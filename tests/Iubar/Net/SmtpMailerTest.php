@@ -1,7 +1,5 @@
 <?php
 
-////// ATTENZIONE QUESTO FILE CONTIENE PASSWORD SENSIBILI
-
 namespace Iubar\Net;
 
 use Psr\Log\LogLevel;
