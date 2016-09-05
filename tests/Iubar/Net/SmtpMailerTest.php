@@ -154,9 +154,6 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 		$m = $this->factorySmtpMailer('mailgun');
 		$m->subject = "TEST MAILGUN";		
 		$m->smtp_usr  = "postmaster@" . $this->getDomain($m->getFrom());
-		echo"Smtp user: " . $m->smtp_usr . PHP_EOL;
-		echo"\$mailgun_password: " .  self::$mailgun_password . PHP_EOL;
-		
 		$m->smtp_pwd = self::$mailgun_password;
 		$result = $m->send();
 		$this->stopBench($bench, $bench_name);

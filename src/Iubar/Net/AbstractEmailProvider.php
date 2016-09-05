@@ -59,7 +59,7 @@ abstract class AbstractEmailProvider {
 			if($this->agent_logger_enabled){
 	
 				// To use the ArrayLogger
-				$mail_logger = new \Swift_Plugins_Loggers_ArrayLogger();
+				$mail_logger = new \Swift_Plugins_Loggers_ArrayLogger(); // Keeps a collection of log messages inside an array. The array content can be cleared or dumped out to the screen.
 				$mailer->registerPlugin(new \Swift_Plugins_LoggerPlugin($mail_logger));
 	
 				// Or to use the Echo Logger
