@@ -68,3 +68,4 @@ composer.lock
 /resources/
 /build/
 password*
+secure-folder
