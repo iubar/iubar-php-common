@@ -1,8 +1,7 @@
 {
-	"name" : "iubar/common",
+	"name" : "iubar/iubar-php-common",
 	"type" : "library",
 	"description" : "Common classes for all tasks",
-	"version" : "dev-trunk",
 	"keywords" : [
 		"database"
 	],
