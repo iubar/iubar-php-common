@@ -81,7 +81,9 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 		
 		$ini_file = __DIR__ . "/secure-folder/passwords.config.ini";
 		if(!is_file($ini_file)){
-						
+					
+		    echo "Loading config from enviroment vars..." . PHP_EOL;
+		    
     		self::$mailgun_api_key 		= getenv('mailgun_api_key');
     		self::$mailgun_password 	= getenv('mailgun_password');
     		self::$aruba_password 		= getenv('aruba_password');
@@ -91,6 +93,9 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
     		self::$sparkpost_password 	= getenv('sparkpost_password');	
 		    
 		}else{
+		    
+		    echo "Loading config from file..." . PHP_EOL;
+		    
     		$ini_array = parse_ini_file($ini_file);    		
     		self::$mandrill_api_key 	= $ini_array['mandrill_api_key'];
     		self::$mailgun_api_key 		= $ini_array['mailgun_api_key'];
@@ -112,7 +117,7 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 		$m->subject = "TEST ARUBA";
 		$m->smtp_usr = "info@iubar.it";
 		$m->smtp_pwd = self::$aruba_password;
-		if ($m->smtp_pwd) {
+		if (!$m->smtp_pwd) {
 		    $this->markTestSkipped('Credentials for Aruba are not available.');
 		}		
 		$m->smtp_ssl = false;
@@ -121,6 +126,22 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(1, $result);
 	}
 
+	public function testArubaSsl(){ // Aruba Ssl
+	    $bench_name = 'testAruba';
+	    $bench = $this->startBench($bench_name);
+	    $m = $this->factorySmtpMailer('aruba');
+	    $m->subject = "TEST ARUBA";
+	    $m->smtp_usr = "info@iubar.it";
+	    $m->smtp_pwd = self::$aruba_password;
+	    if (!$m->smtp_pwd) {
+	        $this->markTestSkipped('Credentials for Aruba are not available.');
+	    }
+	    $m->smtp_ssl = true;
+	    $result = $m->send();
+	    $this->stopBench($bench, $bench_name);
+	    $this->assertEquals(1, $result);
+	}
+	
 // 	public function testGmail(){ // GMAIL
 // 		$bench_name = 'testGmail';
 // 		$bench = $this->startBench($bench_name);
@@ -128,7 +149,7 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 // 		$m->subject = "TEST GMAIL";
 // 		$m->smtp_usr = "borgogelli@iubar.it";
 // 		$m->smtp_pwd = self::$gmail_password;	
-//     	if ($m->smtp_pwd) {
+//     	if (!$m->smtp_pwd) {
 //     	    $this->markTestSkipped('Credentials for GMail are not available.');
 //     	}
 // 		$result = $m->send();
@@ -159,7 +180,7 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 		$m->subject = "TEST MAILGUN";		
 		$m->smtp_usr  = "postmaster@" . $this->getDomain($m->getFrom());
 		$m->smtp_pwd = self::$mailgun_password;
-		if ($m->smtp_pwd) {
+		if (!$m->smtp_pwd) {
 		    $this->markTestSkipped('Credentials for Mailgun are not available.');
 		}		
 		$result = $m->send();
@@ -174,7 +195,7 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 		$m->subject = "TEST SENDGRID";		
 		$m->smtp_usr = "iubar"; // utente registrato con indirizzo info@iubar.it
 		$m->smtp_pwd = self::$sendgrid_password;
-		if ($m->smtp_pwd) {
+		if (!$m->smtp_pwd) {
 		    $this->markTestSkipped('Credentials for SendGrid are not available.');
 		}		
 		$result = $m->send();
@@ -189,7 +210,7 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 		$m->subject = "TEST MAILJET";	
 		$m->smtp_usr = self::$mailjet_api_key;
 		$m->smtp_pwd = self::$mailjet_secret_key;
-		if ($m->smtp_pwd) {
+		if (!$m->smtp_pwd) {
 		    $this->markTestSkipped('Credentials for MailJet are not available.');
 		}		
 		$result = $m->send();
@@ -204,7 +225,7 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 // 		$m->subject = "TEST SPARKPOST";	
 // 		$m->smtp_usr = "SMTP_Injection"; // utente registrato con indirizzo info@iubar.it
 // 		$m->smtp_pwd = self::$sparkpost_password;
-//     	if ($m->smtp_pwd) {
+//     	if (!$m->smtp_pwd) {
 //     	    $this->markTestSkipped('Credentials for SparkPost are not available.');
 //     	}
 // 		$result = $m->send();
