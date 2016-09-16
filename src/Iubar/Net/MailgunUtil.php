@@ -64,7 +64,8 @@ class MailgunUtil {
                     $b = true;                    
                 }else{
                     echo "ERROR: message status is '" . $item->event . "' !" . PHP_EOL;
-                    $this->printJson('Delivery Status: ', $item->delivery-status);
+                    //$this->printJson('Delivery Status: ', $item->delivery-status);
+                    print_r($item);
                 }
                 break;
             }
