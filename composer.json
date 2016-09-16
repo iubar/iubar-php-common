@@ -40,7 +40,8 @@
 			"Iubar\\Document\\" : "src/Iubar/Document/",
 			"Iubar\\Misc\\" : "src/Iubar/Misc/",
 			"Iubar\\Web\\" : "src/Iubar/Web/",
-			"Iubar\\System\\" : "src/Iubar/System/"
+			"Iubar\\System\\" : "src/Iubar/System/",
+			"Iubar\\Net\\" : "src/Iubar/System/"
 		}
 	}
 	
