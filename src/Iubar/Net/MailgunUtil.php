@@ -64,7 +64,11 @@ class MailgunUtil {
                     $b = true;                    
                 }else{
                     echo "ERROR: message status is '" . $item->event . "' !" . PHP_EOL;
-                    //$this->printJson('Delivery Status: ', $item->delivery-status); // FIXME: la sintassi php (object access) non è compatibile con il campo json 'delivery-status' 
+                    //$this->printJson('Delivery Status: ', $item->delivery-status); 
+                    // FIXME: la sintassi php (object access) non è compatibile con il campo json 'delivery-status'
+                    // E' possibile che il nome dell'attributo sia convertito automaticamente da Php in 'delivery_status'
+                    // Verificare quindi il contenuto dell'oggetto con print_r();
+                    // Per simulare tale errore, è sufficiente usare come sender un dominio non ancora convalidato, come ad esempio "iubar.it"
                     print_r($item);
                 }
                 break;
