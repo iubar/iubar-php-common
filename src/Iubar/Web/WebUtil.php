@@ -7,6 +7,17 @@ class WebUtil {
 	public function __construct(){
 		// nothing to do
 	}
+	
+	public static function getClientIp() { // Solo per PHP >=5.3
+	    $ip = getenv('HTTP_CLIENT_IP')?:
+	    getenv('HTTP_X_FORWARDED_FOR')?:
+	    getenv('HTTP_X_FORWARDED')?:
+	    getenv('HTTP_FORWARDED_FOR')?:
+	    getenv('HTTP_FORWARDED')?:
+	    getenv('REMOTE_ADDR');
+	
+	    return $ip;
+	}
 
 /////////////////// URL
 	
