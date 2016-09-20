@@ -67,5 +67,4 @@ composer.lock
 # IUBAR
 /resources/
 /build/
-password*
 secure-folder
