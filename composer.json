@@ -29,7 +29,8 @@
 		"bramus/monolog-colored-line-formatter" : "~2.0",
         "swiftmailer/swiftmailer": "*",
         "devster/ubench" : "*",
-        "league/climate" : "*"
+        "league/climate" : "*",
+        "twig/extensions" : "dev-master"
     },
 	"autoload" : {
 		"psr-0" : {
@@ -41,7 +42,8 @@
 			"Iubar\\Misc\\" : "src/Iubar/Misc/",
 			"Iubar\\Web\\" : "src/Iubar/Web/",
 			"Iubar\\System\\" : "src/Iubar/System/",
-			"Iubar\\Net\\" : "src/Iubar/Net/"
+			"Iubar\\Net\\" : "src/Iubar/Net/",
+			"Iubar\\Twig\\" : "src/Iubar/Twig/"
 		}
 	}
 	
