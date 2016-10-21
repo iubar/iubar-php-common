@@ -78,8 +78,10 @@ abstract class AbstractEmailProvider {
 						$this->log(LogLevel::ERROR, $key . " ==> " . $value);
 					}
 				}else{
-					$this->log(LogLevel::INFO, "Message successfully sent!");
-					$this->log(LogLevel::INFO, "Result: " . $result);
+				    if($this->agent_logger_enabled){
+    					$this->log(LogLevel::INFO, "Message successfully sent!");
+    					$this->log(LogLevel::INFO, "Result: " . $result);
+				    }
 				}
 					
 				if($this->agent_logger_enabled){
@@ -111,7 +113,9 @@ abstract class AbstractEmailProvider {
 		if($this->logger){
 			$this->logger->log($level, $msg);
 		}else{
-			echo "LOG: " . $msg . PHP_EOL;
+		    if ($this->agent_logger_enabled){
+                echo "LOG: " . $msg . PHP_EOL;
+		    }
 		}
 	}
 

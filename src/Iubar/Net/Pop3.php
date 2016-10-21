@@ -2,6 +2,11 @@
 
 namespace Iubar\Net;
 
+/**
+ * In alternativa, valutare il progetto seguente: https://github.com/tedious/Fetch
+ * @author Daniele
+ *
+ */
 class Pop3 {
 
     protected $connection = null;
