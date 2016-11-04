@@ -175,7 +175,11 @@ abstract class AbstractEmailProvider {
 		$this->attachments[$filename] = $type;
 	}
 	
-	
+	public function addAttachments($files = array()){
+	    foreach ($files as $file){
+	        $this->addAttachment($file);
+	    }
+	}
 	
 	private function createMessage(){
 		// Create a message
