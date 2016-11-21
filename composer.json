@@ -12,24 +12,13 @@
 			"homepage" : "http://www.iubar.it"
 		}
 	],
-	"support" : {
-		"issues" : "http://www.iubar.it/bugtracking",
-		"forum" : "http://www.iubar.it",
-		"wiki" : "http://www.iubar.it/wiki",
-		"source" : "https://192.168.0.197/svn/php/php_iubar_lib_common"
-	},
-	"extra" : {
-		"branch-alias" : {
-			"dev-trunk" : "0.1.x-dev"
-		}
-	},
 	"require": {	    
 		"psr/log" : "1.0.0",
 		"monolog/monolog" : "*",
 		"bramus/monolog-colored-line-formatter" : "~2.0",
-        "swiftmailer/swiftmailer": "*",
-        "devster/ubench" : "*",
-        "league/climate" : "*"
+        	"swiftmailer/swiftmailer": "*",
+        	"devster/ubench" : "*",
+        	"league/climate" : "*"
     },
 	"autoload" : {
 		"psr-0" : {
