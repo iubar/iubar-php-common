@@ -43,6 +43,21 @@ abstract class AbstractEmailProvider {
 		return $this->sendThrough($this->getTransport());
 	}
 	
+	private function fillMPartAlt($message){
+		if(!$this->body_html){
+			$message->setBody($this->body_txt);
+		}else{
+		    $message->setBody($this->body_html, 'text/html');
+			if(!$this->body_txt){
+				$message->addPart($this->body_html, 'text/plain');	 // see Spamassassin MPART_ALT_DIFF attribute			
+			}else{
+			    $message->addPart($this->body_txt, 'text/plain');
+			}				
+		}
+		return $message;
+	}
+	
+	
 	protected function sendThrough($transport){
 	
 		$result = 0;
@@ -191,14 +206,7 @@ abstract class AbstractEmailProvider {
 		// ->setSender('your@address.tld') 			// Sender: address specifies who sent the message
 		// ->setReturnPath('bounces@address.tld') 	// The Return-Path: address specifies where bounce notifications should be sent
 	
-		if(!$this->body_html){
-			$message->setBody($this->body_txt);
-		}else{
-			$message->setBody($this->body_html, 'text/html');
-			if(!$this->body_txt){
-				$message->addPart($this->body_txt, 'text/plain');
-			}
-		}
+        $message = $this->fillMPartAlt($message);
 	
 		// Or set it like this
 		// $message->setBody('My <em>amazing</em> body', 'text/html');
