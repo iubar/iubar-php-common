@@ -26,7 +26,6 @@ abstract class AbstractEmailProvider {
 	public $body_txt = null;
 	public $body_html = null;
 	public $attachments = array(); // ie: array('/path/to/image.jpg'=>'image/jpeg');
-	public $last_exception = "";
 	public $from_array = array();
 	
 	
@@ -109,19 +108,15 @@ abstract class AbstractEmailProvider {
 			}catch(\Swift_TransportException $e){
 				// Il messaggio non è stato inviato
 				$this->log(LogLevel::ERROR, $e->getMessage());
-				$this->last_exception = "Impossibile inviare il messaggio, problema di servizio";
+				throw new \Exception('Impossibile inviare il messaggio, problema di servizio');
 			}catch(\Exception $e){
 				$this->log(LogLevel::ERROR, $e->getMessage());
-				$this->last_exception = "Impossibile inviare il messaggio, errore sconosciuto";
+				throw new \Exception('Impossibile inviare il messaggio, errore sconosciuto');
 			}
 	
 		}
 		 
 		return $result;
-	}
-	
-	public function getLastErrorMessage(){
-		return $this->last_exception;
 	}
 	
 	private function log($level, $msg){
