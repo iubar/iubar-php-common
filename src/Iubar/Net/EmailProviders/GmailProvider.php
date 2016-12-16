@@ -35,7 +35,8 @@ class GmailProvider extends AbstractEmailProvider implements IEmailProvider {
 		// Create the Transport
 		$transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, 'ssl')
 		->setUsername($this->smtp_usr)
-		->setPassword($this->smtp_pwd);
+		->setPassword($this->smtp_pwd)
+		->setTimeout(self::TIMEOUT);
 		return $transport;
 	}
 	

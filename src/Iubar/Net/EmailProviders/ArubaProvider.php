@@ -19,7 +19,7 @@ class ArubaProvider extends AbstractEmailProvider implements IEmailProvider {
 		}else{
 			$transport = \Swift_SmtpTransport::newInstance("smtp.iubar.it", 25);
 		}
-		$transport->setUsername($this->smtp_usr)->setPassword($this->smtp_pwd);		
+		$transport->setUsername($this->smtp_usr)->setPassword($this->smtp_pwd)->setTimeout(self::TIMEOUT);	
 		return $transport;
 	}
 	

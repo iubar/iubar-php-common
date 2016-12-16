@@ -18,7 +18,8 @@ class MailjetProvider extends AbstractEmailProvider implements IEmailProvider {
 		
 		$transport = \Swift_SmtpTransport::newInstance("in-v3.mailjet.com", 587, 'tls')
 		->setUsername($this->smtp_usr) // API KEY
-		->setPassword($this->smtp_pwd); // SECRET KEY
+		->setPassword($this->smtp_pwd) // SECRET KEY
+		->setTimeout(self::TIMEOUT);
 		return $transport;
 	}
 	

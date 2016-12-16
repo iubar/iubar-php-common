@@ -14,7 +14,7 @@ abstract class AbstractEmailProvider {
 	// port 25 or 587 for unencrypted / TLS connections
 	// port 465 for SSL connections
 	
-	
+    const TIMEOUT = 4; // 4 secondi
 	
 	public $smtp_usr = null;
 	public $smtp_ssl = false;

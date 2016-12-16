@@ -20,7 +20,8 @@ class SparkpostProvider extends AbstractEmailProvider implements IEmailProvider 
 		}		
 		$transport = \Swift_SmtpTransport::newInstance("smtp.sparkpostmail.com", $port, 'tls')
 		->setUsername($this->smtp_usr)
-		->setPassword($this->smtp_pwd);
+		->setPassword($this->smtp_pwd)
+		->setTimeout(self::TIMEOUT);
 		return $transport;
 	}
 	

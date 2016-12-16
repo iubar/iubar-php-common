@@ -6,7 +6,7 @@ use Iubar\Net\AbstractEmailProvider;
 use Iubar\Net\IEmailProvider;
 
 class MailgunProvider extends AbstractEmailProvider implements IEmailProvider {
-
+   
 	public function __construct(){
 		parent::__construct();
 	}
@@ -22,8 +22,8 @@ class MailgunProvider extends AbstractEmailProvider implements IEmailProvider {
 	    
 		$transport = \Swift_SmtpTransport::newInstance ('smtp.mailgun.org', $port)
 		->setUsername($this->smtp_usr)
-		->setPassword($this->smtp_pwd);
-		// ->setTimeout(8); // 8 secondi
+		->setPassword($this->smtp_pwd)
+		->setTimeout(self::TIMEOUT);
 	
 		// Helps for sending mail locally during development
 		// $transport->setLocalDomain ( '[127.0.0.1]' );
