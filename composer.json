@@ -16,9 +16,9 @@
 		"psr/log" : "1.0.0",
 		"monolog/monolog" : "*",
 		"bramus/monolog-colored-line-formatter" : "~2.0",
-        	"swiftmailer/swiftmailer": "*",
-        	"devster/ubench" : "*",
-        	"league/climate" : "*"
+        "swiftmailer/swiftmailer": "*",
+        "devster/ubench" : "*",
+        "league/climate" : "*"
     },
 	"autoload" : {
 		"psr-0" : {
