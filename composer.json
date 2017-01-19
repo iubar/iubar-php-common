@@ -1,8 +1,6 @@
 {
 	"name" : "iubar/iubar-php-common",
 	"type" : "library",
-	"minimum-stability" : "dev",
-    "prefer-stable" : true,	
 	"description" : "Common classes for all tasks",
 	"keywords" : [
 		"database"
