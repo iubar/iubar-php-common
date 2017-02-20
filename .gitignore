@@ -69,3 +69,4 @@ composer.lock
 /build/
 secure-folder
 passwords.config.ini
+/logs/
