@@ -31,6 +31,9 @@
 		<testsuite name="Php Common">
 
 			<file>./tests/Iubar/Net/SmtpMailerTest.php</file>
+			<file>./tests/Iubar/Net/EmailValidatorTest.php</file>
+			
+			
 
 		</testsuite>
 				
