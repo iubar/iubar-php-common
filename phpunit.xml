@@ -27,20 +27,14 @@
 	<!-- timeoutForLargeTests="60" -->
 
 	<testsuites>
-
 		<testsuite name="Php Common">
-
 			<file>./tests/Iubar/Net/SmtpMailerTest.php</file>
 			<file>./tests/Iubar/Net/EmailValidatorTest.php</file>
-			
-			
-
 		</testsuite>
 				
 		<!-- <testsuite name="All Tests"> -->
 			<!-- <directory suffix=".php">./tests/</directory> -->
-		<!-- </testsuite> -->
-	  
+		<!-- </testsuite> -->	  
 	</testsuites>
 	
 
