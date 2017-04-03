@@ -950,12 +950,12 @@ public static function checkDir($path) {
 	if (! is_dir($path)) {
 		$msg = "The path '" . $path . "' does not exist.";
 	} else {
-		// echo 'The file exists';
-		if (! is_readable($path)) {
-			$msg = "The path '" . $path . "' is not readable.";
-		} else {
-			// echo 'The path is readable';
-		}
+// Il frammento seguente non è compatibile con Samba		
+// 		if (! is_readable($path)) {
+// 			$msg = "The path '" . $path . "' is not readable.";
+// 		} else {
+// 			// echo 'The path is readable';
+// 		}
 	}
 	return $msg;
 }
