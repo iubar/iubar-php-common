@@ -163,10 +163,11 @@ public static function askValue($txt, array $answers, $def_index){
 					break 2; // exit from the while loop
 				}
 			}
-			echo "Risposta '$value' non valida" . PHP_EOL;
 		}else if($def_value){
 			$value = $def_value;
-			break 2; // exit from the while loop
+			break; // exit from the while loop
+		}else{
+			echo "Risposta '$value' non valida" . PHP_EOL;
 		}
 	}
 	return $value;
