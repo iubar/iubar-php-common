@@ -150,7 +150,7 @@ private static function askValue2($txt, array $answers, $def_value=null){
 	return $value;
 }
 
-public static function askValue($txt, array $answers, $def_index){
+public static function askValueWithAnswer($txt, array $answers, $def_index){
 	$def_value = null;
 	if(isset($answers[$def_index])){
 		$def_value  = $answers[$def_index];
