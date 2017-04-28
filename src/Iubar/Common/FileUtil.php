@@ -254,7 +254,7 @@ public static function createDir($folder, $clear_if_exists=false){
 	    }	    
 	    
 	} else {
-		$b = @mkdir( $folder, 0777 );
+		$b = @mkdir($folder, 0777);
 		if( $b ) {
 			$msg = "The folder " . $folder . " was created" . PHP_EOL;			
 		}else{

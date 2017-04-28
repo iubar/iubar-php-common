@@ -101,7 +101,7 @@ class StringUtil {
 		// $i = 0;
 			foreach($array as $elem){
 				if (is_array($elem)){
-					$content .= "[" . StringUtil::arrayToText2($elem) . "]";
+					$content .= '[' . StringUtil::arrayToText2($elem) . ']';
 				}else{
 				//echo $i . StringUtil::NL;;
 				//$content = $content . $elem . $sep; // BUG HERE: VERY SLOWWWWW !!!!!!

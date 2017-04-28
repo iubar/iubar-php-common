@@ -16,7 +16,7 @@ public static function write_ini_file($assoc_arr, $path, $has_sections=FALSE) {
 	$content = "";
 	if ($has_sections) {
 		foreach ($assoc_arr as $key=>$elem) {
-			$content .= "[".$key."]" . PHP_EOL;
+			$content .= '['.$key.']' . PHP_EOL;
 			foreach ($elem as $key2=>$elem2) {
 				if(is_array($elem2)){
 					for($i=0;$i<count($elem2);$i++){

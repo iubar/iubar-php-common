@@ -133,28 +133,74 @@ public static function showMenu($array, $title="", $def=1){
 	return $result;
 }
 
-public static function askValue($txt, $def=""){
-	if($def==="" || $def===null){
-		echo $txt . ": ";
-		$value = ConsoleUtil::read();
+private static function askValue2($txt, array $answers, $def_value=null){
+
+	$question = $txt . ' [' . implode(",", $answers) . ']';
+	if($def_value){
+		$question .= ' [' . $def_value. ']: ';
 	}else{
-		echo $txt . " [" . $def . "]: ";
-		$value = ConsoleUtil::read();
-		if($value=="" && strlen($value)==0){
-			$value = $def;
-		}
-	}	
+		$question .= ": ";
+	}
+	echo $question;
+	$value = ConsoleUtil::read();
+	if(!$value && $def_value){
+		$value = $def_value;
+	}
+
 	return $value;
 }
+
+public static function askValue($txt, array $answers, $def_index){
+	$def_value = null;
+	if(isset($answers[$def_index])){
+		$def_value  = $answers[$def_index];
+	}
+	while (true) {		
+		$value = self::askValue2($txt, $answers, $def_value);
+		if($value){
+			foreach ($answers as $answer){
+				if($value === $answer){
+					break 2; // exit from the while loop
+				}
+			}
+			echo "Risposta '$value' non valida" . PHP_EOL;
+		}else if($def_value){
+			$value = $def_value;
+			break 2; // exit from the while loop
+		}
+	}
+	return $value;
+}
+
+// Rinominare in ask()
+public static function askValue($txt, $def_value=null){
+
+	$question = $txt;
+	if($def_value){
+		$question .= ' [' . $def_value. ']: ';
+	}else{
+		$question .= ": ";
+	}
+	
+	echo $question;
+	$value = ConsoleUtil::read();
+	if(!$value && $def_value){
+		$value = $def_value;
+	}
+		
+	return $value;
+}
+
+// TODO: rinominare in confirm()
 public static function askQuestion($question, $def_boolean=true){
 	$b = false;
 	echo StringUtil::NL;
 	$f = fopen('php://stdin', 'r');
 
 	if($def_boolean){
-		echo $question . " [si]: ";
+		echo $question . ' [si]: ';
 	}else{
-		echo $question . " [no]: ";
+		echo $question . ' [no]: ';
 	}
 
 	$line = trim(fgets($f));

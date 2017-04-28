@@ -4,9 +4,8 @@
 // http://php.net/manual/en/function.debug-backtrace.php
 
 
-class x(){
+class StackTrace{
 	
-	<?php
 	/**
 	 * Print out a stack trace from entry point to wherever this function was called.
 	* @param boolean $show_args Show arguments passed to functions? Default False.
