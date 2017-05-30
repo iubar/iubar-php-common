@@ -79,24 +79,25 @@ class StringUtil {
 	}
 
 	public static function isBracketBalanced($str, $open_bracket = '(', $closed_bracket = ')'){
-		// see: https://gist.github.com/wesleybliss/3813778
-		static $open = 0;
-		if ((substr($str, 0, 1) == $closed_bracket) || (substr($str, -1, 1) == $open_bracket) ) {
-			return false;
-		}
-		
-		for ($i = 0; $i < count($str); $i++){
-			if (substr($str, $i, 1) == $closed_bracket){
+		$open = 0;
+		for ($i = 0; $i < strlen($str); $i++){
+			if ( $open < 0 ) {
+				return false;
+			}
+			
+			$char = substr($str, $i, 1);
+			if ($char == $open_bracket){
 				$open++;
-			} else {
-				if ( $open < 0 ) {
-					return false;
-				}
+			} else if ($char == $closed_bracket){
 				$open--;
 			}
 		}
 		
-		return true;
+		if($open==0){
+			return true;
+		}
+		
+		return false;
 	}	
 	
 	public static function demo(){
