@@ -76,6 +76,26 @@ class StringUtil {
 			$result .= $str;
 		}
 		return $result;
+	}
+
+	public static function isBracketBalanced($str, $open_bracket = '(', $closed_bracket = ')'){
+		static $open = 0;
+		if ((substr($str, 0, 1) == $closed_bracket) || (substr($str, -1, 1) == $open_bracket) ) {
+			return false;
+		}
+		
+		for ($i = 0; $i < count($str); $i++){
+			if (substr($str, $i, 1) == $closed_bracket){
+				$open++;
+			} else {
+				if ( $open < 0 ) {
+					return false;
+				}
+				$open--;
+			}
+		}
+		
+		return true;
 	}	
 	
 	public static function demo(){
