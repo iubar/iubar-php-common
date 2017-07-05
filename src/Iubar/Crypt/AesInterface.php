@@ -1,9 +1,11 @@
 <?php
 
+namespace Iubar\Crypt;
+
 interface AesInterface {
 
-	abstract public function encrypt($plaintext, $iv);
-	
-	abstract public function decrypt($crypted, $iv);
+	function encrypt($plaintext, $iv);
+
+	function decrypt($crypted, $iv);
 
 }

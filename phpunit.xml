@@ -28,6 +28,9 @@
 
 	<testsuites>
 		<testsuite name="Php Common">
+			<file>./tests/Iubar/Crypt/AesCbcNoPaddingTest.php</file>
+			<file>./tests/Iubar/Crypt/AesCbcPkcs5PaddingTest.php</file>
+			<file>./tests/Iubar/Crypt/AesEcbPkcs5PaddingTest.php</file>
 			<file>./tests/Iubar/Net/SmtpMailerTest.php</file>
 			<file>./tests/Iubar/Net/EmailValidatorTest.php</file>
 		</testsuite>
