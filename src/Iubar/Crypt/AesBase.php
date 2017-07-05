@@ -17,11 +17,7 @@ abstract class AesBase {
 		// TODO: ...	
 	}
 	
-	public function getEncryptedDataFromSignature($sig){
-		// TODO: ...
-	}
-	
-	public function validateSignature($sig){
+	public function getCryptedDataFromSignature($sig){
 		// TODO: ...
 	}
 
