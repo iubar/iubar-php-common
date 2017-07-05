@@ -4,7 +4,10 @@
 
 class AesCbcNoPadding extends AesBase implements AesInterface {
 	
-	
+	function __construct($key){
+		parent::__construct($key);
+	}
+		
 	public function encrypt($plaintext, $key, $iv){
 		$encrypted = mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $key, $plaintext, MCRYPT_MODE_CBC, $iv);	
 		return (base64_encode($encrypted));

@@ -4,6 +4,10 @@
 
 class AesEcbPkcs5Padding extends AesBase implements AesInterface {
 	
+	function __construct($key){
+		parent::__construct($key);
+	}
+	
 	public static function encrypt($input, $key) {
 		$size = mcrypt_get_block_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_ECB);
 		$input = self::pkcs5_pad($input, $size);
