@@ -7,9 +7,7 @@ namespace Iubar\Crypt;
  */
 class AesCbcPkcs5Padding extends AesBase implements AesInterface {
 
-// 	protected $key;
  	protected $method = 'aes-128-cbc';
-// 	protected $iv = '1010101010101010';
 	protected $option = OPENSSL_CIPHER_AES_128_CBC;
 
 	// Generate a 256-bit encryption key (This needs storing somewhere)
