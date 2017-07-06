@@ -7,6 +7,7 @@ error_reporting(E_ERROR | E_PARSE);
 // https://stackoverflow.com/questions/1220751/how-to-choose-an-aes-encryption-mode-cbc-ecb-ctr-ocb-cfb
 // https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation
 // https://it.wikipedia.org/wiki/Modalit%C3%A0_di_funzionamento_dei_cifrari_a_blocchi
+// https://github.com/keel/aes-cross
 
 require_once __DIR__ . '/../../../vendor/autoload.php';
 

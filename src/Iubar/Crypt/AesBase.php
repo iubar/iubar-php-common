@@ -12,7 +12,7 @@ abstract class AesBase {
 	abstract public function decrypt($crypted, $iv);
 
 	public function __construct($key){
-		$this->$key = $key;
+		$this->key = $key;
 	}
 
 	// Generate an "initialization vector" (This too needs storing for decryption but we can append it to the encrypted data)
