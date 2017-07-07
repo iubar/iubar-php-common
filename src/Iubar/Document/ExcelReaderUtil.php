@@ -6,7 +6,7 @@ use Iubar\Common\BaseClass;
 
 require_once __DIR__ . '/../Common/BaseClass.php';
 
-// TODO: Abbandonare Spreadsheet_Excel_Reader in favore di https://packagist.org/packages/phpoffice/phpexcel
+// TODO: Abbandonare Spreadsheet_Excel_Reader in favore di https://github.com/PHPOffice/PHPExcel
 
 class ExcelReaderUtil extends BaseClass {
 	
@@ -168,29 +168,29 @@ class ExcelReaderUtil extends BaseClass {
 		$msg = "total_sheets: " . $sheet_num;
 		$this->logDebug($msg);
 		$sheet_index = 0;
-	    foreach ($xls -> boundsheets as $key => $item){
-	        $msg  = "item: " . $item['name'];
-	        $this->logDebug($msg);
-	        $row_num = $xls->rowcount($sheet_index=0);
-	        $col_num = $xls->colcount($sheet_index=0);
-	        $msg = "rows " . $row_num . " cols " . $col_num;
-	        $this->logDebug($msg);
-	        $sheet_index++;
-	    }
-	    return false;
+		foreach ($xls -> boundsheets as $key => $item){
+			$msg  = "item: " . $item['name'];
+			$this->logDebug($msg);
+			$row_num = $xls->rowcount($sheet_index);
+			$col_num = $xls->colcount($sheet_index);
+			$msg = "sheet " . $sheet_index . " rows " . $row_num . " cols " . $col_num;
+			$this->logDebug($msg);
+			$sheet_index++;
+		}
+		return false;
 	}
 	
-	public function printCellInfo($sheet, $row, $col){
+	public function printCellInfo($sheet=0, $row, $col){
 		$data = $this->data;
 		// The type of data in the cell: number|date|unknown
-		$type = $data->type($row,$col,$sheet=0);
+		$type = $data->type($row,$col,$sheet);
 		// The raw data stored for the cell. For example, a cell may contain 123.456 but display as 123.5 because of the cell's format. Raw accesses the underlying value.
-		$raw =  $data->raw($row,$col,$sheet=0);
+		$raw =  $data->raw($row,$col,$sheet);
 		// If the cell has a hyperlink associated with it, the url can be retrieved.
-		$link = $data->hyperlink($row,$col,$sheet=0);
+		$link = $data->hyperlink($row,$col,$sheet);
 		// Rowspan/Colspan of the cell.
-		$row_span = $data->rowspan($row,$col,$sheet=0);
-		$col_span = $data->colspan($row,$col,$sheet=0);
+		$row_span = $data->rowspan($row,$col,$sheet);
+		$col_span = $data->colspan($row,$col,$sheet);
 	
 		$msg1 = "type " . $type;
 		$msg2 = "raw " . $raw;
