@@ -70,7 +70,7 @@ abstract class AbstractEmailProvider {
 			$host = $transport->getHost();
 			$port = $transport->getPort();
 
-			$fp = fsockopen($smtp_host, $smtp_port, $errno, $errstr, 5);
+			$fp = fsockopen($host, $port, $errno, $errstr, 5);
 			if (!$fp) {
 				// Port is closed or blocked
 				$error = "Impossibile contattare il server smtp " . $host. " sulla porta " . $port;
