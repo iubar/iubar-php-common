@@ -28,9 +28,9 @@ abstract class AbstractEmailProvider {
 	public $attachments = array(); // ie: array('/path/to/image.jpg'=>'image/jpeg');
 	public $from_array = array();
 
-
 	private $agent_logger_enabled = false;
 	private $logger = null;
+	private $log_to_console = false;
 
 	abstract protected function getTransport();
 
@@ -86,13 +86,9 @@ abstract class AbstractEmailProvider {
 
 			if($this->agent_logger_enabled){
 
-				// To use the ArrayLogger
 				$mail_logger = new \Swift_Plugins_Loggers_ArrayLogger(); // Keeps a collection of log messages inside an array. The array content can be cleared or dumped out to the screen.
 				$mailer->registerPlugin(new \Swift_Plugins_LoggerPlugin($mail_logger));
 
-				// Or to use the Echo Logger
-				// $mail_logger = new \Swift_Plugins_Loggers_EchoLogger();
-				// $mailer->registerPlugin(new \Swift_Plugins_LoggerPlugin($mail_logger));
 			}
 
 			// Send the message
@@ -106,10 +102,8 @@ abstract class AbstractEmailProvider {
 						$this->log(LogLevel::ERROR, $key . " ==> " . $value);
 					}
 				}else{
-				    if($this->agent_logger_enabled){
     					$this->log(LogLevel::INFO, "Message successfully sent!");
     					$this->log(LogLevel::INFO, "Result: " . $result);
-				    }
 				}
 
 				if($this->agent_logger_enabled){
@@ -136,13 +130,32 @@ abstract class AbstractEmailProvider {
 	private function log($level, $msg){
 		if($this->logger){
 			$this->logger->log($level, $msg);
-		}else{
-		    if ($this->agent_logger_enabled){
-                echo "LOG: " . $msg . PHP_EOL;
-		    }
+		}
+		
+		if($this->log_to_console){
+			$type = "UNKN";
+			switch ($level) {
+				case LogLevel::ERROR:
+					$type = "ERROR";
+					break;
+				case LogLevel::WARNING:
+					$type = "WARNING";
+					break;
+				case LogLevel::INFO:
+					$type = "INFO";
+					break;
+				case LogLevel::DEBUG:
+					$type = "DEBUG";
+					break;
+			}
+			echo "[AbstractEmailProvider] " . $type . ": " . $msg . PHP_EOL;
 		}
 	}
 
+	public function setLogToConsole($b){
+		$this->log_to_console = $b;
+	}
+	
 	public function setLogger($logger){
 		$this->logger = $logger;
 	}
