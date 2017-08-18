@@ -28,7 +28,7 @@ class SendgridProvider extends AbstractEmailProvider implements IEmailProvider {
 	        $port = 587;
 	    }
 	    
-		$transport = \Swift_SmtpTransport::newInstance("smtp.sendgrid.net", $port, 'tls')
+	    $transport = (new \Swift_SmtpTransport("smtp.sendgrid.net", $port, 'tls'))
 		->setUsername($this->smtp_usr)
 		->setPassword($this->smtp_pwd)
 		->setTimeout(self::TIMEOUT);

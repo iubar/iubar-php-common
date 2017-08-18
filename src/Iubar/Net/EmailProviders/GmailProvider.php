@@ -33,7 +33,7 @@ class GmailProvider extends AbstractEmailProvider implements IEmailProvider {
 		// 			Recipients per message (sent via SMTP by POP or IMAP users) 99
 		
 		// Create the Transport
-		$transport = \Swift_SmtpTransport::newInstance('smtp.gmail.com', 465, 'ssl')
+		$transport = (new \Swift_SmtpTransport('smtp.gmail.com', 465, 'ssl'))
 		->setUsername($this->smtp_usr)
 		->setPassword($this->smtp_pwd)
 		->setTimeout(self::TIMEOUT);

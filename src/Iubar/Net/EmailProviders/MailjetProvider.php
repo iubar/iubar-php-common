@@ -16,7 +16,7 @@ class MailjetProvider extends AbstractEmailProvider implements IEmailProvider {
 		// 	Port 25 or 587 (some providers block port 25)
 		// 	If TLS on port 587 doesn't work, try using port 465 and/or using SSL instead
 		
-		$transport = \Swift_SmtpTransport::newInstance("in-v3.mailjet.com", 587, 'tls')
+		$transport = (new \Swift_SmtpTransport("in-v3.mailjet.com", 587, 'tls'))
 		->setUsername($this->smtp_usr) // API KEY
 		->setPassword($this->smtp_pwd) // SECRET KEY
 		->setTimeout(self::TIMEOUT);

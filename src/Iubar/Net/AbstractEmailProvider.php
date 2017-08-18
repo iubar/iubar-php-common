@@ -82,7 +82,7 @@ abstract class AbstractEmailProvider {
 			}
 
 			// Create the Mailer using your created Transport
-			$mailer = \Swift_Mailer::newInstance($transport);
+			$mailer = new \Swift_Mailer($transport);
 
 			if($this->agent_logger_enabled){
 
@@ -237,7 +237,7 @@ abstract class AbstractEmailProvider {
 			$attachment = \Swift_Attachment::fromPath($filename, $type); // ...->setFilename('cool.jpg');
 			// Create the attachment with your data
 			// $data = create_my_pdf_data();
-			// $attachment = \Swift_Attachment::newInstance($data, 'my-file.pdf', 'application/pdf');
+			// $attachment = new \Swift_Attachment($data, 'my-file.pdf', 'application/pdf');
 			// Attach it to the message
 			if(is_file($filename)){
 				$message->attach($attachment);

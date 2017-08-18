@@ -20,7 +20,7 @@ class MailgunProvider extends AbstractEmailProvider implements IEmailProvider {
 	        $port = 587;
 	    }
 	    
-		$transport = \Swift_SmtpTransport::newInstance ('smtp.mailgun.org', $port)
+	    $transport = (new \Swift_SmtpTransport('smtp.mailgun.org', $port))
 		->setUsername($this->smtp_usr)
 		->setPassword($this->smtp_pwd)
 		->setTimeout(self::TIMEOUT);

@@ -24,7 +24,7 @@ class MandrillProvider extends AbstractEmailProvider implements IEmailProvider {
 		// ISPs may redirect traffic on certain ports, so it's up to you which port you use.
 		
 		// Create the Transport
-		$transport = \Swift_SmtpTransport::newInstance("smtp.mandrillapp.com", $port, 'tls')
+		$transport = (new \Swift_SmtpTransport("smtp.mandrillapp.com", $port, 'tls'))
 		->setUsername($this->smtp_usr)
 		->setPassword($this->smtp_pwd)
 		->setTimeout(8); // 8 secondi
