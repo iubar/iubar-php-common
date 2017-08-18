@@ -2,6 +2,8 @@
 
 namespace Iubar\Common;
 
+use Psr\Log\LogLevel;
+
 class LoggingUtil {
 	
 	public static function syslogLeveltoPsr($priority){
