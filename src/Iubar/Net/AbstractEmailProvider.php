@@ -3,6 +3,7 @@
 namespace Iubar\Net;
 
 use Psr\Log\LogLevel;
+use Iubar\Common\LoggingUtil;
 
 abstract class AbstractEmailProvider {
 
@@ -132,23 +133,8 @@ abstract class AbstractEmailProvider {
 			$this->logger->log($level, $msg);
 		}
 		
-		if($this->log_to_console){
-			$type = "UNKN";
-			switch ($level) {
-				case LogLevel::ERROR:
-					$type = "ERROR";
-					break;
-				case LogLevel::WARNING:
-					$type = "WARNING";
-					break;
-				case LogLevel::INFO:
-					$type = "INFO";
-					break;
-				case LogLevel::DEBUG:
-					$type = "DEBUG";
-					break;
-			}
-			echo "[AbstractEmailProvider] " . $type . ": " . $msg . PHP_EOL;
+		if($this->log_to_console){			
+			echo '[' . get_class($this) . '] ' . LoggingUtil::psrLeveltoString($level) . ": " . $msg . PHP_EOL;
 		}
 	}
 
