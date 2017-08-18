@@ -1063,6 +1063,97 @@ private static function timestampToString($timestamp){
 	return $str;
 }
 
+public static function filesize_r($path){
+	// USAGE
+	// $path = "gal";
+	// echo "Folder $path = " . FileUtils::filesize_r($path) . " bytes";
+	
+	if(!file_exists($path)){
+		return 0;
+	}
+	if(is_file($path)) {
+		return filesize($path);
+	}
+	$ret = 0;
+	foreach(glob($path . "/*" ) as $fn){
+		$ret += FileUtils::filesize_r($fn);
+	}
+	return $ret;
+}
+
+
+public static function get_dir_size($dir_name){
+	// USAGE;
+	//$dir_name = "directory name here";
+	// /* 1048576 bytes == 1MB */
+	//$total_size= round((FileUtils::get_dir_size($dir_name) / 1048576),2) ;
+	//print "Directory $dir_name size : $total_size MB";
+	
+	$dir_size =0;
+	if (is_dir($dir_name)) {
+		if ($dh = opendir($dir_name)) {
+			while (($file = readdir($dh)) !== false) {
+				if($file !="." && $file != ".."){
+					if(is_file($dir_name."/".$file)){
+						$dir_size += filesize($dir_name."/".$file);
+					}
+					/* check for any new directory inside this directory */
+					if(is_dir($dir_name."/".$file)){
+						$dir_size += FileUtils::get_dir_size($dir_name."/".$file);
+					}
+				}
+			}
+		}
+	}
+	closedir($dh);
+	return $dir_size;
+}
+
+/**
+ * Finds a list of disk drives on the server.
+ * @return array The array velues are the existing disks.
+ */
+public static function get_disks(){
+	if(php_uname('s')=='Windows NT'){
+		// windows
+		$disks=`fsutil fsinfo drives`;
+		$disks=str_word_count($disks,1);
+		if($disks[0]!='Drives')return '';
+		unset($disks[0]);
+		foreach($disks as $key=>$disk)$disks[$key]=$disk.':\\';
+		return $disks;
+	}else{
+		// unix
+		$data=`mount`;
+		$data=explode(' ',$data);
+		$disks=array();
+		foreach($data as $token)if(substr($token,0,5)=='/dev/')$disks[]=$token;
+		return $disks;
+	}
+}
+
+public static function decodeSize($bytes){
+	$types = array( 'B', 'KB', 'MB', 'GB', 'TB' );
+	for( $i = 0; $bytes >= 1024 && $i < ( count( $types ) - 1 ); $bytes /= 1024, $i++ );
+	return( round( $bytes, 2 ) . " " . $types[$i] );
+}
+
+
+public static function convertBytes($number){
+	$len = strlen($number);
+	if($len < 4){
+		return sprintf("%d b", $number);
+	}
+	if($len >= 4 && $len <=6){
+		return sprintf("%0.2f Kb", $number/1024);
+	}
+	if($len >= 7 && $len <=9){
+		return sprintf("%0.2f Mb", $number/1024/1024);
+	}
+	return sprintf("%0.2f Gb", $number/1024/1024/1024);
+	
+}
+
 public static function getLastFileByPattern($path='.', $pattern=''){  // FIXME: il flag case-unsentive (/i) sembra non funzionare. Ad esempio FileUtil::getLastFileByPattern(__DIR__, '/^.*.php$/i'); 
 	$last_file = null;
 	$iterator = self::getFileByPattern($path, $pattern);
