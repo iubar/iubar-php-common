@@ -208,7 +208,7 @@ abstract class AbstractEmailProvider {
 	private function createMessage(){
 		// Create a message
 		// Deafult Character Set is UTF8 (http://swiftmailer.org/docs/messages.html)
-		$message = new \Swift_Message($this->subject)
+		$message = (new \Swift_Message($this->subject))
 		->setFrom($this->from_array) 				// From: addresses specify who actually wrote the email
 		->setTo($this->to_array);
 		// ->setBcc(array('some@address.tld' => 'The Name'))
