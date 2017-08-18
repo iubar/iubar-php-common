@@ -12,14 +12,14 @@
 			"homepage" : "http://www.iubar.it"
 		}
 	],
-	"require": {	    
+	"require" : {
 		"psr/log" : "1.0.0",
 		"monolog/monolog" : "*",
 		"bramus/monolog-colored-line-formatter" : "~2.0",
-        "swiftmailer/swiftmailer": "*",
-        "devster/ubench" : "*",
-        "league/climate" : "*"
-    },
+		"swiftmailer/swiftmailer" : "*",
+		"devster/ubench" : "*",
+		"league/climate" : "*"
+	},
 	"autoload" : {
 		"psr-0" : {
 			"Iubar" : "src/"
@@ -34,5 +34,4 @@
 			"Iubar\\Twig\\" : "src/Iubar/Twig/"
 		}
 	}
-	
 }
