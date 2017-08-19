@@ -48,7 +48,6 @@ class MiscUtils {
 	}
 	
 	public static function loggerFactory($logger_name, $log_level, $log_file, $overwrite_log = true, $log_to_shell=true){
-
 		$error = "";
 		$logger = new Logger($logger_name); // create a log channel		
 		if($log_file){
@@ -80,7 +79,7 @@ class MiscUtils {
 	
 	private static function checkLogFile($log_file){
 		$error = "";
-		echo "Log file is '" . $log_file . "'" . PHP_EOL;		
+		// echo "Log file is '" . $log_file . "'" . PHP_EOL;		
 		if(file_exists($log_file)){
 			if(!is_writable($log_file)){
 				$error = "Permission denied writing to file '" . $log_file . "'";
