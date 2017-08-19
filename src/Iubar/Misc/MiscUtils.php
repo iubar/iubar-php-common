@@ -48,17 +48,7 @@ class MiscUtils {
 	}
 	
 	public static function loggerFactory($logger_name, $log_level, $log_file, $overwrite_log = true, $log_to_shell=true){
-		
-// 		{
-// 			const EMERGENCY = 'emergency';
-// 			const ALERT     = 'alert';
-// 			const CRITICAL  = 'critical';
-// 			const ERROR     = 'error';
-// 			const WARNING   = 'warning';
-// 			const NOTICE    = 'notice';
-// 			const INFO      = 'info';
-// 			const DEBUG     = 'debug';
-// 		}
+
 		$error = "";
 		$logger = new Logger($logger_name); // create a log channel		
 		if($log_file){
@@ -132,7 +122,7 @@ class MiscUtils {
 		}		
 	}
 	
-	private static function logToShell($logger, $log_level){
+	public static function logToShell($logger, $log_level){
 		$handler = new StreamHandler('php://stdout', $log_level);
 		$custom_format = "%channel%.%level_name%: %message% %context% %extra%" . PHP_EOL;
 		if(true || !self::isWindows()){

@@ -31,7 +31,7 @@ abstract class AbstractEmailProvider {
 
 	private $agent_logger_enabled = false;
 	private $logger = null;
-	private $log_to_console = false;
+// 	private $log_to_console = false;
 
 	abstract protected function getTransport();
 
@@ -133,14 +133,15 @@ abstract class AbstractEmailProvider {
 			$this->logger->log($level, $msg);
 		}
 		
-		if($this->log_to_console){			
-			echo '[' . get_class($this) . '] ' . LoggingUtil::psrLeveltoString($level) . ": " . $msg . PHP_EOL;
-		}
+		// In alternativa al codice seguente configurare lo StreamHandler di Monolog con il ColoredLineFormatter
+// 		if($this->log_to_console){			
+// 			echo '[' . get_class($this) . '] ' . LoggingUtil::psrLeveltoString($level) . ": " . $msg . PHP_EOL;
+// 		}
 	}
 
-	public function setLogToConsole($b){
-		$this->log_to_console = $b;
-	}
+// 	public function setLogToConsole($b){
+// 		$this->log_to_console = $b;
+// 	}
 	
 	public function setLogger($logger){
 		$this->logger = $logger;
@@ -170,12 +171,16 @@ abstract class AbstractEmailProvider {
 		$this->subject = $subject;
 	}
 
-	public function setToList($array){
-		$this->to_array = $array;
+	/**
+	 *
+	 * DEPRECATO DA ELIMINARE
+	 */
+	public function setToList($recipients){
+		$this->to_array = $recipients;
 	}
 
-	public function setTo($to){
-		$this->setToList($to);
+	public function setTo($recipients){
+		$this->to_array = $recipients;
 	}
 
 	public function setBodyHtml($html){
