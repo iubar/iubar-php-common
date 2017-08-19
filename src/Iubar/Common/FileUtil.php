@@ -4,9 +4,6 @@ namespace Iubar\Common;
 
 // TODO: http://stackoverflow.com/questions/3321547/how-to-use-regexiterator-in-php
 
- 
-
-
 class FileUtil {
 	
 	public function __construct(PsrLogLoggerInterface $logger){
@@ -1076,7 +1073,7 @@ public static function folderSize($dir){
 public static function filesize_r($path){
 	// USAGE
 	// $path = "gal";
-	// echo "Folder $path = " . FileUtils::filesize_r($path) . " bytes";
+	// echo "Folder $path = " . FileUtil::filesize_r($path) . " bytes";
 	
 	if(!file_exists($path)){
 		return 0;
@@ -1086,7 +1083,7 @@ public static function filesize_r($path){
 	}
 	$ret = 0;
 	foreach(glob($path . "/*" ) as $fn){
-		$ret += FileUtils::filesize_r($fn);
+		$ret += FileUtil::filesize_r($fn);
 	}
 	return $ret;
 }
@@ -1096,7 +1093,7 @@ public static function get_dir_size($dir_name){
 	// USAGE;
 	//$dir_name = "directory name here";
 	// /* 1048576 bytes == 1MB */
-	//$total_size= round((FileUtils::get_dir_size($dir_name) / 1048576),2) ;
+	//$total_size= round((FileUtil::get_dir_size($dir_name) / 1048576),2) ;
 	//print "Directory $dir_name size : $total_size MB";
 	
 	$dir_size =0;
@@ -1109,7 +1106,7 @@ public static function get_dir_size($dir_name){
 					}
 					/* check for any new directory inside this directory */
 					if(is_dir($dir_name."/".$file)){
-						$dir_size += FileUtils::get_dir_size($dir_name."/".$file);
+						$dir_size += FileUtil::get_dir_size($dir_name."/".$file);
 					}
 				}
 			}
