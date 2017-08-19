@@ -1063,6 +1063,16 @@ private static function timestampToString($timestamp){
 	return $str;
 }
 
+
+
+public static function folderSize($dir){
+	$size = 0;
+	foreach (glob(rtrim($dir, '/').'/*', GLOB_NOSORT) as $each) {
+		$size += is_file($each) ? filesize($each) : self::folderSize($each);
+	}
+	return $size;
+}
+
 public static function filesize_r($path){
 	// USAGE
 	// $path = "gal";
