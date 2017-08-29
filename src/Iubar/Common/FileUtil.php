@@ -375,15 +375,29 @@ public static function filesize2bytes($str) {
     return $bytes;
 }
 
+/*
+ * Il metodo restituisce gli stessi risultati di formatBytes()
+ * Nota che le sigle Gb, Kb, Mb, dovrebbero essere GB, KB, MB
+ */
+public static function convertBytes($number){
+	$len = strlen($number);
+	if($len < 4){
+		return sprintf("%d b", $number);
+	}
+	if($len >= 4 && $len <=6){
+		return sprintf("%0.2f Kb", $number/1024);
+	}
+	if($len >= 7 && $len <=9){
+		return sprintf("%0.2f Mb", $number/1024/1024);
+	}
+	return sprintf("%0.2f Gb", $number/1024/1024/1024);
+}
 public static function formatBytes($bytes, $precision = 2) {
     $units = array('B', 'KB', 'MB', 'GB', 'TB');
-
     $bytes = max($bytes, 0);
     $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
     $pow = min($pow, count($units) - 1);
-
     $bytes /= pow(1024, $pow);
-
     return round($bytes, $precision) . ' ' . $units[$pow];
 }
 
@@ -1061,7 +1075,11 @@ private static function timestampToString($timestamp){
 }
 
 
-
+/**
+ *
+ * Stessi risultati di filesize_r()
+ *
+ */
 public static function folderSize($dir){
 	$size = 0;
 	foreach (glob(rtrim($dir, '/').'/*', GLOB_NOSORT) as $each) {
@@ -1069,7 +1087,6 @@ public static function folderSize($dir){
 	}
 	return $size;
 }
-
 public static function filesize_r($path){
 	// USAGE
 	// $path = "gal";
@@ -1143,22 +1160,6 @@ public static function decodeSize($bytes){
 	$types = array( 'B', 'KB', 'MB', 'GB', 'TB' );
 	for( $i = 0; $bytes >= 1024 && $i < ( count( $types ) - 1 ); $bytes /= 1024, $i++ );
 	return( round( $bytes, 2 ) . " " . $types[$i] );
-}
-
-
-public static function convertBytes($number){
-	$len = strlen($number);
-	if($len < 4){
-		return sprintf("%d b", $number);
-	}
-	if($len >= 4 && $len <=6){
-		return sprintf("%0.2f Kb", $number/1024);
-	}
-	if($len >= 7 && $len <=9){
-		return sprintf("%0.2f Mb", $number/1024/1024);
-	}
-	return sprintf("%0.2f Gb", $number/1024/1024/1024);
-	
 }
 
 public static function getLastFileByPattern($path='.', $pattern=''){  // FIXME: il flag case-unsentive (/i) sembra non funzionare. Ad esempio FileUtil::getLastFileByPattern(__DIR__, '/^.*.php$/i'); 

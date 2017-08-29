@@ -124,7 +124,7 @@ class MiscUtils {
 	public static function logToShell($logger, $log_level){
 		$handler = new StreamHandler('php://stdout', $log_level);
 		$custom_format = "%channel%.%level_name%: %message% %context% %extra%" . PHP_EOL;
-		if(true || !self::isWindows()){
+		if(!self::isWindows()){
 			$handler->setFormatter(new ColoredLineFormatter(null, $custom_format, false, true, true));
 			// oppure: $handler->setFormatter(new ColoredLineFormatter(new TrafficLight(), $custom_format, null, false, true));
 		}else{
