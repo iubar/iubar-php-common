@@ -37,6 +37,7 @@ class MiscUtils {
 				die("QUIT: " . $error . PHP_EOL);
 			}else{
 				$rotating_handler = new \Monolog\Handler\RotatingFileHandler($log_file, 3, $log_level);
+				$rotating_handler->setFormatter(new LineFormatter(null, null, true, true)); // LineFormatter::__construct(string $format = null, string $dateFormat = null, bool $allowInlineLineBreaks = false, bool $ignoreEmptyContextAndExtra = false)
 				$logger->pushHandler($rotating_handler);
 			}
 		}
@@ -59,7 +60,7 @@ class MiscUtils {
 				die("QUIT: " . $error . PHP_EOL);				
 			}else{
 				$handler = new StreamHandler($log_file, $log_level);
-				$handler->setFormatter(new LineFormatter(null, null, true, true));
+				$handler->setFormatter(new LineFormatter(null, null, true, true)); // LineFormatter::__construct(string $format = null, string $dateFormat = null, bool $allowInlineLineBreaks = false, bool $ignoreEmptyContextAndExtra = false)
 				$logger->pushHandler($handler);
 				if($overwrite_log){
 					file_put_contents($log_file, "");
