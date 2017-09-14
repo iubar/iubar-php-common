@@ -4,8 +4,6 @@ namespace Iubar\Common;
 
 use Iubar\Common\BaseClass;
 
-require 'BaseClass.php';
-
 class HostingUtil extends BaseClass {
 
 	public $iubar_lan = "192.168.0.";

@@ -4,8 +4,6 @@ namespace Iubar\Document;
 
 use Iubar\Common\BaseClass;
 
-require_once __DIR__ . '/../Common/BaseClass.php';
-
 // TODO: Abbandonare Spreadsheet_Excel_Reader in favore di https://github.com/PHPOffice/PHPExcel
 
 class ExcelReaderUtil extends BaseClass {

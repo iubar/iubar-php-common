@@ -16,8 +16,6 @@ namespace Iubar\Document;
 
 use Iubar\Common\BaseClass;
 
-// require '../Common/BaseClass.php';
-
 class CsvUtil extends BaseClass {
 
 	const BR = "<br/>\r\n";

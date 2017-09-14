@@ -5,11 +5,7 @@ namespace Iubar\Common;
 
 use Iubar\Common\BaseClass;
 
-require 'BaseClass.php';
-
 class IniWriter extends BaseClass {
-	
-
 
 public static function write_ini_file($assoc_arr, $path, $has_sections=FALSE) {
 	$use_quote = false;

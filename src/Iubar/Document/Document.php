@@ -4,8 +4,6 @@ namespace Iubar\Document;
 
 use Iubar\Common\BaseClass;
 
-// require '../Common/BaseClass.php';
-
 class Document extends BaseClass{
 	
 	public static function search_and_replace($file, $search, $replace){
