@@ -47,6 +47,7 @@ class Formatter extends BaseClass {
 // 		Every other value is considered TRUE (including any resource).
 		
 		$b = false;
+		$str = trim($str);
 		if(strtolower($str)==="true"){ 
 			$b = true;
 		}else if($str==="1"){
