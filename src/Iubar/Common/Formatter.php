@@ -45,10 +45,9 @@ class Formatter extends BaseClass {
 // 		the special type NULL (including unset variables)
 // 		SimpleXML objects created from empty tags
 // 		Every other value is considered TRUE (including any resource).
-
 		
 		$b = false;
-		if($str==="true"){
+		if(strtolower($str)==="true"){ 
 			$b = true;
 		}else if($str==="1"){
 			$b = true;
