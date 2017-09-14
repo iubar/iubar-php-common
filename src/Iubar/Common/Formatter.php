@@ -2,6 +2,8 @@
 
 namespace Iubar\Common;
 
+use Iubar\Common\BaseClass;
+
 class Formatter extends BaseClass {
 	
 	public static function formatCf($cf) {
