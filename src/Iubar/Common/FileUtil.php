@@ -375,7 +375,9 @@ public static function filesize2bytes($str) {
     return $bytes;
 }
 
-/*
+/**
+ * @deprecated: da spostare nella classe Formatter
+ * 
  * Il metodo restituisce gli stessi risultati di formatBytes()
  * Nota che le sigle Gb, Kb, Mb, dovrebbero essere GB, KB, MB
  */
@@ -390,17 +392,25 @@ public static function convertBytes($number){
 	if($len >= 7 && $len <=9){
 		return sprintf("%0.2f Mb", $number/1024/1024);
 	}
-	return sprintf("%0.2f Gb", $number/1024/1024/1024);
+	return sprintf("%0.2f Gb", $number/1024/1024/1024); // verificare se formatta in italiano, ad esempio 1.002,03
 }
+
+/**
+ * @deprecated: da spostare nella classe Formatter
+ */
 public static function formatBytes($bytes, $precision = 2) {
     $units = array('B', 'KB', 'MB', 'GB', 'TB');
     $bytes = max($bytes, 0);
     $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
     $pow = min($pow, count($units) - 1);
     $bytes /= pow(1024, $pow);
-    return round($bytes, $precision) . ' ' . $units[$pow];
+    $str = Formatter::formatFloatIt(round($bytes, $precision), $precision); 
+    return $str. ' ' . $units[$pow];
 }
 
+ /**
+ * @deprecated: da spostare nella classe Formatter
+ */
 public static function formatBytes2($file, $type) {
     switch($type){
         case "KB":
@@ -414,8 +424,10 @@ public static function formatBytes2($file, $type) {
         break;
     }
     if($filesize <= 0) {
-        return $filesize = 'unknown file size';}
-    else{return round($filesize, 2).' '.$type;}
+        return $filesize = 'unknown file size';
+    } else{
+    	return Formatter::formatFloatIt(round($filesize, 2), 2) . ' ' . $type;
+    }
 }
 
 public static function getTotFileSize($array){

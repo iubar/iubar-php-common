@@ -239,6 +239,12 @@ class Formatter extends BaseClass {
 		$str = date ( "l jS F \@ g:i a", $sec );
 		return $str;
 	}
+	
+	public static function formatFloatIt($number, $dec=0){
+		$number_format_it = number_format($number, $dec, ',', '.');
+		return $number_format_it;
+	}
+	
 	public static function formatBytes($yoursize) {
 		// $r = number_format($yoursize / 1024, 2, ',', '.')
 		$str = NULL;
