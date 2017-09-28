@@ -395,6 +395,26 @@ public static function convertBytes($number){
 	return sprintf("%0.2f Gb", $number/1024/1024/1024); // verificare se formatta in italiano, ad esempio 1.002,03
 }
 
+
+public static function toBytes($size, $type) {
+	$bytes = $size;
+	switch($type){
+		case "KB":
+			$bytes = $size * pow(10, 3);
+			break;
+		case "MB":
+			$bytes = $size * pow(10, 6);
+			break;
+		case "GB":
+			$bytes = $size * pow(10, 9);
+			break;
+		case "TB":
+			$bytes = $size * pow(10, 12);
+			break;
+	}
+	return $bytes;
+}
+
 /**
  * @deprecated: da spostare nella classe Formatter
  */
