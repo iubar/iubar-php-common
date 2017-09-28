@@ -400,16 +400,16 @@ public static function toBytes($size, $type) {
 	$bytes = $size;
 	switch($type){
 		case "KB":
-			$bytes = $size * pow(10, 3);
+			$bytes = $size * pow(1024, 1);
 			break;
 		case "MB":
-			$bytes = $size * pow(10, 6);
+			$bytes = $size * pow(1024, 2);
 			break;
 		case "GB":
-			$bytes = $size * pow(10, 9);
+			$bytes = $size * pow(1024, 3);
 			break;
 		case "TB":
-			$bytes = $size * pow(10, 12);
+			$bytes = $size * pow(1024, 4);
 			break;
 	}
 	return $bytes;
