@@ -3,8 +3,9 @@
 // http://php.net/manual/en/function.debug-print-backtrace.php
 // http://php.net/manual/en/function.debug-backtrace.php
 
+namespace Iubar\Misc;
 
-class StackTrace{
+class StackTrace {
 	
 	/**
 	 * Print out a stack trace from entry point to wherever this function was called.

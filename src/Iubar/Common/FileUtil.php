@@ -387,16 +387,16 @@ public static function convertBytes($number){
 		return sprintf("%d b", $number);
 	}
 	if($len >= 4 && $len <=6){
-		return sprintf("%0.2f Kb", $number/1024);
+		return sprintf("%0.2f Kb", $number/pow(1024, 1));
 	}
 	if($len >= 7 && $len <=9){
-		return sprintf("%0.2f Mb", $number/1024/1024);
+		return sprintf("%0.2f Mb", $number/pow(1024, 2));
 	}
-	return sprintf("%0.2f Gb", $number/1024/1024/1024); // verificare se formatta in italiano, ad esempio 1.002,03
+	return sprintf("%0.2f Gb", $number/pow(1024, 3)); // verificare se formatta in italiano, ad esempio 1.002,03
 }
 
 
-public static function toBytes($size, $type) {
+public static function toBytes($size, $type) { // https://blogs.gnome.org/cneumair/2008/09/30/1-kb-1024-bytes-no-1-kb-1000-bytes/
 	$bytes = $size;
 	switch($type){
 		case "KB":
@@ -432,16 +432,18 @@ public static function formatBytes($bytes, $precision = 2) {
  * @deprecated: da spostare nella classe Formatter
  */
 public static function formatBytes2($file, $type) {
+	$filesize = 0;
+	$size = filesize($file);
     switch($type){
         case "KB":
-            $filesize = filesize($file) * .0009765625; // bytes to KB
-        break;
+            $filesize =  $size / pow(1024, 1); // bytes to KB
+        	break;
         case "MB":
-            $filesize = (filesize($file) * .0009765625) * .0009765625; // bytes to MB
-        break;
+            $filesize = $size / pow(1024,2); // bytes to MB
+        	break;
         case "GB":
-            $filesize = ((filesize($file) * .0009765625) * .0009765625) * .0009765625; // bytes to GB
-        break;
+            $filesize = $size / pow(1024, 3); // bytes to GB
+        	break;
     }
     if($filesize <= 0) {
         return $filesize = 'unknown file size';
@@ -474,7 +476,6 @@ public static function dirSize($directory) {
     }
     return $size;
 }
-
 
 public static function appendToFile2($filename, $content){
 
