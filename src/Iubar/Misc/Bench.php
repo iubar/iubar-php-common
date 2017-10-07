@@ -22,8 +22,8 @@ public static function startTimer(string $timer_name){
 }
 
 public static function stopTimer(string $timer_name){
-	$end = microtime(true);
-	self::$array2[$timer_name] = $end;
+	$endtime = microtime(true);
+	self::$array2[$timer_name] = $endtime;
 	return self::getDiff($timer_name, $endtime);
 }
 

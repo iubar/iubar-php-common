@@ -15,6 +15,18 @@ class StringUtil {
 
 	const NL = "\r\n";
 
+	public static  function startsWith($haystack, $needle){
+		$length = strlen($needle);
+		return (substr($haystack, 0, $length) === $needle);
+	}
+	
+	public static  function endsWith($haystack, $needle){
+		$length = strlen($needle);
+		
+		return $length === 0 ||
+		(substr($haystack, -$length) === $needle);
+	}
+	
 	public static function getCharFromRight($char_pos, $string){
 		return substr($string, -$char_pos, 1);
 	}
