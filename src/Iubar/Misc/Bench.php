@@ -70,7 +70,7 @@ private static function microtimeToString($mtime){
 }
 
 private static function timeToString($unixtime){
-	$date = DateTime::createFromFormat('U.u', $unixtime);
+	$date = \DateTime::createFromFormat('U.u', $unixtime);
 	return $date->format("m-d-Y H:i:s");
 }
 

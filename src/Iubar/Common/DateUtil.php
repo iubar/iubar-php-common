@@ -434,18 +434,18 @@ public static function test_diff(){
 }
 
 public static function test_tz(){
-	$tz = new DateTimeZone("Europe/Rome");
+	$tz = new \DateTimeZone("Europe/Rome");
 	print_r($tz->getLocation());
 }
 
 public static function test_tz_2(){
 	date_default_timezone_set('Europe/Rome');
 
-	$datetime = new DateTime('2008-08-03 12:35:23');
+	$datetime = new \DateTime('2008-08-03 12:35:23');
 	echo $datetime->getTimezone()->getName() . "\n";
 
-	$datetime = new DateTime('2008-08-03 12:35:23');
-	$la_time = new DateTimeZone('America/Los_Angeles');
+	$datetime = new \DateTime('2008-08-03 12:35:23');
+	$la_time = new \DateTimeZone('America/Los_Angeles');
 	$datetime->setTimezone($la_time);
 	echo $datetime->getTimezone()->getName();
 }

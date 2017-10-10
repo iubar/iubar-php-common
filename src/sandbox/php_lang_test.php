@@ -1,6 +1,8 @@
 <?php
 
 
+use Iubar\Common\Validator;
+
 // TODO: settare prima il LOCALE
 
 charsetTest();
@@ -75,7 +77,7 @@ function test2(){
 	$handle = fopen ( $filename, "ru");
 	while ( ($data = fgetcsv ( $handle, 1000, "," )) !== FALSE ) {
 		$num = count ( $data );
-		echo "$num campi sulla linea $row" . CsvSql::NL;
+		echo "$num campi sulla linea $row" . PHP_EOL;
 		$row ++;
 		for($c = 0; $c < $num; $c ++) {
 			$str = $data [$c];

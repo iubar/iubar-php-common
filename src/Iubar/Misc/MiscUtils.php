@@ -6,8 +6,8 @@ use Psr\Log\LogLevel;
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\LineFormatter;
-use \Bramus\Monolog\Formatter\ColoredLineFormatter;
-use \Bramus\Monolog\Formatter\ColorSchemes\TrafficLight;
+use Bramus\Monolog\Formatter\ColoredLineFormatter;
+use Bramus\Monolog\Formatter\ColorSchemes\TrafficLight;
 
 class MiscUtils {
 

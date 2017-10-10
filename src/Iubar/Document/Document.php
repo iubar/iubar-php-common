@@ -3,6 +3,7 @@
 namespace Iubar\Document;
 
 use Iubar\Common\BaseClass;
+use Iubar\Common\StringUtil;
 
 class Document extends BaseClass{
 	
@@ -14,7 +15,7 @@ class Document extends BaseClass{
 	
 	public static function search_and_replace_once($file, $search, $replace){
 		$file_contents = file_get_contents($file);
-		$file_contents = StringUtils::replaceOnce2($search, $replace, $file_contents);
+		$file_contents = StringUtil::replaceOnce2($search, $replace, $file_contents);
 		file_put_contents($file, $file_contents);
 	}
 	

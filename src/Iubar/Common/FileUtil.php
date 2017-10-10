@@ -4,9 +4,11 @@ namespace Iubar\Common;
 
 // TODO: http://stackoverflow.com/questions/3321547/how-to-use-regexiterator-in-php
 
+use Psr\Log\LoggerInterface;
+
 class FileUtil {
 	
-	public function __construct(PsrLogLoggerInterface $logger){
+	public function __construct(LoggerInterface $logger){
 		$this->logger = $logger;
 	}	
 
@@ -47,7 +49,7 @@ public static function readFromFile($filename) {
 
 public static function deleteDir($dirPath) {
 	if (! is_dir($dirPath)) {
-		throw new InvalidArgumentException("$dirPath must be a directory");
+		throw new \InvalidArgumentException("$dirPath must be a directory");
 	}
 	if (substr($dirPath, strlen($dirPath) - 1, 1) != '/') {
 		$dirPath .= '/';
@@ -471,7 +473,7 @@ public static function getFileSize($filename){
 public static function dirSize($directory) {
 	// http://www.php.net/manual/en/book.spl.php Standard PHP Library (SPL)
     $size = 0;
-    foreach(new RecursiveIteratorIterator(new RecursiveDirectoryIterator($directory)) as $file){
+    foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory)) as $file){
         $size+=$file->getSize();
     }
     return $size;
@@ -748,8 +750,12 @@ public static function rrmdir($dir) {
      $objects = scandir($dir);
      foreach ($objects as $object) {
        if ($object != "." && $object != "..") {
-         if (filetype($dir."/".$object) == "dir") FileUtil::rrmdir($dir."/".$object); else unlink($dir."/".$object);
-       }
+         if (filetype($dir."/".$object) == "dir"){
+         		FileUtil::rrmdir($dir."/".$object);
+         	} else { 
+         		unlink($dir."/".$object); 
+         	}
+         }
      }
      reset($objects);
      rmdir($dir);
@@ -768,122 +774,7 @@ public static function array2string($array){
 	return $str;
 }
 
-/* 
-function smartcopy2($source, $dest){
-	if(is_dir($source) && is_dir($dest)){
-		$cp = new copyDir();
-
-		// set the directory to copy
-		if (!$cp->setCopyFromDir($source)) {
-			echo $cp->viewError();
-			echo "ERROR: smartcopy2() error 1" . StringUtil::NL;
-			die;
-		}
-		// set the directory to copy to
-		if (!$cp->setCopyToDir($dest)) {
-			echo $cp->viewError();
-			echo "ERROR: smartcopy2() error 2" . StringUtil::NL;
-			die;
-		}
-		$cp->copySubFolders(false); // include sub folders when copying
-		$cp->overWriteFiles(true); // overwrite existing files
-		if (!$cp->createCopy( true )) { // create a copy and recurse through sub folders
-			echo $cp->viewError();
-			echo "ERROR: smartcopy2() error 3" . StringUtil::NL;
-			die;
-		}
-	}else {
-
-		if (!copy($source, $dest)) {
-			echo "ERROR: failed to copy " . $file . StringUtil::NL;
-		}else{
-			echo "INFO: file " . $file . " copied to " . $temp_dest . StringUtil::NL;
-		}
-	}
-}
-
-*/
-
-
-/** 
-     * Copy file or folder from source to destination, it can do 
-     * recursive copy as well and is very smart 
-     * It recursively creates the dest file or directory path if there weren't exists
-      * Situtaions : 
-     * - Src:/home/test/file.txt ,Dst:/home/test/b ,Result:/home/test/b -> If source was file copy file.txt name with b as name to destination
-      * - Src:/home/test/file.txt ,Dst:/home/test/b/ ,Result:/home/test/b/file.txt -> If source was file Creates b directory if does not exsits and copy file.txt into it
-      * - Src:/home/test ,Dst:/home/ ,Result:/home/test/** -> If source was directory copy test directory and all of its content into dest     
-      * - Src:/home/test/ ,Dst:/home/ ,Result:/home/**-> if source was direcotry copy its content to dest
-      * - Src:/home/test ,Dst:/home/test2 ,Result:/home/test2/** -> if source was directoy copy it and its content to dest with test2 as name
-      * - Src:/home/test/ ,Dst:/home/test2 ,Result:->/home/test2/** if source was directoy copy it and its content to dest with test2 as name
-      * @todo 
-     *     - Should have rollback technique so it can undo the copy when it wasn't successful
-      *  - Auto destination technique should be possible to turn off 
-     *  - Supporting callback function 
-     *  - May prevent some issues on shared enviroments : http://us3.php.net/umask
-      * @param $source //file or folder 
-     * @param $dest ///file or folder 
-     * @param $options //folderPermission,filePermission 
-     * @return boolean 
-     */ 
-	 
-    public static function smartCopy($source, $dest, $options=array('folderPermission'=>0755, 'filePermission'=>0755)){ 
-        $result=false; 
-        
-		// echo "DEBUG: smartCopy( " . $source . " , " . $dest . ")" . "\r\n";
-        if (is_file($source)) { 
-            if ($dest[strlen($dest)-1]=='/') { 
-                if (!file_exists($dest)) { 
-                    cmfcDirectory::makeAll($dest,$options['folderPermission'], true);
-                 } 
-                $__dest=$dest."/".basename($source); 
-            } else { 
-                $__dest=$dest; 
-            } 
-            $result=copy($source, $__dest); 
-            chmod($__dest,$options['filePermission']); 
-            
-        } else if(is_dir($source)) { 
-            if ($dest[strlen($dest)-1]=='/') { 
-                if ($source[strlen($source)-1]=='/') { 
-                    //Copy only contents 
-                } else { 
-                    //Change parent itself and its contents 
-                    $dest=$dest.basename($source); 
-                    mkdir($dest); 
-                    chmod($dest,$options['filePermission']); 
-                } 
-            } else { 
-                if ($source[strlen($source)-1]=='/') { 
-                    //Copy parent directory with new name and all its content 
-                    mkdir($dest,$options['folderPermission']); 
-                    chmod($dest,$options['filePermission']); 
-                } else { 
-                    //Copy parent directory with new name and all its content 
-                    @mkdir($dest,$options['folderPermission']); 
-                    chmod($dest,$options['filePermission']); 
-                } 
-            } 
-
-            $dirHandle=opendir($source); 
-            while($file=readdir($dirHandle)) { 
-                if($file!="." && $file!="..") { 
-                     if(!is_dir($source."/".$file)) { 
-                        $__dest=$dest."/".$file; 
-                    } else { 
-                        $__dest=$dest."/".$file; 
-                    } 
-                    //echo "$source/$file ||| $__dest<br />"; 
-                    $result = FileUtil::smartCopy($source."/".$file, $__dest, $options); 
-                } 
-            } 
-            closedir($dirHandle); 
-            
-        } else { 
-            $result=false; 
-        } 
-        return $result; 
-    } 
+  
 
 	
 /**
@@ -896,8 +787,6 @@ function smartcopy2($source, $dest){
  * @param       string   $dest      Destination path
  * @return      bool     Returns TRUE on success, FALSE on failure
  */
-
- 
  public static function copyr($source, $dest) {
     // Check for symlinks
     if (is_link($source)) {
