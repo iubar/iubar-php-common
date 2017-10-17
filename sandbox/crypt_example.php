@@ -1,4 +1,7 @@
 <?php
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
 use Iubar\Crypt\AesEcbPkcs5Padding;
 use Iubar\Crypt\AesCbcNoPadding;
 
@@ -9,7 +12,6 @@ error_reporting(E_ERROR | E_PARSE);
 // https://it.wikipedia.org/wiki/Modalit%C3%A0_di_funzionamento_dei_cifrari_a_blocchi
 // https://github.com/keel/aes-cross
 
-require_once __DIR__ . '/../../../vendor/autoload.php';
 
 
 // include_once("AesEcbPkcs5Padding.php");

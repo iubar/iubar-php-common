@@ -5,6 +5,7 @@ namespace Iubar\Crypt;
 abstract class AesBase {
 
 	public $key = null;
+	
 	private $sig_delimiter = ':';
 
 	abstract public function encrypt($plaintext, $iv);

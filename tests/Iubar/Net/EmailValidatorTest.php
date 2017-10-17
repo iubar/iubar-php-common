@@ -1,8 +1,11 @@
 <?php
 
+namespace Iubar\Tests\Net;
+
+use PHPUnit\Framework\TestCase;
 use Iubar\Net\EmailValidator;
 
-class EmailValidatorTest extends \PHPUnit_Framework_TestCase {
+class EmailValidatorTest extends TestCase {
 
 	public function testEmailValidator(){
 		$email1 = "pippo@iubar.it";

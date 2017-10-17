@@ -1,14 +1,13 @@
 <?php
 
-namespace Iubar\Web;
+namespace Iubar\Tests\Web;
 
+use PHPUnit\Framework\TestCase;
 use Iubar\Web\WebUtil;
 
-require_once(__DIR__ . "/../../../../vendor/autoload.php");
-
-class WebUtilTest {
+class WebUtilTest extends TestCase {
 	
-	public static function demo(){
+	public function test1() {
 		$pageToCheck = "http://www.iubar.it";
 		$page_url = "http://www.iubar.it";
 		$image_url = "http://www.iubar.it/tools/mailinglist/img/pollo.jpg";
@@ -40,28 +39,28 @@ class WebUtilTest {
 					
 	}
 	
+
+public function test2() {
+
+	if(false){
+	$txt_content = "Pippo e pluto vanno al <img src=\"http://www.iubar.it\">ok</img> ciao ciao";
+	$links = WebUtil::extractLinks($txt_content);
+	print_r($links);
+	}
+	
+	
+	$url = "http://www.iubar.it/tools/mailinglist/img/logo_iubar.png";
+	$ok = WebUtil::check_url2($url);
+	echo PHP_EOL . PHP_EOL;
+	if(!$ok){
+		$msg = "ERROR: broken link detected: " . $url;
+		echo $msg . PHP_EOL;
+	}else{
+		$msg = "OK: " . $url;
+		echo $msg . PHP_EOL;
+	}
+	
+	}
+
 } // end class
-
-
-//$demo = new WebUtilTest();
-//$demo->demo();
-
-if(false){
-$txt_content = "Pippo e pluto vanno al <img src=\"http://www.iubar.it\">ok</img> ciao ciao";
-$links = WebUtil::extractLinks($txt_content);
-print_r($links);
-}
-
-
-$url = "http://www.iubar.it/tools/mailinglist/img/logo_iubar.png";
-$ok = WebUtil::check_url2($url);
-echo PHP_EOL . PHP_EOL;
-if(!$ok){
-	$msg = "ERROR: broken link detected: " . $url;
-	echo $msg . PHP_EOL;
-}else{
-	$msg = "OK: " . $url;
-	echo $msg . PHP_EOL;
-}
-
 						

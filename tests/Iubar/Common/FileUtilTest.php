@@ -1,9 +1,9 @@
 <?php
 
-use Iubar\Common\FileUtil;
+namespace Iubar\Tests\Common;
 
-$inc = __DIR__ . "/../../../../vendor/autoload.php";
-require_once($inc);
+use PHPUnit\Framework\TestCase;
+use Iubar\Common\FileUtil;
 
 $target_path = "C:/Users/Borgo/workspace_php/php/php_iubar_builder/resources/pagheopen/jar";
 $files1 = FileUtil::getFilesInPath($target_path, $ext = "", false);

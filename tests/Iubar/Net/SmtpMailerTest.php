@@ -1,14 +1,15 @@
 <?php
 
-namespace Iubar\Net;
+namespace Iubar\Tests\Net;
 
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
 use Iubar\Net\SmtpMailer;
 use Iubar\Misc\MiscUtils;
+use Iubar\Misc\Bench;
 use Iubar\Common\LangUtil;
 use Iubar\Common\ConsoleUtil;
 use Iubar\Common\FileUtil;
-use Ubench;
 
 // == Common SMTP responses and what they mean ==
 
@@ -22,7 +23,7 @@ use Ubench;
 
 ///////////////////////////////// FUNCTIONS
 
-class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
+class SmtpMailerTest extends TestCase {
 
 	// MANDRILL
 	private static $mandrill_api_key = "";
@@ -112,7 +113,7 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 
 // 	public function testAruba(){ // Aruba
 // 		$bench_name = 'testAruba';
-// 		$bench = $this->startBench($bench_name);
+// 		Bench::startTimer($bench_name);
 // 		$m = $this->factorySmtpMailer('aruba');
 // 		$m->subject = "TEST ARUBA";
 // 		$m->smtp_usr = "info@iubar.it";
@@ -128,7 +129,7 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 
 	public function testArubaSsl(){ // Aruba Ssl
 	    $bench_name = 'testArubassl';
-	    $bench = $this->startBench($bench_name);
+	    Bench::startTimer($bench_name);
 	    $m = $this->factorySmtpMailer('aruba');
 	    $m->subject = "TEST ARUBA";
 	    $m->smtp_usr = "info@iubar.it";
@@ -138,28 +139,15 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 	    }
 	    $m->smtp_ssl = true;
 	    $result = $m->send();
-	    $this->stopBench($bench, $bench_name);
+	    echo Bench::stopTimer($bench_name, true) . PHP_EOL;
 	    $this->assertEquals(1, $result);
 	}
 
-// 	public function testGmail(){ // GMAIL
-// 		$bench_name = 'testGmail';
-// 		$bench = $this->startBench($bench_name);
-// 		$m = $this->factorySmtpMailer('gmail');
-// 		$m->subject = "TEST GMAIL";
-// 		$m->smtp_usr = "borgogelli@iubar.it";
-// 		$m->smtp_pwd = self::$gmail_password;
-//     	if (!$m->smtp_pwd) {
-//     	    $this->markTestSkipped('Credentials for GMail are not available.');
-//     	}
-// 		$result = $m->send();
-// 		$this->stopBench($bench, $bench_name);
-// 		$this->assertEquals(1, $result);
-// 	}
+ 
 
 // 	public function testMandrill(){ // Mandril
 // 		$bench_name = 'testMandrill';
-// 		$bench = $this->startBench($bench_name);
+// 		Bench::startTimer($bench_name);
 // 		$m = $this->factorySmtpMailer('mandrill');
 // 		$m->smtp_usr  = "info@iubar.it";
 // 		$m->smtp_pwd = self::$mandrill_api_key;
@@ -169,13 +157,13 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 // 		$m->smtp_port = 587;
 // 		$m->subject = "TEST MANDRILL";
 // 		$result = $m->send();
-// 		$this->stopBench($bench, $bench_name);
+// 		echo Bench::stopTimer($bench_name, true) . PHP_EOL;
 // 		$this->assertEquals(1, $result);
 // 	}
 
 	public function testMailgun(){ // Mailgun
 		$bench_name = 'testMailgun';
-		$bench = $this->startBench($bench_name);
+		Bench::startTimer($bench_name);
 		$m = $this->factorySmtpMailer('mailgun');
 		$m->subject = "TEST MAILGUN";
 		$m->smtp_usr  = "postmaster@" . $this->getDomain($m->getFrom());
@@ -184,13 +172,13 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 		    $this->markTestSkipped('Credentials for Mailgun are not available.');
 		}
 		$result = $m->send();
-		$this->stopBench($bench, $bench_name);
+		echo Bench::stopTimer($bench_name, true) . PHP_EOL;
 		$this->assertEquals(1, $result);
 	}
 
 	public function testSendGrid(){ // SendGrid
 		$bench_name = 'testSendGrid';
-		$bench = $this->startBench($bench_name);
+		Bench::startTimer($bench_name);
 		$m = $this->factorySmtpMailer('sendgrid');
 		$m->subject = "TEST SENDGRID";
 		$m->smtp_usr = "iubar"; // utente registrato con indirizzo info@iubar.it
@@ -199,13 +187,13 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 		    $this->markTestSkipped('Credentials for SendGrid are not available.');
 		}
 		$result = $m->send();
-		$this->stopBench($bench, $bench_name);
+		echo Bench::stopTimer($bench_name, true) . PHP_EOL;
 		$this->assertEquals(1, $result);
 	}
 
 	public function testMailJet(){ // MailJet
 		$bench_name = 'testMailJet';
-		$bench = $this->startBench($bench_name);
+		Bench::startTimer($bench_name);
 		$m = $this->factorySmtpMailer('mailjet');
 		$m->subject = "TEST MAILJET";
 		$m->smtp_usr = self::$mailjet_api_key;
@@ -214,13 +202,13 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 		    $this->markTestSkipped('Credentials for MailJet are not available.');
 		}
 		$result = $m->send();
-		$this->stopBench($bench, $bench_name);
+		echo Bench::stopTimer($bench_name, true) . PHP_EOL;
 		$this->assertEquals(1, $result);
 	}
 
 // 	public function testSparkPost(){ // SparkPost
 // 		$bench_name = 'testSparkPost';
-// 		$bench = $this->startBench($bench_name);
+// 	Bench::startTimer($bench_name);
 // 		$m = $this->factorySmtpMailer('sparkpost');
 // 		$m->subject = "TEST SPARKPOST";
 // 		$m->smtp_usr = "SMTP_Injection"; // utente registrato con indirizzo info@iubar.it
@@ -229,7 +217,7 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 //     	    $this->markTestSkipped('Credentials for SparkPost are not available.');
 //     	}
 // 		$result = $m->send();
-// 		$this->stopBench($bench, $bench_name);
+// 	echo Bench::stopTimer($bench_name, true) . PHP_EOL;
 // 		$this->assertEquals(1, $result);
 // 	}
 
@@ -250,29 +238,7 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 		$m->body_html = "<h2>Questo è un <b>test</b></h2>";
 		return $m;
 	}
-
-	private function startBench($str, $log = true){
-		if ($log){
-			echo 'Start bench ' . $str . PHP_EOL;
-		}
-		$bench = new Ubench;
-		$bench->start();
-
-		return $bench;
-	}
-
-	private function stopBench(Ubench $bench, $str, $log = true){
-		$bench->end();
-		if ($log){
-			echo 'Stop bench ' . $str . PHP_EOL;
-			echo 'Elapsed time: ' . $bench->getTime() . PHP_EOL;
-			echo 'Memory peak: ' . $bench->getMemoryPeak() . PHP_EOL;
-			echo 'Memory usage: ' . $bench->getMemoryUsage() . PHP_EOL;
-
-			echo '--------' . PHP_EOL;
-		}
-	}
-
+ 
 	private function interactive(){
 
 		// Di seguito non è previsto il test SSL (non interessa)
@@ -314,7 +280,7 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 		echo $msg . PHP_EOL;
 
 		$bench_name = 'send';
-		$bench = $this->startBench($bench_name);
+		Bench::startTimer($bench_name);
 
 		$m = SmtpMailer::factory($provider);
 
@@ -362,8 +328,7 @@ class SmtpMailerTest extends \PHPUnit_Framework_TestCase {
 		$m->body_html = "<h2>Questo è un <b>test</b></h2>";
 		$m->enableAgentLogger(true);
 		$result = $m->send();
-		$this->stopBench($bench, $bench_name);
-
+		echo Bench::stopTimer($bench_name, true) . PHP_EOL;
 		return $result;
 
 	}

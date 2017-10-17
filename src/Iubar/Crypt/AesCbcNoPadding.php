@@ -4,6 +4,9 @@ namespace Iubar\Crypt;
 
 // Implementa l'algoritmo "AES/CBC/NoPadding"
 
+use Iubar\Crypt\AesBase;
+use Iubar\Crypt\AesInterface;
+
 class AesCbcNoPadding extends AesBase implements AesInterface {
 
 	public function __construct($key){

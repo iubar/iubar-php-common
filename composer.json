@@ -17,21 +17,20 @@
 		"monolog/monolog" : "*",
 		"bramus/monolog-colored-line-formatter" : "~2.0",
 		"swiftmailer/swiftmailer" : "*",
-		"devster/ubench" : "*",
-		"league/climate" : "*"
+		"league/climate" : "3.2.1",
+		"goodby/csv" : "*"
+	},
+	"require-dev" : {
+		"phpunit/phpunit" : "6.4.1"
 	},
 	"autoload" : {
-		"psr-0" : {
-			"Iubar" : "src/"
-		},
 		"psr-4" : {
-			"Iubar\\Common\\" : "src/Iubar/Common/",
-			"Iubar\\Document\\" : "src/Iubar/Document/",
-			"Iubar\\Misc\\" : "src/Iubar/Misc/",
-			"Iubar\\Web\\" : "src/Iubar/Web/",
-			"Iubar\\System\\" : "src/Iubar/System/",
-			"Iubar\\Net\\" : "src/Iubar/Net/",
-			"Iubar\\Twig\\" : "src/Iubar/Twig/"
+			"Iubar\\" : "src/Iubar/"
+		}
+	},
+	"autoload-dev" : {
+		"psr-4" : {
+			"Iubar\\Tests\\" : "tests/Iubar/"
 		}
 	}
 }
