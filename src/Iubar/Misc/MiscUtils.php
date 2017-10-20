@@ -103,7 +103,7 @@ class MiscUtils {
 		return $error;
 	}
 
-	private static function logInfo($logger, $error, $log_file, $log_to_shell){
+	private static function logInfo(Logger $logger, $error, $log_file, $log_to_shell){
 		$NO_HANDLER = "All log handlers are disabled: you should choose between screen or file logging";
 		if($error!=""){
 			if(!$log_to_shell){
@@ -123,8 +123,9 @@ class MiscUtils {
 		}
 	}
 
-	public static function logToShell($logger, $log_level){
+	public static function logToShell(Logger $logger, $log_level){
 		$handler = new StreamHandler('php://stdout', $log_level);
+		// const SIMPLE_FORMAT = "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n";
 		$format = "%channel%.%level_name%: %message% %context% %extra%" . PHP_EOL;
 		$colorScheme = null;
 		// $dateFormat = 'Y-m-d H:i:s';
@@ -202,5 +203,17 @@ class MiscUtils {
 		return mb_convert_encoding($content, 'UTF-8',
 				mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
 	}
+
+	public static function setLoggerLevelForAllHandlers(Logger $logger, $level=null){
+		$handlers = $logger->getHandlers();
+		foreach ($handlers as $handler) {
+			if(!$level){
+				$level = LogLevel::DEBUG;
+			}
+			$handler->setLevel($level);
+		}
+	}
+
+
 
 } // end class
