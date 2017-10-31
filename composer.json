@@ -13,6 +13,7 @@
 		}
 	],
 	"require" : {
+		"php": ">=7.0",
 		"psr/log" : "1.0.0",
 		"monolog/monolog" : "*",
 		"bramus/monolog-colored-line-formatter" : "~2.0",
