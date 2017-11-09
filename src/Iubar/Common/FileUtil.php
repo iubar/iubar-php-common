@@ -589,9 +589,11 @@ public static function createFile($file){
 	fclose($handle);
 }
 
-public static function writeToFileUtf8($filename, $content){
+public static function writeToFileUtf8($filename, $content, $bom=false){
 	$fh = fopen($filename, 'wb+') or die("can't open file");
-	FileUtil::writeUtf8Header($fh);
+	if($bom){
+		FileUtil::writeUtf8Header($fh);
+	}
 	fwrite($fh, utf8_encode($content));
 	fclose($fh);
 }
@@ -605,7 +607,7 @@ public static function writeToFileUtf8($filename, $content){
 // }
 
 public static function writeToFileUtf8_2($filename, $content){
-	file_put_contents($filename, "\xEF\xBB\xBF".  $content);
+	file_put_contents($filename, "\xEF\xBB\xBF".  $content); // The BOM is three bytes in UTF-8, but it's still a single Unicode codepoint ("\uFEFF")
 }
 
 //////////////////////////////////////////////////////// REMOVE TREE
