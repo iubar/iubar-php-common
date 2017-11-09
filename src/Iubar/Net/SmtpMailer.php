@@ -9,6 +9,7 @@ use Iubar\Net\EmailProviders\MailjetProvider;
 use Iubar\Net\EmailProviders\MandrillProvider;
 use Iubar\Net\EmailProviders\SendgridProvider;
 use Iubar\Net\EmailProviders\SparkpostProvider;
+use Iubar\Net\EmailProviders\AmazonSesProvider;
 
 class SmtpMailer {
 	
@@ -40,6 +41,9 @@ class SmtpMailer {
 			case 'sparkpost':
 				$provider = new SparkpostProvider();
 				break;
+			case 'amazonses':
+				$provider = new AmazonSesProvider();
+				break;
 			default:
 				throw new \Exception('Provider not supported: ' . $provider_name);
 				break;				
@@ -56,5 +60,4 @@ class SmtpMailer {
 		return $domain;
 	}
 	
-} // end class
-?>
+}

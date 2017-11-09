@@ -5,6 +5,15 @@ namespace Iubar\Common;
 use Iubar\Common\LangUtil;
 use League\CLImate\CLImate;
 
+/**
+ * Alternative 
+ * https://symfony.com/doc/current/components/console/helpers/questionhelper.html
+ * https://github.com/thephpleague/climate
+ * 
+ * @deprecated
+ * @author Borgo
+ *
+ */
 class ConsoleUtil {
 	
 public static function getUserFolderPath($win=true){ // Only for WINDOWS

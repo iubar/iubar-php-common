@@ -18,6 +18,7 @@ namespace Iubar\Net;
 
 // Casi di test: http://markonphp.com/properly-validate-email-address-php/#sol2
 
+// Email List Hygiene: https://www.xverify.com
 class EmailValidator {
 
 	public function validate($email, $check_mx=true, $check_mailbox=false){
@@ -76,6 +77,8 @@ class EmailValidator {
     							if(substr( $rcpt_text, 0, 3) == "250"){
     								$b_server_found=1;
     								$is_valid = true;
+    							}else{
+    								// TODO: log the error
     							}
 
     							// quit mail server connection
@@ -106,10 +109,16 @@ class EmailValidator {
     	for($i=0;$i<2;$i++)
     		$s.=fgets($fp, 1024);
 
-    		return $s;
+    	return $s;
     }
 
+    
+    // http://php.net/manual/en/function.levenshtein.php
+    // http://php.net/manual/en/function.similar-text.php
+    
+    
 }
+
 
 
 // Support windows platforms. Only for PHP < 5.3
