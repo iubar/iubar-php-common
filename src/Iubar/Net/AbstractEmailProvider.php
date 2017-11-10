@@ -28,6 +28,7 @@ abstract class AbstractEmailProvider {
 	public $body_html = null;
 	public $attachments = array(); // ie: array('/path/to/image.jpg'=>'image/jpeg');
 	public $from_array = array();
+	public $reply_to_array = array();
 
 	private $agent_logger_enabled = false;
 	private $logger = null;
@@ -132,9 +133,9 @@ abstract class AbstractEmailProvider {
 		if($this->logger){
 			$this->logger->log($level, $msg);
 		}
-		
+
 		// In alternativa al codice seguente configurare lo StreamHandler di Monolog con il ColoredLineFormatter
-// 		if($this->log_to_console){			
+// 		if($this->log_to_console){
 // 			echo '[' . get_class($this) . '] ' . LoggingUtil::psrLeveltoString($level) . ": " . $msg . PHP_EOL;
 // 		}
 	}
@@ -142,7 +143,7 @@ abstract class AbstractEmailProvider {
 // 	public function setLogToConsole($b){
 // 		$this->log_to_console = $b;
 // 	}
-	
+
 	public function setLogger($logger){
 		$this->logger = $logger;
 	}
@@ -163,6 +164,19 @@ abstract class AbstractEmailProvider {
 				$this->from_array[$email] = $name;
 			}else{
 				$this->from_array[] = $email;
+			}
+		}
+	}
+
+	public function setReplyTo($email, $name=""){
+		if(is_array($email)){
+			// in questa situazione il valore di $name viene ignorato
+			$this->reply_to_array = $email;
+		}else{
+			if($name){
+				$this->reply_to_array[$email] = $name;
+			}else{
+				$this->reply_to_array[] = $email;
 			}
 		}
 	}
@@ -214,6 +228,7 @@ abstract class AbstractEmailProvider {
 		// Deafult Character Set is UTF8 (http://swiftmailer.org/docs/messages.html)
 		$message = (new \Swift_Message($this->subject))
 		->setFrom($this->from_array) 				// From: addresses specify who actually wrote the email
+		->setReplyTo($this->reply_to_array)
 		->setTo($this->to_array);
 		// ->setBcc(array('some@address.tld' => 'The Name'))
 		// ->setSender('your@address.tld') 			// Sender: address specifies who sent the message
