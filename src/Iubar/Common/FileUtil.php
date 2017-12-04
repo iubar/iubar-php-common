@@ -517,7 +517,7 @@ public static function appendToFile($file, $content){
 	}
 }
 
-public static function createUtf8File($filename){
+public static function createUtf8File($filename, $bom=false){
 	if (!file_exists($filename)) {
 		
 		$path_parts = pathinfo($filename);
@@ -530,7 +530,9 @@ public static function createUtf8File($filename){
 		$handle = fopen($filename, 'wb+');
 		//echo "Output file does not exist: creating $filename\r\n";
 		if ($handle) {
-			self::writeUtf8Header($handle);
+			if($bom){
+				self::writeUtf8Header($handle);
+			}
 			fclose($handle);
 		}
 	}
@@ -590,21 +592,16 @@ public static function createFile($file){
 }
 
 public static function writeToFileUtf8($filename, $content, $bom=false){
-	$fh = fopen($filename, 'wb+') or die("can't open file");
-	if($bom){
-		FileUtil::writeUtf8Header($fh);
+	$handle = fopen($filename, 'wb+') or die("can't open file");
+	if($handle){
+		if($bom){
+			FileUtil::writeUtf8Header($handle);
+		}
+		fwrite($handle, utf8_encode($content));
+		fclose($handle);
 	}
-	fwrite($fh, utf8_encode($content));
-	fclose($fh);
 }
 
-// public static function createFileUtf8($path, $content = ''){ // TODO: verificare differenza con writeToFileUtf8()
-// 	$file=fopen($filename, "w");
-// 	# Now UTF-8 - Add byte order mark
-// 	fwrite($file, pack("CCC", 0xef,0xbb,0xbf)); // Pack data into binary string
-// 	fwrite($file, $content);
-// 	fclose($file);
-// }
 
 public static function writeToFileUtf8_2($filename, $content){
 	file_put_contents($filename, "\xEF\xBB\xBF".  $content); // The BOM is three bytes in UTF-8, but it's still a single Unicode codepoint ("\uFEFF")

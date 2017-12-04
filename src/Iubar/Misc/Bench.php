@@ -3,28 +3,29 @@ namespace Iubar\Misc;
 
 class Bench {
 
-	private static $array = array();
+	private static $array = array(); // start times
 
-	private static $array2 = array();
+	private static $array2 = array(); // stop times
 
 	public static $debug = false;
 
 	public static function startTimer(string $timer_name) {
 		$starttime = microtime(true);
 		self::$array[$timer_name] = $starttime;
+		self::$array2[$timer_name] = 0;
 		if (self::$debug) {
 			// http://php.net/manual/en/function.debug-backtrace.php
 			$backtrace = debug_backtrace();
 			$calling_method = $backtrace[1]["function"];
 			echo $calling_method . " : has been started at " . $starttime . ' (unix timestamp)' . PHP_EOL;
-			echo $calling_method . " : has been started at " . self::timeToString($starttime) . PHP_EOL;
+			echo $calling_method . " : has been started at " . self::timeToString($starttime, new \DateTimeZone('Europe/Rome')) . PHP_EOL;
 		}
 	}
 
 	public static function stopTimer(string $timer_name, $verbose = false) {
 		$endtime = microtime(true);
 		self::$array2[$timer_name] = $endtime;
-		$str = self::getDiff($timer_name, $endtime);
+		$str = self::getDiffAsString($timer_name, $endtime);
 		if($verbose){
 			$str = "[" . $timer_name . "]" . " elapsed time: " . $str;
 		}
@@ -39,37 +40,78 @@ class Bench {
 	 */
 	public static function getElapsedTimeAsString(string $timer_name) {
 		$now = microtime(true);
+		return self::getDiffAsString($timer_name, $now);
+	}
+	
+	public static function getElapsedTime(string $timer_name) {
+		$now = microtime(true);
 		return self::getDiff($timer_name, $now);
 	}
+	
 
 	/**
 	 * Returns time elapsed from start to stop
 	 */
 	public static function getTotalExecutionTimeAsString(string $timer_name) {
 		$end = self::$array2[$timer_name];
+		return self::getDiffAsString($timer_name, $end);
+	}
+	
+	public static function getTotalExecutionTime(string $timer_name) {
+		$end = self::$array2[$timer_name];
 		return self::getDiff($timer_name, $end);
 	}
-
-	private static function getDiff(string $timer_name, $endtime) {
+	
+	private static function getDiffAsString(string $timer_name, $endtime) {
 		$str = null;
-		$starttime = self::$array[$timer_name];
-		if ($starttime) {
-			$diff = $endtime - $starttime;
+		$diff = self::getDiff($timer_name, $endtime);
 			if (self::$debug) {
 				$backtrace = debug_backtrace();
 				$calling_method = $backtrace[1]["function"];
 				echo "[" . $timer_name . "]" . $calling_method . " elapsed time (unix timestamp): " . $diff . PHP_EOL;
 			}
-			$str = self::microtimeToString($diff);
+			if($diff!==null){
+				$str = self::microtimeToString($diff);
+			}
+ 		return $str;
+	}
+	
+	private static function getDiff(string $timer_name, $endtime) {
+		$diff = null;
+		$starttime = self::$array[$timer_name];
+		if ($starttime) {
+			$diff = $endtime - $starttime;
 		}
-		return $str;
+		return $diff;
 	}
 
-	private static function microtimeToString($mtime) {
-		list ($sec, $usec) = explode('.', $mtime);
-		$usec_rounded = round("0." . $usec, 4); // aggiungo lo zero per poter poi arrotondare il numero, altrimenti non potrei arrotondare un numero del tipo "0001"
-		$usec_formatted_wo_zero = str_replace("0.", "", $usec_rounded);
-		$str = date('H:i:s', $sec) . ',' . $usec_formatted_wo_zero;
+	/**
+	 * Nota che $mtime rappresenta i secondi perchè è valorizzato con la funzione microtime(true)
+	 * @see http://php.net/manual/en/function.microtime.php
+	 * @see http://php.net/manual/en/datetime.createfromformat.php
+	 * 
+	 * @param unknown $mtime
+	 * @param string $format
+	 * @return unknown
+	 */
+	public static function microtimeToString($mtime, $format='Y-m-d H:i:s.u') {
+		$str = null;
+		//echo "MTIME " . $mtime . PHP_EOL;
+// 		if($mtime==0){
+// 			$mtime = '0.0';
+// 		}
+// 		list($sec,$ms) = explode(".", $mtime);
+ 		$utc = new \DateTimeZone("UTC");
+ 		
+ 		// Format explained:
+ 		// U: Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT)	Example: 1292177455
+ 		// u: Microseconds (up to six digits)	Example: 45, 654321
+ 		// Note that the U option does not support negative timestamps (before 1970). You have to use date for that.
+ 		// Note "u" can only parse microseconds up to 6 digits, but some language (like Go) return more than 6 digits for the microseconds, e.g.: "2017-07-25T15:50:42.456430712+02:00" (when turning time.Time to JSON with json.Marshal()). 
+ 		// Currently there is no other solution than using a separate parsing library to get correct dates. 		 	
+		$d = \DateTime::createFromFormat('U.u', number_format($mtime, 6, '.', ''), $utc);
+		$d->setTimezone($utc);
+		$str = $d->format($format);
 		return $str;
 	}
 
