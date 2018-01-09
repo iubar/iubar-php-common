@@ -13,7 +13,6 @@ use Goodby\CSV\Export\Standard\CsvFileObject;
 use Iubar\Common\StringUtil;
 use Iubar\Common\BaseClass;
 
-
 // USAGE of the Goodby\CSV classes 
 // $lexer = new Lexer(new LexerConfig());
 // $interpreter = new Interpreter();

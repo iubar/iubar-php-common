@@ -117,11 +117,13 @@ abstract class AbstractEmailProvider {
 				}
 			}catch(\Swift_TransportException $e){
 				// Il messaggio non è stato inviato
-				$this->log(LogLevel::ERROR, $e->getMessage());
-				throw new \Exception('Impossibile inviare il messaggio, problema di servizio');
+				$error = $e->getMessage();
+				$this->log(LogLevel::ERROR, $error);
+				throw new \Exception('Impossibile inviare il messaggio, errore di servizio: ' . $error);
 			}catch(\Exception $e){
-				$this->log(LogLevel::ERROR, $e->getMessage());
-				throw new \Exception('Impossibile inviare il messaggio, errore sconosciuto');
+				$error = $e->getMessage();
+				$this->log(LogLevel::ERROR, $error);
+				throw new \Exception('Impossibile inviare il messaggio, errore sconosciuto: ' . $error);
 			}
 
 		}
