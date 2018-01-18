@@ -2,7 +2,6 @@
 
 namespace Iubar\Tests\Common;
 
-use PHPUnit\Framework\TestCase;
 use Iubar\Common\FileUtil;
 
 $target_path = "C:/Users/Borgo/workspace_php/php/php_iubar_builder/resources/pagheopen/jar";
