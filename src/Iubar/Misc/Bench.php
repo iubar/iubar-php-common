@@ -8,6 +8,8 @@ class Bench {
 	private static $array2 = array();
  // stop times
 	public static $debug = false;
+	
+	public static $def_format = 'H:i:s.u'; // oppure 'Y-m-d H:i:s.u'
 
 	public static function startTimer(string $timer_name) {
 		$starttime = microtime(true);
@@ -61,8 +63,11 @@ class Bench {
 		return self::getDiff($timer_name, $end);
 	}
 
-	private static function getDiffAsString(string $timer_name, $endtime) {
+	private static function getDiffAsString(string $timer_name, $endtime, $format = null) {
 		$str = null;
+		if(!$format){
+			$format = self::$def_format;
+		}
 		$diff = self::getDiff($timer_name, $endtime);
 		if (self::$debug) {
 			$backtrace = debug_backtrace();
@@ -70,7 +75,7 @@ class Bench {
 			echo "[" . $timer_name . "]" . $calling_method . " elapsed time (unix timestamp): " . $diff . PHP_EOL;
 		}
 		if ($diff !== null) {
-			$str = self::microtimeToString($diff);
+			$str = self::microtimeToString($diff, $format);
 		}
 		return $str;
 	}
@@ -94,7 +99,7 @@ class Bench {
 	 * @param string $format
 	 * @return unknown
 	 */
-	public static function microtimeToString($mtime, $format = 'Y-m-d H:i:s.u') {
+	public static function microtimeToString($mtime, $format) {
 		$str = null;
 		// echo "MTIME " . $mtime . PHP_EOL;
 		// if($mtime==0){
