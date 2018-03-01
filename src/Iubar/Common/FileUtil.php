@@ -65,6 +65,15 @@ public static function deleteDir($dirPath) {
 	rmdir($dirPath);
 }
 
+/**
+ * 
+ * 
+ * 
+ * @param unknown $target_path
+ * @param string $ext è l'estensione SENZA IL PUNTO
+ * @param boolean $recursive
+ * @return \RecursiveIteratorIterator[]|\FilesystemIterator[]
+ */
 public static function getFilesInPath($target_path, $ext = "", $recursive=true){
 	
 	// TODO: scrivere un metodo analogo che accetta anche come parametro un pattern 

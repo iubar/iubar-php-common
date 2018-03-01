@@ -114,9 +114,9 @@ class Bench {
 		// Note that the U option does not support negative timestamps (before 1970). You have to use date for that.
 		// Note "u" can only parse microseconds up to 6 digits, but some language (like Go) return more than 6 digits for the microseconds, e.g.: "2017-07-25T15:50:42.456430712+02:00" (when turning time.Time to JSON with json.Marshal()).
 		// Currently there is no other solution than using a separate parsing library to get correct dates.
-		$d = \DateTime::createFromFormat('U.u', number_format($mtime, 6, '.', ''), $utc);
-		$d->setTimezone($utc);
-		$str = $d->format($format);
+		$dt = \DateTime::createFromFormat('U.u', number_format($mtime, 6, '.', ''), $utc);
+		$dt->setTimezone($utc);
+		$str = $dt->format($format);
 		return $str;
 	}
 
@@ -130,9 +130,9 @@ class Bench {
 	 *      RFC850 = "l, d-M-y H:i:s T"
 	 */
 	private static function timeToString($unixtime, \DateTimeZone $tz) {
-		$date = \DateTime::createFromFormat('U.u', $unixtime);
-		$date->setTimezone($tz);
-		return $date->format(\DateTime::RFC850); // This method does not use locales. All output is in English.
+		$dt = \DateTime::createFromFormat('U.u', $unixtime);
+		$dt->setTimezone($tz);
+		return $dt->format(\DateTime::RFC850); // This method does not use locales. All output is in English.
 	}
 
 	public static function getStartTimeAsString(string $timer_name, \DateTimeZone $tz = null) {
@@ -150,6 +150,17 @@ class Bench {
 		$unixtime = self::$array2[$timer_name];
 		return self::timeToString($unixtime, $tz);
 	}
+	
+	public static function getNowAsString(\DateTimeZone $tz = null) {
+		if ($tz == null) {
+			$tz = new \DateTimeZone('Europe/Rome');
+		}
+		$dt = new \DateTime();
+		$dt->setTimezone($tz);
+		return $dt->format(\DateTime::RFC850);
+	}
+	
+	
 }
 
 
