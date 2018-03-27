@@ -32,6 +32,7 @@
 			<file>./tests/Iubar/Crypt/AesEcbPkcs5PaddingTest.php</file>
 			<file>./tests/Iubar/Net/SmtpMailerTest.php</file>
 			<file>./tests/Iubar/Net/EmailValidatorTest.php</file>
+			<file>./tests/Iubar/Common/FileUtilTest.php</file>
 		</testsuite>
 				
 		<!-- <testsuite name="All Tests"> -->
