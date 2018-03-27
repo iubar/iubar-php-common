@@ -1,6 +1,6 @@
 <?php
 
-namespace Iubar\Document;
+namespace Iubar\Excel;
 
 use Goodby\CSV\Import\Standard\Lexer;
 use Goodby\CSV\Import\Standard\Interpreter;
@@ -12,7 +12,6 @@ use Goodby\CSV\Export\Standard\Collection\CallbackCollection;
 use Goodby\CSV\Export\Standard\CsvFileObject;
 use Iubar\Common\StringUtil;
 use Iubar\Common\BaseClass;
-
 
 // USAGE of the Goodby\CSV classes 
 // $lexer = new Lexer(new LexerConfig());
@@ -29,6 +28,7 @@ class GoodbyCsvUtil extends BaseClass {
 	private $enclosure = "\"";
 	private $file = NULL;
 	private $columns = array();
+	private static $MAX_LEN = 50000;
 	
 	public function __construct(){
 		parent::__construct();
@@ -85,9 +85,28 @@ class GoodbyCsvUtil extends BaseClass {
 	}
 	
 	public function initColumnsName(){
-		$columns = array();
-		$columns = CsvUtil::get_csv_header($this->file, $this->delimiter, $this->enclosure);					
-		$this->columns = $columns;
+		$this->columns = $this->get_csv_header();	
+	}
+	
+	public function get_csv_header(){
+		$row = 0;
+		$handle = fopen ($this->file, "r");
+		if ($handle !== FALSE) {
+			//$size = filesize($filename) + 1;
+			while (($data = fgetcsv($handle, self::$MAX_LEN, $this->delimiter, $this->enclosure)) !== FALSE) {
+				if($row==0){
+					return $data;
+					//$dump[$row] = $data;
+					//echo $data[1] . $BR;
+				}else{
+					//echo "skipped " . $data[1] . $BR;
+					break;
+				}
+				$row++;
+			}
+			fclose($handle);
+		}
+		return null;
 	}
 
 	public function exportToSql($tablename, $from_row=0){

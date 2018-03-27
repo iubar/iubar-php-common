@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Iubar\Tests\Crypt;
 
-use PHPUnit\Framework\TestCase;
 use Iubar\Common\FileUtil;
 
 class FileUtilTest extends TestCase {
