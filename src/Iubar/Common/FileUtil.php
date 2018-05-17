@@ -1086,16 +1086,16 @@ public static function get_disks(){
 	}
 }
 	
-	public static function countFolders($folder){
+	public static function getSubfolders($folder){
 		$dir = new \DirectoryIterator($folder);
-		$counter = 0;
+		$folders = [];
 		foreach ($dir as $fileinfo) {
 			if ($fileinfo->isDir() && !$fileinfo->isDot()) {
-				$counter++;
+				$folders[] = $fileinfo->getBasename();
 			}
 		}
 		
-		return $counter;
+		return $folders;
 	}
 
 public static function decodeSize($bytes){
