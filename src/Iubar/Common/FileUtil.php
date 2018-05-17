@@ -1085,6 +1085,18 @@ public static function get_disks(){
 		return $disks;
 	}
 }
+	
+	public static function countFolders($folder){
+		$dir = new \DirectoryIterator($folder);
+		$counter = 0;
+		foreach ($dir as $fileinfo) {
+			if ($fileinfo->isDir() && !$fileinfo->isDot()) {
+				$counter++;
+			}
+		}
+		
+		return $counter;
+	}
 
 public static function decodeSize($bytes){
 	$types = array( 'B', 'KB', 'MB', 'GB', 'TB' );
