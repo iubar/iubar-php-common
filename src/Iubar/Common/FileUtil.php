@@ -1085,6 +1085,18 @@ public static function get_disks(){
 		return $disks;
 	}
 }
+	
+	public static function getSubfolders($folder){
+		$dir = new \DirectoryIterator($folder);
+		$folders = [];
+		foreach ($dir as $fileinfo) {
+			if ($fileinfo->isDir() && !$fileinfo->isDot()) {
+				$folders[] = $fileinfo->getBasename();
+			}
+		}
+		
+		return $folders;
+	}
 
 public static function decodeSize($bytes){
 	$types = array( 'B', 'KB', 'MB', 'GB', 'TB' );

@@ -13,7 +13,7 @@
 		}
 	],
 	"require" : {
-		"psr/log" : "1.0.0",
+		"psr/log": "~1.0.2",
 		"monolog/monolog" : "*",
 		"bramus/monolog-colored-line-formatter" : "~2.0",
 		"swiftmailer/swiftmailer" : "*",

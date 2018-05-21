@@ -143,7 +143,7 @@ class SmtpMailerTest extends TestCase {
 	    $this->assertEquals(1, $result);
 	}
 
- 
+
 
 // 	public function testMandrill(){ // Mandril
 // 		$bench_name = 'testMandrill';
@@ -161,20 +161,20 @@ class SmtpMailerTest extends TestCase {
 // 		$this->assertEquals(1, $result);
 // 	}
 
-	public function testMailgun(){ // Mailgun
-		$bench_name = 'testMailgun';
-		Bench::startTimer($bench_name);
-		$m = $this->factorySmtpMailer('mailgun');
-		$m->subject = "TEST MAILGUN";
-		$m->smtp_usr  = "postmaster@" . $this->getDomain($m->getFrom());
-		$m->smtp_pwd = self::$mailgun_password;
-		if (!$m->smtp_pwd) {
-		    $this->markTestSkipped('Credentials for Mailgun are not available.');
-		}
-		$result = $m->send();
-		echo Bench::stopTimer($bench_name, true) . PHP_EOL;
-		$this->assertEquals(1, $result);
-	}
+// 	public function testMailgun(){ // Mailgun
+// 		$bench_name = 'testMailgun';
+// 		Bench::startTimer($bench_name);
+// 		$m = $this->factorySmtpMailer('mailgun');
+// 		$m->subject = "TEST MAILGUN";
+// 		$m->smtp_usr  = "postmaster@" . $this->getDomain($m->getFrom());
+// 		$m->smtp_pwd = self::$mailgun_password;
+// 		if (!$m->smtp_pwd) {
+// 		    $this->markTestSkipped('Credentials for Mailgun are not available.');
+// 		}
+// 		$result = $m->send();
+// 		echo Bench::stopTimer($bench_name, true) . PHP_EOL;
+// 		$this->assertEquals(1, $result);
+// 	}
 
 	public function testSendGrid(){ // SendGrid
 		$bench_name = 'testSendGrid';
@@ -238,7 +238,7 @@ class SmtpMailerTest extends TestCase {
 		$m->body_html = "<h2>Questo è un <b>test</b></h2>";
 		return $m;
 	}
- 
+
 	private function interactive(){
 
 		// Di seguito non è previsto il test SSL (non interessa)
