@@ -4,6 +4,20 @@ namespace Iubar\Common;
 
 class LangUtil {
 	
+	/**
+	 * 
+	 * ie: $a = array(1,2,array(3,4, array(5,6,7), 8), 9);
+	 * 
+	 * @return \Iubar\Common\RecursiveIteratorIterator[]
+	 */
+	public static function array_flat(array $array){
+		$flat_array = array();		
+		$it = new \RecursiveIteratorIterator(new \RecursiveArrayIterator($array));
+		foreach($it as $v) {
+			$flat_array[] = $v;
+		}
+		return $flat_array;
+	}
 	
 	public static function getScriptPath(){
 		$fullpath = $argv[0];
