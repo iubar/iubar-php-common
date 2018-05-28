@@ -1,5 +1,8 @@
 <?php
 
+//  @see https://stackoverflow.com/questions/3321547/how-to-use-regexiterator-in-php?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
+
+
 function demo0(){
     // Create recursive dir iterator which skips dot folders
     $dir = new RecursiveDirectoryIterator('./system/information',
