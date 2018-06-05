@@ -935,14 +935,14 @@ public static function searchFileByPattern($path, $regex){
 	$result = array();
 	$directory = new \RecursiveDirectoryIterator($path);
 	$flattened = new \RecursiveIteratorIterator($directory);
-	$files = new \RegexIterator($flattened, $regex); // esempio "/^.*\.(jpg|jpeg|png|gif)$/i"
+	$files = new \RegexIterator($flattened, $regex); // esempio '/^.*\.(jpg|jpeg|png|gif)$/i'
 	foreach($files as $file) {
 		$result[] = $file;
 	}
 	return $result;
 }
 
-public static function getFileByPattern($path='.', $regex=''){ // $regex example '/^.(php|dat)$/' oppure /^.+\.php$/i
+public static function getFileByPattern($path='.', $regex=''){ // $regex example '/^.*\.(php|dat)$/' oppure /^.+\.php$/i
 	$iterator = new \RecursiveDirectoryIterator($path);
 	$filter = new \RegexIterator($iterator->getChildren(), $regex);
 	// 	$filelist = array();
@@ -1104,7 +1104,7 @@ public static function decodeSize($bytes){
 	return( round( $bytes, 2 ) . " " . $types[$i] );
 }
 
-public static function getLastFileByPattern($path='.', $pattern=''){  // FIXME: il flag case-unsentive (/i) sembra non funzionare. Ad esempio FileUtil::getLastFileByPattern(__DIR__, '/^.*.php$/i'); 
+public static function getLastFileByPattern($path='.', $pattern=''){  // FIXME: il flag case-unsentive (/i) sembra non funzionare. Ad esempio FileUtil::getLastFileByPattern(__DIR__, '/^.*\.php$/i'); 
 	$last_file = null;
 	$iterator = self::getFileByPattern($path, $pattern);
 	print_r($iterator);
