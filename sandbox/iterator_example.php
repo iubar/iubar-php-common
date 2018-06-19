@@ -67,7 +67,7 @@ function demo2(){
 
 ////////////////////////////////////////////////////////////////////////
 
-abstract class FilesystemRegexFilter extends RecursiveRegexIterator {
+abstract class FilesystemRegexFilter extends \RecursiveRegexIterator {
     protected $regex;
     public function __construct(RecursiveIterator $it, $regex) {
         $this->regex = $regex;
@@ -113,12 +113,37 @@ function demo3(){
     
 }
 ///////////////////
+ function getFileByPattern($path='.', $regex=''){ // $regex example '/^.*\.(php|dat)$/' oppure /^.+\.php$/i
+	$iterator = new \RecursiveDirectoryIterator($path);
+	$filter = new \RegexIterator($iterator->getChildren(), $regex);
+		$filelist = array();
+		foreach($filter as $entry) {
+			$filelist[] = $entry->getFilename();
+		}
+		return $filelist;
+}
 
-
- 
+ function searchFileByPattern($path, $regex){
+	$result = array();
+	$directory = new \RecursiveDirectoryIterator($path);
+	$flattened = new \RecursiveIteratorIterator($directory);
+	$files = new \RegexIterator($flattened, $regex); // esempio '/^.*\.(jpg|jpeg|png|gif)$/i'
+	foreach($files as $file) {
+		$result[] = $file;
+	}
+	return $result;
+}
 
 // demo3();
 
 
 // $files = FileUtil::searchFileByPattern("C:/Users/Borgo/iubar/paghe/install/windows/nsi/db/update/sql", "/Update_Db_(Paghe|Addizionali|Anag|Fisco)_da_015500_a_015600\.sql/");
+
+$path = 'C:\Users\Borgo\iubar\paghe\db\sql\install';
+$regex = "/Get(.*)\.sql/i";
+$regex = "/Db(.*)\.sql/i";
+echo $path . PHP_EOL;
+echo $regex . PHP_EOL;
+ 
+$files = getFileByPattern($path, $regex);
 print_r($files);
