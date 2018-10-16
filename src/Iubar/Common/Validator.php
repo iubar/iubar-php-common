@@ -305,19 +305,21 @@ class Validator extends BaseClass {
 				return false;
 			}
 			// Loop through each char
-			for ( $i = 0; $i < count($s); $i++ ) {
-				if ( substr($s, $i, 1) == '(' ) {
-					// Increase the open count
-					$open++;
-					echo "Open $open \n";
-				} else if ( substr($s, $i, 1) == ')' ) {
-					// If open goes below zero, there's an invalid closing paren
-					if ( $open < 0 ) {
-						return false;
+			if (is_array($s)){
+				for ( $i = 0; $i < count($s); $i++ ) {
+					if ( substr($s, $i, 1) == '(' ) {
+						// Increase the open count
+						$open++;
+						echo "Open $open \n";
+					} else if ( substr($s, $i, 1) == ')' ) {
+						// If open goes below zero, there's an invalid closing paren
+						if ( $open < 0 ) {
+							return false;
+						}
+						// Decrease the open count
+						$open--;
+						echo "Closed $open \n";
 					}
-					// Decrease the open count
-					$open--;
-					echo "Closed $open \n";
 				}
 			}
 			
