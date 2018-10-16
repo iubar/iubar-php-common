@@ -11,5 +11,13 @@ class ArrayUtils {
 			return $default;
 		}
 	}
+
+	public static function removeValue(array $array, $del_value){
+		if (($key = array_search($del_value, $array)) !== false) {
+			unset($arrays[$key]);
+		}
+		return $array;
+	}
+	
 	
 }
