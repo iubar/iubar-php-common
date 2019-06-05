@@ -100,6 +100,9 @@ class Bench {
 	 * @return unknown
 	 */
 	public static function microtimeToString($mtime, $format) {
+		if(!$mtime){
+		  return "<undefined micro time>";
+		}		
 		$str = null;
 		// echo "MTIME " . $mtime . PHP_EOL;
 		// if($mtime==0){
@@ -130,6 +133,9 @@ class Bench {
 	 *      RFC850 = "l, d-M-y H:i:s T"
 	 */
 	private static function timeToString($unixtime, \DateTimeZone $tz) {
+		if(!$unixtime){
+		  return "<undefined time>";
+		}
 		$dt = \DateTime::createFromFormat('U.u', $unixtime);
 		$dt->setTimezone($tz);
 		return $dt->format(\DateTime::RFC850); // This method does not use locales. All output is in English.

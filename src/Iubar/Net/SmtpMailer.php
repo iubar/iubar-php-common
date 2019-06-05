@@ -11,6 +11,23 @@ use Iubar\Net\EmailProviders\SendgridProvider;
 use Iubar\Net\EmailProviders\SparkpostProvider;
 use Iubar\Net\EmailProviders\AmazonSesProvider;
 
+/**
+ * Usage:
+ * 
+ * $mailer = SmtpMailer::factory('amazonses');
+ * $mailer->smtp_usr = ...;
+ * $mailer->smtp_pwd = ...;
+ * $mailer->setFrom($config['from']);
+ * $mailer->setTo($config['to']);
+ * $mailer->setLogger($logger); 		
+ * $mailer->setSubject("...");
+ * $mailer->setBodyHtml("...");		
+ * $numSent = $mailer->send();
+ *		
+ * 
+ * @author Borgo
+ *
+ */
 class SmtpMailer {
 	
 	public static function factoryDefault(){

@@ -69,7 +69,7 @@ public static function deleteDir($dirPath) {
  * 
  * 
  * 
- * @param unknown $target_path
+ * @param string $target_path
  * @param string $ext è l'estensione SENZA IL PUNTO
  * @param boolean $recursive
  * @return \RecursiveIteratorIterator[]|\FilesystemIterator[]
@@ -549,8 +549,8 @@ public static function createUtf8File($filename, $bom=false){
 
 /** @Deprecated
  * 
- * @param unknown $filename
- * @param unknown $content
+ * @param string $filename
+ * @param string $content
  */
 public static function appendToFileUtf8($filename, $content){
 	// Let's make sure the file exists and is writable first.
@@ -933,16 +933,22 @@ public static function checkIsWritable($path){
 
 public static function searchFileByPattern($path, $regex){
 	$result = array();
-	$directory = new \RecursiveDirectoryIterator($path);
-	$flattened = new \RecursiveIteratorIterator($directory);
-	$files = new \RegexIterator($flattened, $regex); // esempio "/^.*\.(jpg|jpeg|png|gif)$/i"
+	$iterator = new \RecursiveDirectoryIterator($path);
+	$flattened = new \RecursiveIteratorIterator($iterator);
+	$files = new \RegexIterator($flattened, $regex); // esempio '/^.*\.(jpg|jpeg|png|gif)$/i'
 	foreach($files as $file) {
 		$result[] = $file;
 	}
 	return $result;
 }
 
-public static function getFileByPattern($path='.', $regex=''){ // $regex example '/^.(php|dat)$/' oppure /^.+\.php$/i
+/**
+ * @deprecated ho dubbi sulla reale validità del metodo con le ultime versioni di PHP. Forse sarebbe meglio usare searchFileByPattern()
+ * @param string $path
+ * @param string $regex
+ * @return \RegexIterator
+ */
+public static function getFileByPattern($path='.', $regex=''){ // $regex example '/^.*\.(php|dat)$/' oppure /^.+\.php$/i
 	$iterator = new \RecursiveDirectoryIterator($path);
 	$filter = new \RegexIterator($iterator->getChildren(), $regex);
 	// 	$filelist = array();
@@ -1085,6 +1091,18 @@ public static function get_disks(){
 		return $disks;
 	}
 }
+	
+	public static function getSubfolders($folder){
+		$dir = new \DirectoryIterator($folder);
+		$folders = [];
+		foreach ($dir as $fileinfo) {
+			if ($fileinfo->isDir() && !$fileinfo->isDot()) {
+				$folders[] = $fileinfo->getBasename();
+			}
+		}
+		
+		return $folders;
+	}
 
 public static function decodeSize($bytes){
 	$types = array( 'B', 'KB', 'MB', 'GB', 'TB' );
@@ -1092,7 +1110,7 @@ public static function decodeSize($bytes){
 	return( round( $bytes, 2 ) . " " . $types[$i] );
 }
 
-public static function getLastFileByPattern($path='.', $pattern=''){  // FIXME: il flag case-unsentive (/i) sembra non funzionare. Ad esempio FileUtil::getLastFileByPattern(__DIR__, '/^.*.php$/i'); 
+public static function getLastFileByPattern($path='.', $pattern=''){  
 	$last_file = null;
 	$iterator = self::getFileByPattern($path, $pattern);
 	print_r($iterator);

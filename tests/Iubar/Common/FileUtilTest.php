@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace Iubar\Tests\Crypt;
 
 use Iubar\Common\FileUtil;
+use PHPUnit\Framework\TestCase;
 
 class FileUtilTest extends TestCase {
 
-	const REGEX_SQL = "/update_db_(.*)\\.sql/i";
+	const REGEX_SQL = "/update_db_(.*)\.sql/i";
 
 	public function testGetFileByPattern1(){
 		$dir = __DIR__ . DIRECTORY_SEPARATOR . 'emtpy-dir';
