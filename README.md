@@ -1,5 +1,5 @@
 # iubar-php-common
-Php Common Lib
+Php Common Lib for Iubar
 
 
 The original code can be found in PHP-ExcelReader by Vadim Tkachenko 
