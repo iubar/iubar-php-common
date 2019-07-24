@@ -1,6 +1,6 @@
 language: php
 php:
-- 5.5
+- 7.2
 env:
   global:
     # - APP_HOST="iubar.it"
