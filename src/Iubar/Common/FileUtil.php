@@ -642,7 +642,7 @@ public static function unlinkRecursive($dir, $deleteRootToo=true){
     closedir($dh);
 
     if ($deleteRootToo){
-        rmdir($dir);
+        self::rrmdir($dir);
     }
 
     return;
@@ -659,7 +659,7 @@ public static function delTree($dir) {
 		}
 	}
     if (is_dir($dir)){
-    	rmdir( $dir );
+    	self::rrmdir( $dir );
     }
 }
 
@@ -690,7 +690,7 @@ public static function deleteAll($directory, $empty = false) { // $empty==false 
         closedir($directoryHandle);
 
         if($empty == false) {
-            if(!rmdir($directory)) {
+            if(!self::rrmdir($directory)) {
                 return false;
             }
         }
@@ -727,7 +727,7 @@ public static function destroyDir($dir, $only_content=true) {
 			if(is_dir($dir . $file)) {
 				chdir('.');
 				FileUtil::destroyDir($dir.$file);
-				FileUtil::rmdir($dir.$file) or DIE("rmdir command: warning, couldn't delete " . $dir . $file . "\r\n");
+				FileUtil::rrmdir($dir.$file) or DIE("rmdir command: warning, couldn't delete " . $dir . $file . "\r\n");
 				$array[] = $dir.$file;
 			}else{
 				unlink($dir.$file) or DIE("unlink command: warning, couldn't delete " . $dir . $file . "\r\n");
@@ -740,7 +740,7 @@ public static function destroyDir($dir, $only_content=true) {
 	if(!$only_content){
 		//chown($dir, 666); //Insert an Invalid UserId to set to Nobody Owern; 666 is my standard for "Nobody"
 		chmod($dir, 0777);
-		FileUtil::rmdir($dir);
+		FileUtil::rrmdir($dir);
 		$array[] = $dir;
 	}
 	}else{
@@ -767,7 +767,7 @@ public static function rrmdir($dir) {
          }
      }
      reset($objects);
-     rmdir($dir);
+     self::rrmdir($dir);
    }
  }
 

@@ -25,33 +25,12 @@ use Iubar\Common\FileUtil;
 
 class SmtpMailerTest extends TestCase {
 
-	// MANDRILL
-	private static $mandrill_api_key = "";
-	// https://bitbucket.org/mailchimp/mandrill-api-php
-	// Api doc: https://mandrillapp.com/api/docs/index.php.html
-
-	// MAILGUN
-	private static $mailgun_api_key = "";	// FIXME: non utilizzato
-	private static $mailgun_password = "";
-	// Api base url: "https://api.mailgun.net/v3/" . $mailgun_domain;
 
 	// ARUBA
 	private static $aruba_password = "";
 
 	// GMAIL
 	private static $gmail_password = "";
-
-	// MAILJET
-	private static $mailjet_api_key = ""; 		// smtp username
-	private static $mailjet_secret_key = ""; 	// smtp password
-	// 	https://github.com/mailjet/mailjet-apiv3-php
-	// 	https://github.com/mailjet/mailjet-apiv3-php-simple
-
-	// SENDGRID
-	private static $sendgrid_password = "";
-
-	// SPARKPOST
-	private static $sparkpost_password = "";
 
 	public static function setUpBeforeClass() : void {
 
@@ -85,28 +64,14 @@ class SmtpMailerTest extends TestCase {
 
 		    echo "Loading config from enviroment vars..." . PHP_EOL;
 
-    		self::$mailgun_api_key 		= getenv('mailgun_api_key');
-    		self::$mailgun_password 	= getenv('mailgun_password');
     		self::$aruba_password 		= getenv('aruba_password');
-    		self::$mailjet_api_key 		= getenv('mailjet_api_key');
-    		self::$mailjet_secret_key 	= getenv('mailjet_secret_key');
-    		self::$sendgrid_password 	= getenv('sendgrid_password');
-    		self::$sparkpost_password 	= getenv('sparkpost_password');
 
 		}else{
 
 		    echo "Loading config from file..." . PHP_EOL;
 
     		$ini_array = parse_ini_file($ini_file);
-    		self::$mandrill_api_key 	= $ini_array['mandrill_api_key'];
-    		self::$mailgun_api_key 		= $ini_array['mailgun_api_key'];
-    		self::$mailgun_password 	= $ini_array['mailgun_password'];
     		self::$aruba_password 		= $ini_array['aruba_password'];
-    		self::$gmail_password 		= $ini_array['gmail_password'];
-    		self::$mailjet_api_key 		= $ini_array['mailjet_api_key'];
-    		self::$mailjet_secret_key 	= $ini_array['mailjet_secret_key'];
-    		self::$sendgrid_password 	= $ini_array['sendgrid_password'];
-    		self::$sparkpost_password 	= $ini_array['sparkpost_password'];
 		}
 	}
 
@@ -143,83 +108,6 @@ class SmtpMailerTest extends TestCase {
 	    $this->assertEquals(1, $result);
 	}
 
-
-
-// 	public function testMandrill(){ // Mandril
-// 		$bench_name = 'testMandrill';
-// 		Bench::startTimer($bench_name);
-// 		$m = $this->factorySmtpMailer('mandrill');
-// 		$m->smtp_usr  = "info@iubar.it";
-// 		$m->smtp_pwd = self::$mandrill_api_key;
-//     	if ($m->smtp_pwd) {
-//     	    $this->markTestSkipped('Credentials for mANDRILL are not available.');
-//     	}
-// 		$m->smtp_port = 587;
-// 		$m->subject = "TEST MANDRILL";
-// 		$result = $m->send();
-// 		echo Bench::stopTimer($bench_name, true) . PHP_EOL;
-// 		$this->assertEquals(1, $result);
-// 	}
-
-// 	public function testMailgun(){ // Mailgun
-// 		$bench_name = 'testMailgun';
-// 		Bench::startTimer($bench_name);
-// 		$m = $this->factorySmtpMailer('mailgun');
-// 		$m->subject = "TEST MAILGUN";
-// 		$m->smtp_usr  = "postmaster@" . $this->getDomain($m->getFrom());
-// 		$m->smtp_pwd = self::$mailgun_password;
-// 		if (!$m->smtp_pwd) {
-// 		    $this->markTestSkipped('Credentials for Mailgun are not available.');
-// 		}
-// 		$result = $m->send();
-// 		echo Bench::stopTimer($bench_name, true) . PHP_EOL;
-// 		$this->assertEquals(1, $result);
-// 	}
-
-	public function testSendGrid(){ // SendGrid
-		$bench_name = 'testSendGrid';
-		Bench::startTimer($bench_name);
-		$m = $this->factorySmtpMailer('sendgrid');
-		$m->subject = "TEST SENDGRID";
-		$m->smtp_usr = "iubar"; // utente registrato con indirizzo info@iubar.it
-		$m->smtp_pwd = self::$sendgrid_password;
-		if (!$m->smtp_pwd) {
-		    $this->markTestSkipped('Credentials for SendGrid are not available.');
-		}
-		$result = $m->send();
-		echo Bench::stopTimer($bench_name, true) . PHP_EOL;
-		$this->assertEquals(1, $result);
-	}
-
-	public function testMailJet(){ // MailJet
-		$bench_name = 'testMailJet';
-		Bench::startTimer($bench_name);
-		$m = $this->factorySmtpMailer('mailjet');
-		$m->subject = "TEST MAILJET";
-		$m->smtp_usr = self::$mailjet_api_key;
-		$m->smtp_pwd = self::$mailjet_secret_key;
-		if (!$m->smtp_pwd) {
-		    $this->markTestSkipped('Credentials for MailJet are not available.');
-		}
-		$result = $m->send();
-		echo Bench::stopTimer($bench_name, true) . PHP_EOL;
-		$this->assertEquals(1, $result);
-	}
-
-// 	public function testSparkPost(){ // SparkPost
-// 		$bench_name = 'testSparkPost';
-// 	Bench::startTimer($bench_name);
-// 		$m = $this->factorySmtpMailer('sparkpost');
-// 		$m->subject = "TEST SPARKPOST";
-// 		$m->smtp_usr = "SMTP_Injection"; // utente registrato con indirizzo info@iubar.it
-// 		$m->smtp_pwd = self::$sparkpost_password;
-//     	if (!$m->smtp_pwd) {
-//     	    $this->markTestSkipped('Credentials for SparkPost are not available.');
-//     	}
-// 		$result = $m->send();
-// 	echo Bench::stopTimer($bench_name, true) . PHP_EOL;
-// 		$this->assertEquals(1, $result);
-// 	}
 
 	private function factorySmtpMailer($type){
 
@@ -285,26 +173,6 @@ class SmtpMailerTest extends TestCase {
 		$m = SmtpMailer::factory($provider);
 
 		switch ($provider) {
-		    case "mandrill":
-		        $m->smtp_usr  = "info@iubar.it";
-				$m->smtp_pwd = self::$mandrill_api_key;
-		        break;
-		    case "mailjet":
-				$m->smtp_usr = self::$mailjet_api_key;
-				$m->smtp_pwd = self::$mailjet_secret_key;
-		        break;
-	        case "mailgun":
-	        	$m->smtp_usr  = "postmaster@" . $domain;
-				$m->smtp_pwd = self::$mailgun_password;
-	        	break;
-		    case "sendgrid":
-				$m->smtp_usr = "iubar"; // utente registrato con indirizzo info@iubar.it
-				$m->smtp_pwd = self::$sendgrid_password;
-		        break;
-	        case "sparkpost":
-	        	$m->smtp_usr = "SMTP_Injection"; // utente registrato con indirizzo info@iubar.it
-	        	$m->smtp_pwd = self::$sparkpost_password;
-	        	break;
 	        case "aruba":
 				$m->smtp_usr = "info@iubar.it";
 				$m->smtp_pwd = self::$aruba_password;
@@ -333,18 +201,6 @@ class SmtpMailerTest extends TestCase {
 
 	}
 
-	private function getDomain($from_array){
-	    // Recupero il nome di dominio dall'indirizzo email del mittente
-	    $from_email = null;
-	    if(LangUtil::isAnAssociativeArray($from_array)){
-	        reset($from_array);
-	        $from_email = key($from_array);
-	    }else{
-	        $from_email = $from_array[0];
-	    }
-	    $domain = SmtpMailer::getDomainFromEmail($from_email);
-	    return $domain;
-	}
 
 }
 

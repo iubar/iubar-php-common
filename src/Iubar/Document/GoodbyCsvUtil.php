@@ -109,15 +109,15 @@ class GoodbyCsvUtil extends BaseClass {
 		return null;
 	}
 
-	public function exportToSql($tablename, $from_row=0){
+	public function exportToSql($tableName, $from_row=0){
 		$data = array();
 		$columns = $this->columns;
 		$n = 0;
 		$interpreter = new Interpreter();
 		// $pdo->query('CREATE TABLE IF NOT EXISTS user (id INT, `name` VARCHAR(255), email VARCHAR(255))');
-		$interpreter->addObserver(function(array $values) use (&$data, $columns, $from_row, &$n) {
+		$interpreter->addObserver(function(array $values) use (&$data, $columns, $from_row, $tableName, &$n) {
 			if($n>=$from_row){
-				$query = "INSERT INTO " . $tablename . " (" . StringUtil::toCsv($columns) . ") VALUES (" . StringUtil::toCsv($values, "NULL") .")";
+				$query = "INSERT INTO " . $tableName . " (" . StringUtil::toCsv($columns) . ") VALUES (" . StringUtil::toCsv($values, "NULL") .")";
 				$this->logDebug("Query is " . $query);
 				$data[] = $query;
 			}
@@ -127,12 +127,12 @@ class GoodbyCsvUtil extends BaseClass {
 		return $data;
 	}
 		
-	public function importoToDb($pdo, $tablename, $test=false){	
+	public function importoToDb($pdo, $tableName, $test=false){	
 		$columns = $this->columns;
 		$interpreter = new Interpreter();
 		// $pdo->query('CREATE TABLE IF NOT EXISTS user (id INT, `name` VARCHAR(255), email VARCHAR(255))');
-		$interpreter->addObserver(function(array $values) use ($pdo, $columns) {
-			$query = "INSERT INTO " . $tablename . " (" . StringUtil::toCsv($columns) . ') VALUES (' . StringUtil::repeatString("?, ", count($columns)-1) . "?)";
+		$interpreter->addObserver(function(array $values) use ($pdo, $columns, $tableName, $test) {
+			$query = "INSERT INTO " . $tableName . " (" . StringUtil::toCsv($columns) . ') VALUES (' . StringUtil::repeatString("?, ", count($columns)-1) . "?)";
 			$this->logDebug("Query is " . $query);
 			if(!$test){
 				$stmt = $pdo->prepare($query);

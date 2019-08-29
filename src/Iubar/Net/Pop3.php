@@ -174,7 +174,7 @@ class Pop3 {
 {
             $prefix = ($prefix == "0") ? "" : "$prefix.";
             foreach ($part->parts as $number => $subpart)
-                $attachments = array_merge($attachments, mail_get_parts($imap, $mid, $subpart, $prefix . ($number + 1)));
+                $attachments = array_merge($attachments, $this->mail_get_parts($imap, $mid, $subpart, $prefix . ($number + 1)));
         }
         return $attachments;
     }

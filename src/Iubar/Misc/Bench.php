@@ -121,8 +121,6 @@ class Bench {
 
 	/**
 	 *
-	 * @param unknown $unixtime
-	 * @return unknown
 	 *
 	 * @see http://php.net/manual/it/function.date.php
 	 * @see http://php.net/manual/en/class.datetime.php RFC822 = "D, d M y H:i:s O"
