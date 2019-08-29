@@ -11,7 +11,7 @@ class AesEcbPkcs5PaddingTest extends TestCase {
 
 	private static $config = [];
 
-	public static function setUpBeforeClass(){
+	public static function setUpBeforeClass() : void {
 		$config_file = __DIR__ . DIRECTORY_SEPARATOR . 'config.php';
 		if(!is_file($config_file)){
 			die("Config not found: " . $config_file . PHP_EOL);
