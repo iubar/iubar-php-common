@@ -19,11 +19,13 @@ class HostingUtil extends BaseClass {
 	public $www_fiscoopen_it;
 	public $www_fiscoopen_it2;
 	
-	public $friend_ips = NULL;
+    public $friend_ips = NULL;
+    
+    
 
 	public function __construct(){
 		parent::__construct();
-		$this->friend_ips = array($iubar_lan, $iubar_wan, $iubar_it, $www_iubar_it, $pagheopen_it, $www_pagheopen_it, $www_pagheopen_it_out);	
+		$this->friend_ips = array($this->iubar_lan, $this->iubar_wan, $this->iubar_it, $this->www_iubar_it, $this->pagheopen_it, $this->www_pagheopen_it, $this->www_pagheopen_it_out);	
 	}
 
 	public function isIpAuthorized(){

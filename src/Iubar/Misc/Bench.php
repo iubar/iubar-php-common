@@ -94,10 +94,6 @@ class Bench {
 	 * 
 	 * @see http://php.net/manual/en/function.microtime.php
 	 * @see http://php.net/manual/en/datetime.createfromformat.php
-	 *
-	 * @param unknown $mtime
-	 * @param string $format
-	 * @return unknown
 	 */
 	public static function microtimeToString($mtime, $format) {
 		if(!$mtime){

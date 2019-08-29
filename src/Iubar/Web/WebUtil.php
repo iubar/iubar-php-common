@@ -258,7 +258,9 @@ class WebUtil {
 				return ($base . $rel);
 	
 				/* parse base URL and convert to local variables: $scheme, $host, $path, $query, $port, $user, $pass */
-				extract(parse_url($base));
+                extract(parse_url($base));
+                $host = null;
+                $scheme = null;
 	
 				if(isset($path)){
 					/* remove non-directory element from path */

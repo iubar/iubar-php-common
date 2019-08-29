@@ -5,7 +5,8 @@ namespace Iubar\Misc;
 class HashUtils {
 	
 	private static $salt = '2138765&';
-	private static $pepper = 'anything|else';
+    private static $pepper = 'anything|else';
+    private static $plainPassword = 'test';
 	
 	public static function hashedPassword($plainPassword) {
 		

@@ -263,7 +263,7 @@ class StringUtil {
 	
 	public static function getLastWord($text){
 		$tokens = explode(' ', trim($text));
-		return $tokens[(sizeof($array)-1)];
+		return $tokens[(sizeof($text)-1)];
 	}
 	
 	public static function getWordAfter($text, $str){
@@ -308,7 +308,7 @@ class StringUtil {
 	 */
 	public static function encode($string, $to = 'UTF-8', $from = 'UTF-8'){
 		// ASCII is already valid UTF-8
-		if($to == 'UTF-8' AND is_ascii($string)){
+		if($to == 'UTF-8' AND self::is_ascii($string)){
 			return $string;
 		}
 	

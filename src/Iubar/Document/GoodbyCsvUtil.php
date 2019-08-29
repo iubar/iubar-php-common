@@ -1,6 +1,6 @@
 <?php
 
-namespace Iubar\Excel;
+namespace Iubar\Document;
 
 use Goodby\CSV\Import\Standard\Lexer;
 use Goodby\CSV\Import\Standard\Interpreter;
