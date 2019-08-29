@@ -145,7 +145,7 @@ class GoodbyCsvUtil extends BaseClass {
 	public function toArray($columns){
 		$data = array();
 		$interpreter = new Interpreter();
-		$interpreter->addObserver(function(array $row) use (&$data) {
+		$interpreter->addObserver(function(array $row) use ($columns, &$data) {
 			    	
 			$i = 0;
 			$rowAssociative = array();
