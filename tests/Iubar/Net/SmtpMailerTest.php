@@ -53,7 +53,7 @@ class SmtpMailerTest extends TestCase {
 	// SPARKPOST
 	private static $sparkpost_password = "";
 
-	public static function setUpBeforeClass(){
+	public static function setUpBeforeClass() : void {
 
 
 		///////////////////////////////////////////////////////////////////////////////////
