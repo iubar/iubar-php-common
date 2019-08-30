@@ -7,6 +7,9 @@ namespace Iubar\Crypt;
 use Iubar\Crypt\AesBase;
 use Iubar\Crypt\AesInterface;
 
+/**
+ * @deprecated mcrypt was DEPRECATED in PHP 7.1.0, and REMOVED in PHP 7.2.0.
+ */
 class AesCbcNoPadding extends AesBase implements AesInterface {
 
 	public function __construct($key){
