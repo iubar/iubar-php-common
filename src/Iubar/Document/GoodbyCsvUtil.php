@@ -142,25 +142,25 @@ class GoodbyCsvUtil extends BaseClass {
 		$this->getLexer()->parse($this->file, $interpreter);
 	}
 
-	public function toArray($columns){
-		$data = array();
-		$interpreter = new Interpreter();
-		$interpreter->addObserver(function(array $row) use ($columns, &$data) {
+	// public function toArray($columns){
+	// 	$data = array();
+	// 	$interpreter = new Interpreter();
+	// 	$interpreter->addObserver(function(array $row) use ($columns, &$data) {
 			    	
-			$i = 0;
-			$rowAssociative = array();
-			foreach ($columns as $column){
-				$rowAssociative[$column] = $row[$i];
-				$i++;
-			}
-			$data[] = $rowAssociative; 	    
-		});
+	// 		$i = 0;
+	// 		$rowAssociative = array();
+	// 		foreach ($columns as $column){
+	// 			$rowAssociative[$column] = $row[$i];
+	// 			$i++;
+	// 		}
+	// 		$data[] = $rowAssociative; 	    
+	// 	});
 		
-		$this->getLexer()->parse($this->file, $interpreter);
+	// 	$this->getLexer()->parse($this->file, $interpreter);
 		
-		print_r($data);
-		return $data;
-	}
+	// 	print_r($data);
+	// 	return $data;
+	// }
 
 	public function getLexer(){
 		$config = new LexerConfig();

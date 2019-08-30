@@ -52,7 +52,7 @@ class SmtpMailerTest extends TestCase {
 				echo "CERT IS OK: " . $file . PHP_EOL;
 			}
 		}else{
-			echo "CERT FILE IS NOT CONFIGURED IN PHP.INI" - PHP_EOL;
+			echo "CERT FILE IS NOT CONFIGURED IN PHP.INI" . PHP_EOL;
 		}
 
 
