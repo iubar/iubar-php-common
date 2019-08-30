@@ -27,12 +27,12 @@
 
 	<testsuites>
 		<testsuite name="Php Common">
-			<!-- <file>./tests/Iubar/Crypt/AesCbcPkcs5PaddingTest.php</file>
+			<file>./tests/Iubar/Crypt/AesCbcPkcs5PaddingTest.php</file>
 			<file>./tests/Iubar/Crypt/AesCbcNoPaddingTest.php</file>
 			<file>./tests/Iubar/Crypt/AesEcbPkcs5PaddingTest.php</file>
-			<file>./tests/Iubar/Net/SmtpMailerTest.php</file> -->
+			<file>./tests/Iubar/Net/SmtpMailerTest.php</file>
 			<file>./tests/Iubar/Net/EmailValidatorTest.php</file>
-			<!-- <file>./tests/Iubar/Common/FileUtilTest.php</file> -->
+			<file>./tests/Iubar/Common/FileUtilTest.php</file>
 		</testsuite>
 				
 		<!-- <testsuite name="All Tests"> -->
