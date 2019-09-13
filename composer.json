@@ -17,7 +17,7 @@
 		"monolog/monolog" : "*",
 		"bramus/monolog-colored-line-formatter" : "~3.0.1",
 		"swiftmailer/swiftmailer" : "*",
-		"league/climate" : "3.2.1",
+		"league/climate" : "*",
 		"goodby/csv" : "*"
 	},
 	"require-dev" : {
