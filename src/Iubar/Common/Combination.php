@@ -2,7 +2,7 @@
 
 namespace Iubar\Common;
 
-class Combinations implements \Iterator {
+class Combination implements \Iterator {
 	
 	// USAGE: 
 	// 		foreach(new Combinations("1234567", 5) as $substring){

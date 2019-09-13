@@ -110,7 +110,6 @@ class MiscUtils {
 				die($NO_HANDLER . PHP_EOL);
 			}else{
 				$logger->error($error);
-				$logger->notice($msg);
 			}
 		}else if(!$log_file){
 			if($log_to_shell){

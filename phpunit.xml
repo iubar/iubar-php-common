@@ -32,7 +32,7 @@
 			<file>./tests/Iubar/Crypt/AesEcbPkcs5PaddingTest.php</file>
 			<file>./tests/Iubar/Net/SmtpMailerTest.php</file>
 			<file>./tests/Iubar/Net/EmailValidatorTest.php</file>
-			<file>./tests/Iubar/Common/FileUtilTest.php</file>
+			<!-- <file>./tests/Iubar/Common/FileUtilTest.php</file> -->
 		</testsuite>
 				
 		<!-- <testsuite name="All Tests"> -->
@@ -57,7 +57,7 @@
 	<!-- <log type="coverage-text" target="php://stdout" showUncoveredFiles="false"/> -->
 <!-- 	<log type="json" target="./logs/logfile.json" /> -->
 <!-- 	<log type="tap" target="./logs/logfile.tap" /> -->
-<!-- 	<log type="junit" target="./logs/logfile.xml" logIncompleteSkipped="false" /> -->
+<!-- 	<log type="junit" target="./logs/logfile.xml" /> -->
 	<!-- <log type="testdox-html" target="/tmp/testdox.html"/> -->
 	<!-- <log type="testdox-text" target="/tmp/testdox.txt"/> -->
 <!-- 	</logging> -->

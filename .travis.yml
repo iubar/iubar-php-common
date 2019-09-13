@@ -1,12 +1,20 @@
 language: php
 php:
-- 5.5
+- 7.2
 env:
   global:
     # - APP_HOST="iubar.it"
 before_script:
-  - composer install --prefer-source --no-interaction --dev    
-script: phpunit
+  - cat /etc/os-release
+  - php -v
+script:
+  - composer require --dev jakub-onderka/php-parallel-lint
+  - composer require --dev jakub-onderka/php-console-highlighter
+  - composer install --prefer-source --no-suggest --no-progress --no-interaction 
+  - vendor/bin/parallel-lint --exclude vendor .
+  - vendor/bin/phpstan -V
+  - vendor/bin/phpstan analyse src --no-interaction --no-progress --level 0
+  - phpunit
 notifications:
   email:
     recipients:

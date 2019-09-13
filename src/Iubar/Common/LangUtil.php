@@ -8,7 +8,6 @@ class LangUtil {
 	 * 
 	 * ie: $a = array(1,2,array(3,4, array(5,6,7), 8), 9);
 	 * 
-	 * @return \Iubar\Common\RecursiveIteratorIterator[]
 	 */
 	public static function array_flat(array $array){
 		$flat_array = array();		
@@ -17,15 +16,6 @@ class LangUtil {
 			$flat_array[] = $v;
 		}
 		return $flat_array;
-	}
-	
-	public static function getScriptPath(){
-		$fullpath = $argv[0];
-		$path_parts = pathinfo($fullpath);
-		$script_path = $path_parts['dirname'];
-		echo "SCRIPT FULLPATH: " . $fullpath . StringUtil::NL . StringUtil::NL;
-		echo "SCRIPT PATH: " . $script_path . StringUtil::NL . StringUtil::NL;
-		return $script_path ;		
 	}
 	
 	public static function getCombinations($base, $n){
@@ -124,7 +114,7 @@ class LangUtil {
 		$within_array = 'no';
 		foreach( $array as $k=>$v ){
 			if( is_array($v) ){
-				$within_array = is_in_array($v, $key, $key_value);
+				$within_array = self::is_in_array($v, $key, $key_value);
 				if( $within_array == 'yes' ){
 					break;
 				}

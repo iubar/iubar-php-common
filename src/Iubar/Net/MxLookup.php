@@ -9,7 +9,8 @@ class MxLookup {
 	var $ANCOUNT = 0;
 	var $cIx = 0;
 	var $dns_repl_domain;
-	var $arrMX = array();
+    var $arrMX = array();
+    var $dns_reply = NULL;
 
 	function __construct($domain, $dns="8.8.8.8") { 
 	

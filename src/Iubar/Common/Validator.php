@@ -189,7 +189,7 @@ class Validator extends BaseClass {
 			if(true){ // if($enc=="UTF-8"){
 				$regex = Validator::getUtf8RegExPhraseOfWords(); // sembra funzionare indipendentemente dall'encoding
 			}else{
-				$regex = $regValidator::$regex_phrase_of_words;			
+				$regex = Validator::$regex_phrase_of_words;			
 			}
 			
 			$b = preg_match($regex, $str, $matches);
@@ -275,14 +275,14 @@ class Validator extends BaseClass {
 			// $matches = $this->test(Validator::$regex_phrase_of_number, $text2);
 			// $matches = $this->test(Validator::$regex_email, $text3);
 		
-			$matches = $this->test(Validator::$regex_provincia1, $text100);
-			$matches = $this->test(Validator::$regex_provincia2, $text101);
-			$matches = $this->test(Validator::$regex_provincia2, $text102);
-			$matches = $this->test(Validator::$regex_provincia2, $text103);
+			$matches = self::test(Validator::$regex_provincia1, $text100);
+			$matches = self::test(Validator::$regex_provincia2, $text101);
+			$matches = self::test(Validator::$regex_provincia2, $text102);
+			$matches = self::test(Validator::$regex_provincia2, $text103);
 		
 		}
 		
-		private function test($regex, $text){
+		private static function test($regex, $text){
 			$NL = "\r\n";
 			echo "Text is " . $text . " and regex is " . $regex . $NL;
 			preg_match_all($regex, $text, $matches);
@@ -305,19 +305,21 @@ class Validator extends BaseClass {
 				return false;
 			}
 			// Loop through each char
-			for ( $i = 0; $i < count($s); $i++ ) {
-				if ( substr($s, $i, 1) == '(' ) {
-					// Increase the open count
-					$open++;
-					echo "Open $open \n";
-				} else if ( substr($s, $i, 1) == ')' ) {
-					// If open goes below zero, there's an invalid closing paren
-					if ( $open < 0 ) {
-						return false;
+			if (is_array($s)){
+				for ( $i = 0; $i < count($s); $i++ ) {
+					if ( substr($s, $i, 1) == '(' ) {
+						// Increase the open count
+						$open++;
+						echo "Open $open \n";
+					} else if ( substr($s, $i, 1) == ')' ) {
+						// If open goes below zero, there's an invalid closing paren
+						if ( $open < 0 ) {
+							return false;
+						}
+						// Decrease the open count
+						$open--;
+						echo "Closed $open \n";
 					}
-					// Decrease the open count
-					$open--;
-					echo "Closed $open \n";
 				}
 			}
 			

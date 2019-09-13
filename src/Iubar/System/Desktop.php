@@ -4,6 +4,8 @@ namespace Iubar\System;
 
 class Desktop {
 
+    private static $isLinux = false;
+
 	public static function openBrowser($url){
 		if(System::isWindows()){
 			$cmd = "start " . $url;
@@ -16,7 +18,7 @@ class Desktop {
 			echo "\$return_vars: " . PHP_EOL;
 			print_r($return_vars);
 			
-		}else if($isLinux){
+		}else if(self::$isLinux){
 			die("Quit: Linux system detected." . PHP_EOL);
 		}else{
 			die("Quit: Unknown system detected." . PHP_EOL);
@@ -50,7 +52,7 @@ class Desktop {
 			echo "\$return_vars: " . PHP_EOL;
 			print_r($return_vars);
 		
-		}else if($isLinux){
+		}else if(self::$isLinux){
 			die("Quit: Linux system detected." . PHP_EOL);
 		}else{
 			die("Quit: Unknown system detected." . PHP_EOL);
@@ -98,7 +100,7 @@ class Desktop {
 				$user_home = "C:/Users" . "/" . $user;
 				$workspace = $user_home . "/" . "workspace_php";
 			}
-		}else if($isLinux){
+		}else if(self::$isLinux){
 			die("Quit: Linux system detected." . PHP_EOL);
 		}else{
 			die("Quit: Unknown system detected." . PHP_EOL);

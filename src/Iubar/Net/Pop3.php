@@ -142,8 +142,6 @@ class Pop3 {
     /**
      * unused function
      *
-     * @param string $headers
-     * @return unknown
      */
     private function mail_parse_headers($headers) {
         $headers = preg_replace('/\r\n\s+/m', '', $headers);
@@ -156,10 +154,6 @@ class Pop3 {
     /**
      * unused function
      *
-     * @param unknown $imap
-     * @param unknown $mid
-     * @param string $parse_headers
-     * @return unknown
      */
     private function mail_mime_to_array($imap, $mid, $parse_headers = false) {
         $mail = imap_fetchstructure($imap, $mid);
@@ -172,20 +166,15 @@ class Pop3 {
     /**
      * unused function
      *
-     * @param unknown $imap
-     * @param unknown $mid
-     * @param unknown $part
-     * @param unknown $prefix
-     * @return NULL[]
      */
     private function mail_get_parts($imap, $mid, $part, $prefix) {
         $attachments = array();
-        $attachments[$prefix] = $this->mail_decode_part($imap, $mid, $part, $prefix);
+        $attachments[$prefix] = $this->mail_decode_part($mid, $part, $prefix);
         if (isset($part->parts)) // multipart
 {
             $prefix = ($prefix == "0") ? "" : "$prefix.";
             foreach ($part->parts as $number => $subpart)
-                $attachments = array_merge($attachments, mail_get_parts($imap, $mid, $subpart, $prefix . ($number + 1)));
+                $attachments = array_merge($attachments, $this->mail_get_parts($imap, $mid, $subpart, $prefix . ($number + 1)));
         }
         return $attachments;
     }
@@ -193,10 +182,6 @@ class Pop3 {
     /**
      * unused function
      *
-     * @param unknown $message_number
-     * @param unknown $part
-     * @param unknown $prefix
-     * @return boolean[]|NULL[]
      */
     private function mail_decode_part($message_number, $part, $prefix) {
         $attachment = array();

@@ -76,7 +76,7 @@ abstract class AbstractEmailProvider {
 			if (!$fp) {
 				// Port is closed or blocked
 				$error = "Impossibile contattare il server smtp " . $host. " sulla porta " . $port;
-				$this->log($error);
+				$this->log(LogLevel::ERROR, $error);
 				throw new \Exception($error);
 			} else {
 				// Port is open and available

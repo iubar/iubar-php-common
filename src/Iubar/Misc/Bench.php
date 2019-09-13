@@ -94,12 +94,11 @@ class Bench {
 	 * 
 	 * @see http://php.net/manual/en/function.microtime.php
 	 * @see http://php.net/manual/en/datetime.createfromformat.php
-	 *
-	 * @param unknown $mtime
-	 * @param string $format
-	 * @return unknown
 	 */
 	public static function microtimeToString($mtime, $format) {
+		if(!$mtime){
+		  return "<undefined micro time>";
+		}		
 		$str = null;
 		// echo "MTIME " . $mtime . PHP_EOL;
 		// if($mtime==0){
@@ -122,14 +121,15 @@ class Bench {
 
 	/**
 	 *
-	 * @param unknown $unixtime
-	 * @return unknown
 	 *
 	 * @see http://php.net/manual/it/function.date.php
 	 * @see http://php.net/manual/en/class.datetime.php RFC822 = "D, d M y H:i:s O"
 	 *      RFC850 = "l, d-M-y H:i:s T"
 	 */
 	private static function timeToString($unixtime, \DateTimeZone $tz) {
+		if(!$unixtime){
+		  return "<undefined time>";
+		}
 		$dt = \DateTime::createFromFormat('U.u', $unixtime);
 		$dt->setTimezone($tz);
 		return $dt->format(\DateTime::RFC850); // This method does not use locales. All output is in English.

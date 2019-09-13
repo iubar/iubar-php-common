@@ -130,18 +130,14 @@ public static function checkinzone($start,$end) {
   // echo '<strong>', var_dump(checkinzone($start,$end)),'</strong>';
 
   $now = (date('G') * 60) + date('i');
-  $start = strange2min($start);
-  $end = strange2min($end);
+  $start = self::strange2min($start);
+  $end = self::strange2min($end);
   return ( ($start <= $now ) &&($now <= $end));
 }
 
 
 /**
  * Finds the difference in days between two calendar dates.
- *
- * @param Date $startDate
- * @param Date $endDate
- * @return Int
  */
 public static function dateDiff($startDate, $endDate)
 {
@@ -359,7 +355,7 @@ public static function isYesterday($date){
 	$month = strftime("%m", $date);
 	$year = strftime("%Y", $date);
 
-	$yesterday = getYesterday();
+	$yesterday = self::getYesterday();
 
 	$day2 = strftime("%d", $yesterday);
 	$month2 = strftime("%m", $yesterday);
@@ -416,9 +412,9 @@ public static function test_diff_2(){
 	$d2 = mktime($h2, $m, $s, $month, $day, $year);
 	$diff3 = $d1 - $d2;
 
-	echo "diff1: " . secondsToHours($diff1) . " h." . StringUtil::NL;
-	echo "diff2: " . secondsToHours($diff2) . " h." . StringUtil::NL;
-	echo "diff3: " . secondsToHours($diff3) . " h." . StringUtil::NL;
+	echo "diff1: " . self::secondsToHours($diff1) . " h." . StringUtil::NL;
+	echo "diff2: " . self::secondsToHours($diff2) . " h." . StringUtil::NL;
+	echo "diff3: " . self::secondsToHours($diff3) . " h." . StringUtil::NL;
 }
 
 public static function test_diff(){
@@ -599,11 +595,11 @@ public static function getPreviousYearNum($month, $year){
 }
 
 public static function getDateFirstDayOfMonth($month, $year){
-	return getDateFirstDayOfMonth2($month, $year, DateUtil::$def_date_format);
+	return self::getDateFirstDayOfMonth2($month, $year, DateUtil::$def_date_format);
 }
 
 public static function getDateLastDayOfMonth($month, $year){
-	return getDateLastDayOfMonth2($month, $year, DateUtil::$def_date_format);
+	return self::getDateLastDayOfMonth2($month, $year, DateUtil::$def_date_format);
 }
 
 public static function getDateFirstDayOfMonth2($month, $year, $date_format){
@@ -622,7 +618,7 @@ public static function getDateLastDayOfMonth2($month, $year, $date_format){
 }
 
 public static function getDateAsEndOfDay($day_of_month, $month, $year){
-	return getDateAsEndOfDay2($day_of_month, $month, $year, DateUtil::$def_date_format);
+	return self::getDateAsEndOfDay2($day_of_month, $month, $year, DateUtil::$def_date_format);
 }
 
 public static function getDateAsEndOfDay2($day_of_month, $month, $year, $date_format){

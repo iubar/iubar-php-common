@@ -7,6 +7,8 @@ namespace Iubar\Common;
 use Psr\Log\LoggerInterface;
 
 class FileUtil {
+
+    private $logger = null;
 	
 	public function __construct(LoggerInterface $logger){
 		$this->logger = $logger;
@@ -23,7 +25,7 @@ class FileUtil {
 					$iterator = new \FilesystemIterator($name);
 					$isDirEmpty = !$iterator->valid();					
 					if($isDirEmpty){			
-						rmdir($name);
+						self::rrmdir($name);
 					}else{
 					 	self::clearDirectory($name);		
 					}
@@ -62,7 +64,7 @@ public static function deleteDir($dirPath) {
 			unlink($file);
 		}
 	}
-	rmdir($dirPath);
+	self::rrmdir($dirPath);
 }
 
 /**
@@ -169,7 +171,7 @@ public static function printFilesInDir($dir, $format, $filter) {
 	while (false !== ($file = readdir($handle))) {
 		if ($file != "." && $file != "..") {
 			$fullpath = $dir. "/". $file;
-			if (filterExtension($file, $filter)) {
+			if (self::filterExtension($file, $filter)) {
 				if ($format == 1) {
 					echo "<li><a href=\"" . $fullpath . "\">" . $file . "</a></li>";
 				} else if ($format == 2) {
@@ -303,7 +305,6 @@ public static function printFilePath(){
 	}
 	echo "PHP_SELF: " .  $_SERVER['PHP_SELF'] . "\n";
 	echo "__FILE__: " .  __FILE__ . "\n";
-	echo "argv[0]: " .  $argv[0] . "\n";
 }
 
 
@@ -466,7 +467,7 @@ public static function formatBytes2($file, $type) {
 public static function getTotFileSize($array){
 	$size = 0;
 	foreach($array as $filename){
-		$size = $size + getFileSize($filename);
+		$size = $size + self::getFileSize($filename);
 	}
 	return $size;
 }
@@ -641,7 +642,7 @@ public static function unlinkRecursive($dir, $deleteRootToo=true){
     closedir($dh);
 
     if ($deleteRootToo){
-        rmdir($dir);
+        self::rrmdir($dir);
     }
 
     return;
@@ -652,13 +653,13 @@ public static function delTree($dir) {
 	foreach( $files as $file ){
 		//if( substr( $file, -1 ) == '/' ){
 		if (is_dir($file)){
-			delTree( $file );
+			self::delTree( $file );
 		}else{
 			unlink( $file );
 		}
 	}
     if (is_dir($dir)){
-    	rmdir( $dir );
+    	self::rrmdir( $dir );
     }
 }
 
@@ -679,7 +680,7 @@ public static function deleteAll($directory, $empty = false) { // $empty==false 
                 $path = $directory . "/" . $contents;
 
                 if(is_dir($path)) {
-                    deleteAll($path);
+                    self::deleteAll($path);
                 } else {
                     unlink($path);
                 }
@@ -689,7 +690,7 @@ public static function deleteAll($directory, $empty = false) { // $empty==false 
         closedir($directoryHandle);
 
         if($empty == false) {
-            if(!rmdir($directory)) {
+            if(!self::rrmdir($directory)) {
                 return false;
             }
         }
@@ -726,7 +727,7 @@ public static function destroyDir($dir, $only_content=true) {
 			if(is_dir($dir . $file)) {
 				chdir('.');
 				FileUtil::destroyDir($dir.$file);
-				FileUtil::rmdir($dir.$file) or DIE("rmdir command: warning, couldn't delete " . $dir . $file . "\r\n");
+				FileUtil::rrmdir($dir.$file) or DIE("rmdir command: warning, couldn't delete " . $dir . $file . "\r\n");
 				$array[] = $dir.$file;
 			}else{
 				unlink($dir.$file) or DIE("unlink command: warning, couldn't delete " . $dir . $file . "\r\n");
@@ -739,7 +740,7 @@ public static function destroyDir($dir, $only_content=true) {
 	if(!$only_content){
 		//chown($dir, 666); //Insert an Invalid UserId to set to Nobody Owern; 666 is my standard for "Nobody"
 		chmod($dir, 0777);
-		FileUtil::rmdir($dir);
+		FileUtil::rrmdir($dir);
 		$array[] = $dir;
 	}
 	}else{
@@ -766,7 +767,7 @@ public static function rrmdir($dir) {
          }
      }
      reset($objects);
-     rmdir($dir);
+     self::rrmdir($dir);
    }
  }
 
