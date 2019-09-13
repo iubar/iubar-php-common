@@ -15,7 +15,7 @@
 	"require" : {
 		"psr/log" : "~1.0.2",
 		"monolog/monolog" : "*",
-		"bramus/monolog-colored-line-formatter" : "~2.0",
+		"bramus/monolog-colored-line-formatter" : "~3.0.1",
 		"swiftmailer/swiftmailer" : "*",
 		"league/climate" : "3.2.1",
 		"goodby/csv" : "*"
