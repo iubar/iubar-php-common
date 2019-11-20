@@ -7,90 +7,38 @@ use Psr\Log\LogLevel;
 use Iubar\Net\SmtpMailer;
 use Iubar\Misc\MiscUtils;
 use Iubar\Misc\Bench;
-use Iubar\Common\LangUtil;
-use Iubar\Common\ConsoleUtil;
 use Iubar\Common\FileUtil;
-
-// == Common SMTP responses and what they mean ==
-
-// SMTP replies will vary based on the server or ISP that issues them, though there are some general guidelines. Each response will include (at the very least) a 3 digit code. The first digit typically indicates whether the server was able to accept the message or not. For example:
-// •2: A response that begins with a '2' generally means that the message was accepted without error.
-// •4: Responses that start with '4' typically indicate a temporary error. These types of responses typically result in a soft bounce.
-// •5: Responses with a '5' at the beginning of the code indicate permanent failure. These usually result in a hard bounce.
-
-// The second and third digits can provide additional info, but are usually highly-contextual and specific to the particular mail server.
-
-
-///////////////////////////////// FUNCTIONS
 
 class SmtpMailerTest extends TestCase {
 
-
 	// ARUBA
-	private static $aruba_password = "";
-
-	// GMAIL
-	private static $gmail_password = "";
+    private static $aruba_password = "";
+    
+    // AMAZON SES
+    private static $amazonses_port 		= "";
+    private static $amazonses_user 		= "";
+    private static $amazonses_password 		= "";
 
 	public static function setUpBeforeClass() : void {
-
-
-		///////////////////////////////////////////////////////////////////////////////////
-
-		// Configuro di seguito i certificati usati da CURL
-
-		// $ch = curl_init("https://www.paypal.com/cgi-bin/webscr");
-		// curl_setopt($ch, CURLOPT_CAINFO, '/path/to/cacert.pem')
-		// curl.cainfo=<path-to>cacert.pem
-
-	    echo "setUpBeforeClass()" . PHP_EOL;
-
-		if ($file = ini_get('curl.cainfo')) {
-			if($error = FileUtil::checkFile($file)){
-				die("CERT FILE IS CONFIGURED IN PHP.INI BUT WAS NOT FOUND ON DISK: " . $error);
-			}else{
-				echo "CERT IS OK: " . $file . PHP_EOL;
-			}
-		}else{
-			echo "CERT FILE IS NOT CONFIGURED IN PHP.INI" . PHP_EOL;
-		}
-
-
-		///////////////////////////////////////////////////////////////////////////////////
-
-
 		$ini_file = __DIR__ . "/secure-folder/passwords.config.ini";
-		if(!is_file($ini_file)){
-
+		if (!is_file($ini_file)){
 		    echo "Loading config from enviroment vars..." . PHP_EOL;
 
-    		self::$aruba_password 		= getenv('aruba_password');
-
-		}else{
-
-		    echo "Loading config from file..." . PHP_EOL;
+            self::$aruba_password = getenv('aruba_password');
+            self::$amazonses_port = getenv('amazonses_port');
+            self::$amazonses_user = getenv('amazonses_user');
+            self::$amazonses_password = getenv('amazonses_password');
+		} else {
+		    echo "Loading config from file $ini_file" . PHP_EOL;
 
     		$ini_array = parse_ini_file($ini_file);
-    		self::$aruba_password 		= $ini_array['aruba_password'];
+            self::$aruba_password = $ini_array['aruba_password'];
+            self::$amazonses_port = $ini_array['amazonses_port'];
+            self::$amazonses_user = $ini_array['amazonses_user'];
+            self::$amazonses_password = $ini_array['amazonses_password'];
 		}
 	}
 
-
-// 	public function testAruba(){ // Aruba
-// 		$bench_name = 'testAruba';
-// 		Bench::startTimer($bench_name);
-// 		$m = $this->factorySmtpMailer('aruba');
-// 		$m->subject = "TEST ARUBA";
-// 		$m->smtp_usr = "info@iubar.it";
-// 		$m->smtp_pwd = self::$aruba_password;
-// 		if (!$m->smtp_pwd) {
-// 		    $this->markTestSkipped('Credentials for Aruba are not available.');
-// 		}
-// 		$m->smtp_ssl = false;
-// 		$result = $m->send();
-// 		$this->stopBench($bench, $bench_name);
-// 		$this->assertEquals(1, $result);
-// 	}
 
 	public function testArubaSsl(){ // Aruba Ssl
 	    $bench_name = 'testArubassl';
@@ -106,16 +54,25 @@ class SmtpMailerTest extends TestCase {
 	    $result = $m->send();
 	    echo Bench::stopTimer($bench_name, true) . PHP_EOL;
 	    $this->assertEquals(1, $result);
-	}
+    }
+    
+    public function testAmazonSes(){
+        $bench_name = 'testAmazonSes';
+        Bench::startTimer($bench_name);
+        $from = 'info@iubar.it';
+        $to = 'tester@email-test.had.dnsops.gov';
+        $m = $this->factorySmtpMailer('amazonses', $from, $to);
+        $m->subject = 'TEST AMAZONSES';
+	    $m->smtp_usr = self::$amazonses_user;
+	    $m->smtp_pwd = self::$amazonses_password;
+        $m->smtp_port = self::$amazonses_port;
+        $result = $m->send();
+        echo Bench::stopTimer($bench_name, true) . PHP_EOL;
+	    $this->assertEquals(1, $result);
+    }
 
-
-	private function factorySmtpMailer($type){
-
+	private function factorySmtpMailer($type, $from = ['info@fatturatutto.it' => 'FatturaTutto.it'], $to = ['daniele.montesi@iubar.it' => 'Daniele']){
 		$logger = MiscUtils::loggerFactory("my_logger", LogLevel::DEBUG, null);
-		$from = array("info@fatturatutto.it" => "FatturaTutto.it");
-		// $from = array("info@reteprofessionisti.it" => "ReteProf");
-		$to = array("daniele.montesi@iubar.it" => "Daniele");
-		// $to = array("borgogelli@iubar.it" => "Andrea Borgogelli Avveduti");
 
 		$m = SmtpMailer::factory($type);
 		$m->setLogger($logger);
@@ -125,80 +82,6 @@ class SmtpMailerTest extends TestCase {
 		$m->body_txt = "Questa è una prova.";
 		$m->body_html = "<h2>Questo è un <b>test</b></h2>";
 		return $m;
-	}
-
-	private function interactive(){
-
-		// Di seguito non è previsto il test SSL (non interessa)
-		$providers = array(
-			"mandrill" => array(25, 587, 2525), // You can use port 25, 587, or 2525
-			"mailgun" => array(25, 587, 2525), 	// Mailgun servers listen on ports 25, 587 (STARTTLS), and 2525
-			"mailjet" => array(25, 587), 		// Port 25 or 587
-			"sendgrid" => array(587, 2525),		// Use port 587 for TLS connectionsor and 2525
-			"sparkpost" => array(25, 587, 2525),// Use port 25 or 587 for unencrypted / TLS connections
-			"aruba" => array(), 				// Nessuna selezione possibile per Aruba
-			"gmail" => array()					// Nessuna selezione possibile per Gmail
-		);
-
-		$from_choices = array(
-				"info@iubar.it" => "Iubar.it",
-				"borgogelli@iubar.it" => "Andrea Borgogelli Avveduti",
-				"daniele.montesi@iubar.it" => "Daniele Montesi",
-				"systems@iubar.it" => "Andrea Borgogelli Avveduti",
-				"info@reteprofessionisti.it" => "ReteProfessionisti.it",
-				"forum@reteprofessionisti.it" => "ReteProfessionisti.it (Forum)",
-				"info@fatturatutto.it" => "FatturaTutto.it",
-				"info@dasdadasdassdasdassdasd.it" => "Error"
-		);
-		$to_choices = $from_choices;
-
-		$from = ConsoleUtil::showMenu($from_choices, "Mittente");
-		$to = ConsoleUtil::showMenu($from_choices, "Destinatario");
-		$provider = ConsoleUtil::showMenu($providers, "Provider");
-		$ports = $providers[$provider];
-		$port = ConsoleUtil::showMenu($ports, "Porta");
-
-		echo ConsoleUtil::printTitle("Riepilogo");
-		echo "From: " . $from . PHP_EOL;
-		echo "To: " . $to . PHP_EOL;
-		echo "Through: " . $provider . PHP_EOL;
-		echo "Port: " . $port . PHP_EOL;
-		ConsoleUtil::writeSeparator();
-		$msg = "Provo a inviare la mail...";
-		echo $msg . PHP_EOL;
-
-		$bench_name = 'send';
-		Bench::startTimer($bench_name);
-
-		$m = SmtpMailer::factory($provider);
-
-		switch ($provider) {
-	        case "aruba":
-				$m->smtp_usr = "info@iubar.it";
-				$m->smtp_pwd = self::$aruba_password;
-				$m->ssl = true;
-	        	break;
-        	case "gmail":
-				$m->smtp_usr = "borgogelli@iubar.it";
-				$m->smtp_pwd = self::$gmail_password;
-
-        		break;
-        	default:
-        		$error = "Errore: situazione imprevista";
-        		die($error . PHP_EOL);
-		}
-
-		$m->smtp_port($port);
-		$m->setFrom($from);
-		$m->setToList(array($to));
-		$m->subject = "TEST";
-		$m->body_txt = "Questo è un test";
-		$m->body_html = "<h2>Questo è un <b>test</b></h2>";
-		$m->enableAgentLogger(true);
-		$result = $m->send();
-		echo Bench::stopTimer($bench_name, true) . PHP_EOL;
-		return $result;
-
 	}
 
 
