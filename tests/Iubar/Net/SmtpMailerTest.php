@@ -56,17 +56,18 @@ class SmtpMailerTest extends TestCase {
 	    $this->assertEquals(1, $result);
     }
     
-    public function testAmazonSes(){
-        $bench_name = 'testAmazonSes';
+    public function testAmazonSes1(){
+        $bench_name = 'testAmazonSes1';
         Bench::startTimer($bench_name);
-        $from = 'info@iubar.it';
-        $to = 'tester@email-test.had.dnsops.gov';
-        $m = $this->factorySmtpMailer('amazonses', $from, $to);
-        $m->subject = 'TEST AMAZONSES';
-	    $m->smtp_usr = self::$amazonses_user;
-	    $m->smtp_pwd = self::$amazonses_password;
-        $m->smtp_port = self::$amazonses_port;
-        $result = $m->send();
+        $result = $this->sendAmazonSes('test');
+        echo Bench::stopTimer($bench_name, true) . PHP_EOL;
+	    $this->assertEquals(1, $result);
+    }
+
+    public function testAmazonSes2(){
+        $bench_name = 'testAmazonSes2';
+        Bench::startTimer($bench_name);
+        $result = $this->sendAmazonSes('non-align');
         echo Bench::stopTimer($bench_name, true) . PHP_EOL;
 	    $this->assertEquals(1, $result);
     }
@@ -84,6 +85,17 @@ class SmtpMailerTest extends TestCase {
 		return $m;
 	}
 
+    private function sendAmazonSes($subject){
+        $from = 'info@iubar.it';
+        $to = 'tester@email-test.had.dnsops.gov';
+        $m = $this->factorySmtpMailer('amazonses', $from, $to);
+        $m->subject = $subject;
+	    $m->smtp_usr = self::$amazonses_user;
+	    $m->smtp_pwd = self::$amazonses_password;
+        $m->smtp_port = self::$amazonses_port;
+        $result = $m->send();
+        return $result;
+    }
 
 }
 
