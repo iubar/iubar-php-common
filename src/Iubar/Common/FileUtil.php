@@ -947,7 +947,7 @@ public static function searchFileByPattern($path, $regex){
  * @deprecated ho dubbi sulla reale validità del metodo con le ultime versioni di PHP. Forse sarebbe meglio usare searchFileByPattern()
  * @param string $path
  * @param string $regex
- * @return \RegexIterator
+ * @return \RegexIterator The object is of type RegexIterator
  */
 public static function getFileByPattern($path='.', $regex=''){ // $regex example '/^.*\.(php|dat)$/' oppure /^.+\.php$/i
 	$iterator = new \RecursiveDirectoryIterator($path);
@@ -972,7 +972,7 @@ public static function getFileByPattern($path='.', $regex=''){ // $regex example
  * @param string $path
  *  the path to scan
  * @return mixed
- *  an array of files in the given path matching the pattern.
+ *  an array of string in the given path matching the pattern.
  */
 
 public static function rglob($pattern='*', $flags = 0, $path='') {
@@ -1111,18 +1111,21 @@ public static function decodeSize($bytes){
 	return( round( $bytes, 2 ) . " " . $types[$i] );
 }
 
+/**
+ * @todo rinominare il metodo, qui "Last" ha il significato di "Newer"
+ * @return null|string
+ */
 public static function getLastFileByPattern($path='.', $pattern=''){  
 	$last_file = null;
 	$iterator = self::getFileByPattern($path, $pattern);
-	print_r($iterator);
+	// print_r($iterator);
 	
 	$filelist = array();
 	foreach($iterator as $entry) {
-		echo $entry->getFilename() . PHP_EOL;
-		echo self::timestampToString($entry->getMTime()) . PHP_EOL; // Get last modification time
+		// echo "File: " . $entry->getFilename() . ' MTime: ' . self::timestampToString($entry->getMTime()) . PHP_EOL; // Get last modification time
 		$mtime = $entry->getMTime();
 		$filename = $entry->getFilename();
-		$filelist[$mtime] = $filename;
+		$filelist[$mtime] = $filename; // indicizzo l'array con la data di ultima modifica del file
 	}
 	if(count($filelist)>0){
 	ksort($filelist);
@@ -1148,6 +1151,4 @@ public static function getLastFileByPattern($path='.', $pattern=''){
  
 
 } // end class
-
-
-?>
+ 
