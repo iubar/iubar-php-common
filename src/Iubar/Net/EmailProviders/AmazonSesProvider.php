@@ -7,6 +7,10 @@ use Iubar\Net\IEmailProvider;
 
 /**
 * @see https://docs.aws.amazon.com/ses/index.html
+* In alternativa ll'utilizzo del client Smtp (come implementato da questa classe), potrei istanziare il client dell'sdk di AmazonSes, vedi i seguenti documeti
+* @see https://docs.aws.amazon.com/en_us/ses/latest/DeveloperGuide/send-using-sdk-php.html
+* @see https://docs.aws.amazon.com/en_us/sdk-for-php/v3/developer-guide/getting-started_basic-usage.html
+* @see https://github.com/aws/aws-sdk-php
 */
 class AmazonSesProvider extends AbstractEmailProvider implements IEmailProvider {
 
