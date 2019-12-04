@@ -5,6 +5,9 @@ namespace Iubar\Net\EmailProviders;
 use Iubar\Net\AbstractEmailProvider;
 use Iubar\Net\IEmailProvider;
 
+/**
+* @see https://docs.aws.amazon.com/ses/index.html
+*/
 class AmazonSesProvider extends AbstractEmailProvider implements IEmailProvider {
 
 	public function __construct(){
