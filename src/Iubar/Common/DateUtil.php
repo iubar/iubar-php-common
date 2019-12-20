@@ -209,7 +209,7 @@ public static function getElapsedDays($from, $to){
 
 public static function getElapsedDays2($from, $to){
 	// Attenzione: non tiene conto del passaggio ora legale/solare
-	//The public static function expects to be given a string containing an English date format
+	// The public static function expects to be given a string containing an English date format
 	$start_ts = strtotime($from);
 	$end_ts = strtotime($to);
 	$diff = $end_ts - $start_ts;
@@ -217,14 +217,14 @@ public static function getElapsedDays2($from, $to){
 }
 
 public static function getYesterday(){
-	$yesterday = mktime(0, 0, 0, date("m") , date("d") - 1, date("Y"));
-	return $yesterday;
+	return mktime(0, 0, 0, date("m") , date("d") - 1, date("Y"));
+ 
 }
 
 public static function getToday(){
 	// USAGE: date ("d-M-Y", DateUtil::getToday());
-	$today = mktime(0, 0, 0, date("m") , date("d"), date("Y"));
-	return $today;
+	return mktime(0, 0, 0, date("m") , date("d"), date("Y"));
+ 
 }
 
 public static function dateToString($date){
@@ -233,8 +233,8 @@ public static function dateToString($date){
 }
 
 public static function dateToString2($date){
-	$str = strftime("%d %B %Y", $date);
-	return $str;
+	return strftime("%d %B %Y", $date);
+ 
 }
 
 // Get the last day of the month
@@ -259,8 +259,8 @@ public static function stringToTime($str){
 // 	// outputs 12th November, 2010
 // 	echo date("jS F, Y", strtotime("11-12-10"));
 // 	// outputs 11th December, 2010
-	$time = strtotime($str);
-	return $time;
+return strtotime($str);
+ 
 }
 
 
@@ -367,23 +367,7 @@ public static function isYesterday($date){
 
 	return $b;
 }
-
-
-
-/*
-public static function strdate_to_array($str){
-	$array = array();
-
-	$day = substr($str, 0, 2);
-	$month = substr($str, 3, 2);
-	$year = substr($str, 6, (strlen($str)-6));
-	$array[] = $day;
-	$array[] = $month;
-	$array[] = $year;
-	return $array;
-}
-*/
-
+ 
 
 
 //////////////////////////////////////////////////// TEST
@@ -539,39 +523,38 @@ public static function getLastMonths($n){
 public static function countDaysInMonth($month, $year) {
 	// $last_day = date('d', mktime(0, 0, 0, $this->month + 1, 0, $this->year));
 	// in alternativa posso usare ...
-	$num = cal_days_in_month(CAL_GREGORIAN, $month, $year);
-	return $num;
+	return cal_days_in_month(CAL_GREGORIAN, $month, $year);
+ 
 }
 
 public static function getTodayNum(){
-	$day = 0;
-    $day =  date("j", time()); // 1-31
-	return $day;
+ 
+	return  date("j", time()); // 1-31
+ 
 }
 
 public static function getMonthNum($date){
-	$month = 0;
-    $month =  date("n", $date);
-	return $month;
+ 
+	return date("n", $date);
+ 
 }
 
 public static function getYear($date){
-	$month = 0;
-    $month =  date("Y", $date);
-	return $month;
+ 
+	return date("Y", $date);
+ 
 }
 
 public static function getDayOfMonth($date){
-	$month = 0;
-    $month =  date("j", $date);
-	return $month;
+ 
+    return  date("j", $date);
+ 
 }
 
 public static function getMonthName($month){
-	$name = "unknown";
     $timestamp = mktime(0, 0, 0, $month, 1); // anno corrente, occorre specificare il giorno 1 onde evitare side-effects in date come 31/12
-    $name =  date("M", $timestamp);
-	return $name;
+    return  date("M", $timestamp);
+ 
 }
 
 public static function getPreviousMonthNum($month){
@@ -603,18 +586,18 @@ public static function getDateLastDayOfMonth($month, $year){
 }
 
 public static function getDateFirstDayOfMonth2($month, $year, $date_format){
-	$date = 0;
+ 
     $timestamp = mktime(0, 0, 0, $month, 1, $year);
-    $date =  date($date_format, $timestamp);
-	return $date;
+    return  date($date_format, $timestamp);
+ 
 }
 
 public static function getDateLastDayOfMonth2($month, $year, $date_format){
-	$date = 0;
+ 
     $timestamp = mktime(0, 0, -1, $month + 1, 1, $year);
     //printDebug("test: " . date($date_format, $timestamp));
-    $date =  date($date_format, $timestamp);
-	return $date;
+	return  date($date_format, $timestamp);
+ 
 }
 
 public static function getDateAsEndOfDay($day_of_month, $month, $year){
@@ -622,12 +605,11 @@ public static function getDateAsEndOfDay($day_of_month, $month, $year){
 }
 
 public static function getDateAsEndOfDay2($day_of_month, $month, $year, $date_format){
-	$date = 0;
+ 
     $timestamp = mktime(0, 0, -1, $month, $day_of_month + 1, $year);
-    $date =  date($date_format, $timestamp);
-	return $date;
+	return  date($date_format, $timestamp);
+ 
 }
 
 } // end class
-
-?>
+ 

@@ -48,7 +48,7 @@ class FileUtilTest2 extends TestCase {
 		$this->printList($files2);	
 		$this->printSeparator();
 
-		$files3 = FileUtil::searchFileByPattern(self::PATH, self::REGEX); // returns a list of SplFileInfo Object // il metodo analizza sempre le stotto cartelle
+		$files3 = FileUtil::searchFileByPattern(self::PATH, self::REGEX); // returns a list of SplFileInfo Object // il metodo analizza sempre le sotto cartelle
 		$this->printList($files3); 		
 		$this->printSeparator();
 
