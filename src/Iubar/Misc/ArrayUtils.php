@@ -14,7 +14,7 @@ class ArrayUtils {
 
 	public static function removeValue(array $array, $del_value){
 		if (($key = array_search($del_value, $array)) !== false) {
-			unset($arrays[$key]);
+			unset($array[$key]);
 		}
 		return $array;
 	}
