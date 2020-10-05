@@ -156,10 +156,14 @@ abstract class AbstractEmailProvider {
 	public function getFrom(){
 		return $this->from_array;
 	}
-
+	
+	/**
+	*@deprecated spezzare in due metodi, uno con argomento stringa e l'altro con argomento array
+	*/
 	public function setFrom($email, $name=""){
 		if(is_array($email)){
-			// in questa situazione il valore di $name viene ignorato
+			// in questa situazione mi apetto un array del tipo
+			// ['john@doe.com' => 'John Doe']
 			$this->from_array = $email;
 		}else{
 			if($name){

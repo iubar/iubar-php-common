@@ -277,7 +277,15 @@ public static function createDir($folder, $clear_if_exists=false){
 }
 
 public static function getCurrentDir2(){
-    return end(explode('/', dirname(!empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : !empty($_SERVER['PHP_SELF']) ? $_SERVER['PHP_SELF'] : str_replace('\\','/',__FILE__))));
+	$uri = null;
+	if(!empty($_SERVER['REQUEST_URI'])){
+		$uri = $_SERVER['REQUEST_URI'];
+	}else if(!empty($_SERVER['PHP_SELF'])){
+		$uri = $_SERVER['PHP_SELF'];
+	}else{
+		$uri = str_replace('\\', '/', __FILE__);
+	}	
+    return end(explode('/', dirname($uri)));
 }
 
 public static function getCurrentDir(){

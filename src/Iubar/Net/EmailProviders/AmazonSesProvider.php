@@ -31,7 +31,7 @@ class AmazonSesProvider extends AbstractEmailProvider implements IEmailProvider 
 		if ($port === null){
 			$port = 587;
 		}		
-		$transport = (new \Swift_SmtpTransport("email-smtp.eu-west-1.amazonaws.com", $port, 'tls'))
+		$transport = (new \Swift_SmtpTransport("email-smtp.eu-west-1.amazonaws.com", $port, 'tls')) // see https://eu-west-1.console.aws.amazon.com/ses/home?region=eu-west-1#smtp-settings:
 		->setUsername($this->smtp_usr)
 		->setPassword($this->smtp_pwd)
 		->setTimeout(self::TIMEOUT);
