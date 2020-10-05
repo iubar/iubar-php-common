@@ -31,7 +31,7 @@ use Iubar\Net\EmailProviders\AmazonSesProvider;
 class SmtpMailer {
 	
 	public static function factoryDefault(){
-		return new EmailProviders\MailgunProvider();
+		return new EmailProviders\ArubaProvider();
 	}
 	
 	public static function factory($provider_name){
