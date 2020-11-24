@@ -34,7 +34,7 @@ class OsUtil {
 		// Loop through the array of user agents and matching operating systems
 		foreach($os_list as $curr_os=>$match){
 			// Find a match
-			if (eregi($match, $_SERVER['HTTP_USER_AGENT'])){
+			if (preg_match("/(" . $match . ")/i", $_SERVER['HTTP_USER_AGENT'])){
 				// We found the correct match
 				break;
 			}
