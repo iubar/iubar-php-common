@@ -1,6 +1,6 @@
 <?php
 
-namespace Iubar\Tests\Net;
+namespace Iubar\Net;
 
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Iubar\Tests\Web;
+namespace Iubar\Web;
 
 use PHPUnit\Framework\TestCase;
 use Iubar\Web\WebUtil;

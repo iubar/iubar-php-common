@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Iubar\Tests\Crypt;
+namespace Iubar\Crypt;
 
 use PHPUnit\Framework\TestCase;
 use Iubar\Crypt\AesCbcNoPadding;
