@@ -142,7 +142,7 @@ class CsvUtil extends BaseClass {
 	
 		$fp = fopen($filename, 'wb+');
 		foreach ($list as $line) {
-			fputcsv($fp, split($delim, $line), $delim);
+			fputcsv($fp, explode($delim, $line), $delim);
 		}
 		fclose($fp);
 	}

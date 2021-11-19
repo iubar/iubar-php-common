@@ -9,15 +9,7 @@ class Desktop {
 	public static function openBrowser($url){
 		if(System::isWindows()){
 			$cmd = "start " . $url;
-
-			echo "eseguo: " . $cmd . PHP_EOL;
-			exec($cmd, $output, $return_vars);
-			echo "\$output: " .  PHP_EOL;
-			print_r($output);
-			echo PHP_EOL;
-			echo "\$return_vars: " . PHP_EOL;
-			print_r($return_vars);
-			
+			exec($cmd);			
 		}else if(self::$isLinux){
 			die("Quit: Linux system detected." . PHP_EOL);
 		}else{
