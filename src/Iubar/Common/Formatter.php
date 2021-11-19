@@ -4,6 +4,7 @@ namespace Iubar\Common;
 
 use Iubar\Common\BaseClass;
 use Doctrine\SqlFormatter\SqlFormatter;
+use Doctrine\SqlFormatter\NullHighlighter;
 
 class Formatter extends BaseClass {
 	
