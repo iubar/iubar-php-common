@@ -18,6 +18,7 @@
 		"bramus/monolog-colored-line-formatter" : "*",
 		"swiftmailer/swiftmailer" : "*",
 		"league/climate" : "*",
+		"doctrine/sql-formatter" : "*",		
 		"goodby/csv" : "*"
 	},
 	"require-dev" : {
