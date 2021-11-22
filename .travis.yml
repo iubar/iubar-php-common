@@ -17,9 +17,10 @@ script:
   - vendor/bin/psalm --version
   - vendor/bin/psalm || true
   - vendor/bin/psalm --long-progress || true
-  - vendor/bin/psalm --shepherd || true
   - vendor/bin/psalm --taint-analysis || true
   - vendor/bin/var-dump-check --exclude vendor . || true
+  - vendor/bin/psalm --set-baseline=your-baseline.xml
+  - vendor/bin/psalm --shepherd || true
 notifications:
   email:
     recipients:
