@@ -22,7 +22,7 @@ script:
   - vendor/bin/psalm --long-progress || true
   - vendor/bin/psalm --shepherd || true
   - vendor/bin/psalm --taint-analysis || true
-  - vendor/bin/var-dump-check --exclude vendor .
+  - vendor/bin/var-dump-check --exclude vendor . || true
 notifications:
   email:
     recipients:
