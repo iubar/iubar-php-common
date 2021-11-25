@@ -18,7 +18,7 @@
 		"bramus/monolog-colored-line-formatter" : "*",
 		"league/climate" : "*",
 		"goodby/csv" : "*",
-		"symfony/mailer": "^5.3"
+		"symfony/mailer": "^5.3",
 		"doctrine/sql-formatter" : "*"
 	},
 	"require-dev" : {
