@@ -115,17 +115,15 @@ abstract class AbstractEmailProvider {
 	    $name = '';
 	    
 	    if (is_array($to)){
-	        foreach ($to as $value){
-	            foreach ($value as $to_email => $to_name){
-	                $email = $to_email;
-	                $name = $to_name;
-	                
-	                if ($name == null){
-	                    $name = '';
-	                }
-	                
-	                $this->to_array[$email] = $name;
-	            }
+	        foreach ($to as $to_email => $to_name){
+                $email = $to_email;
+                $name = $to_name;
+                
+                if ($name == null){
+                    $name = '';
+                }
+                
+                $this->to_array[$email] = $name;
 	        }
 	    } else {
 	        $email = $to;

@@ -50,7 +50,10 @@ class SmtpMailerTest extends TestCase {
 	    }
 	    $m->smtp_ssl = true;
 	    $m->setFrom('info@iubar.it', 'Iubar');
-	    $m->setTo([['daniele.montesi@iubar.it' => 'Daniele Montesi']]);
+	    $to =  [
+	        'daniele.montesi@iubar.it' => 'Daniele Montesi'
+	    ];
+	    $m->setTo($to);
 	    $result = $m->send();
 	    echo Bench::stopTimer($bench_name, true) . PHP_EOL;
 	    $this->assertEquals(1, $result);
