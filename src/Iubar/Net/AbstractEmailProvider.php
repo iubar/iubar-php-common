@@ -110,25 +110,8 @@ abstract class AbstractEmailProvider {
 		$this->reply_to_address = new Address($email, $name);
 	}
 	
-	public function setTo($to){
-	    $email = null;
-	    $name = '';
-	    
-	    if (is_array($to)){
-	        foreach ($to as $to_email => $to_name){
-                $email = $to_email;
-                $name = $to_name;
-                
-                if ($name == null){
-                    $name = '';
-                }
-                
-                $this->to_array[$email] = $name;
-	        }
-	    } else {
-	        $email = $to;
-	        $this->to_array[$email] = $name;
-	    }
+	public function addTo($email, $name = ''){
+	    $this->to_array[$email] = $name;
 	}
 	
 	public function setSubject($subject){
