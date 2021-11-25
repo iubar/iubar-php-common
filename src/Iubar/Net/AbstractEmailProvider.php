@@ -32,7 +32,7 @@ abstract class AbstractEmailProvider {
 	public $body_html = null;
 	public $attachments = []; // ie: array('/path/to/image.jpg'=>'image/jpeg');
 	
-	public $to_address = null;
+	public $to_array = [];
 	public $from_address = null;
 	public $reply_to_address = null;
 
@@ -70,18 +70,22 @@ abstract class AbstractEmailProvider {
 				// Port is open and available
 				fclose($fp);
 			}
+			
 
 			// Create the Mailer using your created Transport
 			$mailer = new Mailer($transport);
-
-			// Send the message
-			try{
-				$mailer->send($this->createMessage());
-				$result = 1;
-			} catch(\Exception $e){
-				$error = $e->getMessage();
-				$this->log(LogLevel::ERROR, $error);
-				throw new \Exception('Impossibile inviare il messaggio: ' . $error);
+			
+			foreach ($this->to_array as $email => $name){
+			    $to_address = new Address($email, $name);
+			    // Send the message
+			    try{
+			        $mailer->send($this->createMessage($to_address));
+			        $result++;
+			    } catch(\Exception $e){
+			        $error = $e->getMessage();
+			        $this->log(LogLevel::ERROR, $error);
+			        throw new \Exception('Impossibile inviare il messaggio: ' . $error);
+			    }
 			}
 		}
 
@@ -106,8 +110,27 @@ abstract class AbstractEmailProvider {
 		$this->reply_to_address = new Address($email, $name);
 	}
 	
-	public function setTo($email, $name = ''){
-	    $this->to_address = new Address($email, $name);
+	public function setTo($to){
+	    $email = null;
+	    $name = '';
+	    
+	    if (is_array($to)){
+	        foreach ($to as $value){
+	            foreach ($value as $to_email => $to_name){
+	                $email = $to_email;
+	                $name = $to_name;
+	                
+	                if ($name == null){
+	                    $name = '';
+	                }
+	                
+	                $this->to_array[$email] = $name;
+	            }
+	        }
+	    } else {
+	        $email = $to;
+	        $this->to_array[$email] = $name;
+	    }
 	}
 	
 	public function setSubject($subject){
@@ -140,12 +163,12 @@ abstract class AbstractEmailProvider {
 	    }
 	}
 
-	private function createMessage(){
+	private function createMessage(Address $to_address){
 		// Create a message
 		$message = (new Email())
 		  ->subject($this->subject)
 		  ->from($this->from_address)	// From: addresses specify who actually wrote the email
-		  ->to($this->to_address);
+		  ->to($to_address);
 		
 		  if ($this->reply_to_address !== null){
 		      $message->replyTo($this->reply_to_address);

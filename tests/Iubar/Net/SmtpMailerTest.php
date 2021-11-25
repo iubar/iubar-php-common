@@ -2,12 +2,10 @@
 
 namespace Iubar\Net;
 
+use Iubar\Misc\Bench;
+use Iubar\Misc\MiscUtils;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LogLevel;
-use Iubar\Net\SmtpMailer;
-use Iubar\Misc\MiscUtils;
-use Iubar\Misc\Bench;
-use Iubar\Common\FileUtil;
 
 class SmtpMailerTest extends TestCase {
 
@@ -52,7 +50,7 @@ class SmtpMailerTest extends TestCase {
 	    }
 	    $m->smtp_ssl = true;
 	    $m->setFrom('info@iubar.it', 'Iubar');
-	    $m->setTo('daniele.montesi@iubar.it', 'Daniele Montesi');
+	    $m->setTo([['daniele.montesi@iubar.it' => 'Daniele Montesi']]);
 	    $result = $m->send();
 	    echo Bench::stopTimer($bench_name, true) . PHP_EOL;
 	    $this->assertEquals(1, $result);
@@ -100,4 +98,3 @@ class SmtpMailerTest extends TestCase {
 
 }
 
-?>
