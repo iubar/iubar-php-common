@@ -24,7 +24,7 @@ class Validator extends BaseClass {
 	public static $regex_phrase_of_number = "/^[0-9]+(\\s[0-9]+)*$/";
 	public static $regex_phone_number = "/^[\+0-9]+(\\s[0-9]+)*$/"; // a differenza di $regex_phrase_of_number, prevede che un numero telefonico possa iniziare con il carattere '+'
 	
-	public static $regex_email = "/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/i";
+	public static $regex_email = "/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,10})$/i";
 	
 	// Attenzione: La provincia di Roma potrebbe essere indicata con la vecchia dicitura (ROMA)
 	public static $regex_provincia1 = "/[\\(]([A-Z]{2})[\\)]/";

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Iubar\Tests\Crypt;
+namespace Iubar\Common;
 
 use Iubar\Common\FileUtil;
 use PHPUnit\Framework\TestCase;

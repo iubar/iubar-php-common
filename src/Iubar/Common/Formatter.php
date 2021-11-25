@@ -3,6 +3,8 @@
 namespace Iubar\Common;
 
 use Iubar\Common\BaseClass;
+use Doctrine\SqlFormatter\SqlFormatter;
+use Doctrine\SqlFormatter\NullHighlighter;
 
 class Formatter extends BaseClass {
 	
@@ -414,6 +416,15 @@ class Formatter extends BaseClass {
 	    return join(' ', $ret);
 	}
 	
-	
+	public static function formatSql(string $query, bool $highlight) : string 
+	{
+	    $formatter = null;
+	    if($highlight){
+	        $formatter = new SqlFormatter();
+	    }else{
+	        $formatter = new SqlFormatter(new NullHighlighter());
+	    }
+	    return $formatter->format($query);
+	}
 	
 } // end class
