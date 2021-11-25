@@ -51,6 +51,8 @@ class SmtpMailerTest extends TestCase {
 	        $this->markTestSkipped('Credentials for Aruba are not available.');
 	    }
 	    $m->smtp_ssl = true;
+	    $m->setFrom('info@iubar.it', 'Iubar');
+	    $m->setTo('daniele.montesi@iubar.it', 'Daniele Montesi');
 	    $result = $m->send();
 	    echo Bench::stopTimer($bench_name, true) . PHP_EOL;
 	    $this->assertEquals(1, $result);
@@ -72,14 +74,11 @@ class SmtpMailerTest extends TestCase {
 	    $this->assertEquals(1, $result);
     }
 
-	private function factorySmtpMailer($type, $from = ['info@fatturatutto.it' => 'FatturaTutto.it'], $to = ['daniele.montesi@iubar.it' => 'Daniele']){
+	private function factorySmtpMailer($type){
 		$logger = MiscUtils::loggerFactory("my_logger", LogLevel::DEBUG, null);
 
 		$m = SmtpMailer::factory($type);
 		$m->setLogger($logger);
-		$m->enableAgentLogger(true);
-		$m->setFrom($from);
-		$m->setToList($to);
 		$m->body_txt = "Questa è una prova.";
 		$m->body_html = "<h2>Questo è un <b>test</b></h2>";
 		return $m;
@@ -88,7 +87,9 @@ class SmtpMailerTest extends TestCase {
     private function sendAmazonSes($subject){
         $from = 'info@iubar.it';
         $to = 'tester@email-test.had.dnsops.gov';
-        $m = $this->factorySmtpMailer('amazonses', $from, $to);
+        $m = $this->factorySmtpMailer('amazonses');
+        $m->setFrom($from);
+        $m->setTo($to);
         $m->subject = $subject;
 	    $m->smtp_usr = self::$amazonses_user;
 	    $m->smtp_pwd = self::$amazonses_password;

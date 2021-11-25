@@ -4,6 +4,7 @@ namespace Iubar\Net\EmailProviders;
 
 use Iubar\Net\AbstractEmailProvider;
 use Iubar\Net\IEmailProvider;
+use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
 
 class ArubaProvider extends AbstractEmailProvider implements IEmailProvider {
 
@@ -14,12 +15,12 @@ class ArubaProvider extends AbstractEmailProvider implements IEmailProvider {
 	protected function getTransport(){
 		// Create the Transport
 		$transport = null;
-		if($this->smtp_ssl){
-			$transport = new \Swift_SmtpTransport("smtps.aruba.it", 465, 'ssl');
-		}else{
-			// $transport = new \Swift_SmtpTransport("smtp.iubar.it", 25);
+		if ($this->smtp_ssl){			
+			$transport = new EsmtpTransport('smtps.aruba.it', 465);
+			$transport->setUsername($this->smtp_usr);
+			$transport->setPassword($this->smtp_pwd);
 		}
-		$transport->setUsername($this->smtp_usr)->setPassword($this->smtp_pwd)->setTimeout(self::TIMEOUT);
+			
 		return $transport;
 	}
 

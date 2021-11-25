@@ -4,6 +4,7 @@ namespace Iubar\Net\EmailProviders;
 
 use Iubar\Net\AbstractEmailProvider;
 use Iubar\Net\IEmailProvider;
+use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
 
 /**
 * @see https://docs.aws.amazon.com/ses/index.html
@@ -31,10 +32,11 @@ class AmazonSesProvider extends AbstractEmailProvider implements IEmailProvider 
 		if ($port === null){
 			$port = 587;
 		}		
-		$transport = (new \Swift_SmtpTransport("email-smtp.eu-west-1.amazonaws.com", $port, 'tls')) // see https://eu-west-1.console.aws.amazon.com/ses/home?region=eu-west-1#smtp-settings:
-		->setUsername($this->smtp_usr)
-		->setPassword($this->smtp_pwd)
-		->setTimeout(self::TIMEOUT);
+
+		$transport = new EsmtpTransport('email-smtp.eu-west-1.amazonaws.com', $port);
+		$transport->setUsername($this->smtp_usr);
+		$transport->setPassword($this->smtp_pwd);
+
 		return $transport;
 	}
 	
