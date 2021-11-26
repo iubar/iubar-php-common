@@ -9,14 +9,11 @@ end_of_line = lf
 insert_final_newline = true
 
 # Matches multiple files with brace expansion notation
+[*.{js, php}]
 # Set default charset
-[*.{js, php}]
 charset = utf-8
-
-# 4 space indentation
-[*.{js, php}]
+# Set 4 space indentation
 indent_style = tab
 indent_size = 4
-
+# Remove any whitespace characters preceding newline characters
 trim_trailing_whitespace = true
-# remove any whitespace characters preceding newline characters

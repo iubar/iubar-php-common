@@ -2,9 +2,8 @@
 
 namespace Iubar\Common;
 
-use Iubar\Common\BaseClass;
-use Doctrine\SqlFormatter\SqlFormatter;
 use Doctrine\SqlFormatter\NullHighlighter;
+use Doctrine\SqlFormatter\SqlFormatter; // in alternativa si potrebbe usare phpmyadmin/sql-parser
 
 class Formatter extends BaseClass {
 	
