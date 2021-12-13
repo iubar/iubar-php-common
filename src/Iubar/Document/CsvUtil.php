@@ -47,19 +47,15 @@ class CsvUtil extends BaseClass {
 		}
 	}
 
-	public static function get_csv_assoc($filename, $delim =",", $start_from_line=0){
+	public static function get_csv_assoc(string $filename, string $delim=",", int $start_from_line=0) : array{
 	    $row = 0;
-	    $dump = array();
-	
+	    $dump = [];
 		$headers = CsvUtil::get_csv_header($filename, $delim);
-	
 	    $handle = fopen($filename, "r");
-	    $size = filesize($filename) + 1;
-	
 	    if ($handle !== FALSE) {
 			while (($data = fgetcsv($handle, CsvUtil::$MAX_LEN, $delim)) !== FALSE) {
 				if($row>=$start_from_line){
-					$data_ass = array();
+				    $data_ass = [];
 					$i = 0;
 					foreach($headers as $key){
 						if(isset($data[$i])){
@@ -68,22 +64,18 @@ class CsvUtil extends BaseClass {
 						}else{
 							echo "--> VALUE NOT SET FOR KEY (header = " . $key . " row = " . $row . " columns = " . $i . ") (forse c'è un punto e virgola di troppo nell'intestazione del file ? oppure righe vuote in fondo al file ?)" . PHP_EOL; // note: columns starts from 0
 							print_r($data);
-	
 							die("stop");
 						}
 						$i++;
-					}
-	
-					$dump[$row] = $data_ass;
-					//echo $data[1] . "<br>";
+					}	
+					$dump[] = $data_ass;
 				}else{
-					//echo "skipped " . $data[1] . "<br>";
+					//echo "skipped " . PHP_EOL;
 				}
 				$row++;
 			}
 			fclose ($handle);
 	    }
-	    //echo "Elements in array: " . count($dump) . PHP_EOL;
 	    return $dump;
 	}
 
@@ -92,8 +84,7 @@ class CsvUtil extends BaseClass {
 	    $dump = array();
 	
 	    $handle = fopen($filename, "r");
-	    //$size = filesize($filename)+1;
-	
+ 
 	    if ($handle !== FALSE) {
 			while (($data = fgetcsv($handle, CsvUtil::$MAX_LEN, $delim)) !== FALSE) {
 				if($row>=$start_from_line){
@@ -112,8 +103,7 @@ class CsvUtil extends BaseClass {
 	public static function get_csv_header($filename, $delim =",", $enclosure = '"'){
 	    $row = 0;
 	    $handle = fopen ($filename, "r");
-	    if ($handle !== FALSE) {
-			//$size = filesize($filename) + 1;
+	    if ($handle !== FALSE) {			
 			while (($data = fgetcsv($handle, CsvUtil::$MAX_LEN, $delim, $enclosure)) !== FALSE) {
 				if($row==0){
 					return $data;

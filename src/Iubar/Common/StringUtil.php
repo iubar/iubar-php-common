@@ -13,7 +13,7 @@ namespace Iubar\Common;
 
 class StringUtil {
 
-	const NL = "\r\n";
+	 
 
 	public static  function startsWith($haystack, $needle){
 		$length = strlen($needle);
@@ -112,14 +112,17 @@ class StringUtil {
 		return false;
 	}	
 	
+	/**
+	 * @deprecated trasformare in un test case
+	 */
 	public static function demo(){
 		$string = "abcdefgh";
 		echo "string is " . $string;
-		echo StringUtil::NL;
+		echo PHP_EOL;
 		echo "right 3: " . StringUtil::right(3, $string);
-		echo StringUtil::NL;
+		echo PHP_EOL;
 		echo "left 3: " . StringUtil::left(3, $string);
-		echo StringUtil::NL;
+		echo PHP_EOL;
 	}
 	
 	public static function removeNl($txt){
@@ -129,7 +132,7 @@ class StringUtil {
 		return $txt;
 	}
 	
-	public static function arrayToText2($array, $sep=StringUtil::NL){
+	public static function arrayToText2($array, $sep=PHP_EOL){
 		$content = "";
 		if (is_array($array)){
 		// $i = 0;
@@ -166,14 +169,14 @@ class StringUtil {
 		return $row_num;
 	}
 	
-	public static function textToArray($file, $sep_str=StringUtil::NL){
+	public static function textToArray($file, $sep_str=PHP_EOL){
 		$array = array();
 		$text = file_get_contents($file);
 		$array = explode($sep_str, $text);
 		return $array;
 	}
 	
-	public static function arrayToText($array, $sep=StringUtil::NL){
+	public static function arrayToText($array, $sep=PHP_EOL){
 		$content = "";
 		if (is_array($array)){
 			$content = implode($sep, $array) . $sep;
