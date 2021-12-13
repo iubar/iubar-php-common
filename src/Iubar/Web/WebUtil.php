@@ -247,36 +247,34 @@ class WebUtil {
 		return $ret;
 	}
 	
-
+ 
 	public static function rel2abs($rel, $base){
-		/* return if already absolute URL */
+ 
 		if (parse_url($rel, PHP_URL_SCHEME) != '')
 			return ($rel);
 	
-			/* queries and anchors */
 			if ($rel[0] == '#' || $rel[0] == '?')
 				return ($base . $rel);
 	
-				/* parse base URL and convert to local variables: $scheme, $host, $path, $query, $port, $user, $pass */
                 extract(parse_url($base));
                 $host = null;
                 $scheme = null;
 	
 				if(isset($path)){
-					/* remove non-directory element from path */
+		 
 					$path = preg_replace('#/[^/]*$#', '', $path);
 				}else{
 					$path = '';
 				}
 	
-				/* destroy path if relative url points to root */
+		 
 				if ($rel[0] == '/')
 					$path = '';
 	
-					/* dirty absolute URL */
+			 
 					$abs = '';
 	
-					/* do we have a user in our URL? */
+			 
 					if (isset($user)) {
 						$abs .= $user;
 	
@@ -289,7 +287,7 @@ class WebUtil {
 	
 					$abs .= $host;
 	
-					/* did somebody sneak in a port? */
+				 
 					if (isset($port))
 						$abs .= ':' . $port;
 	
@@ -300,11 +298,12 @@ class WebUtil {
 						for ($n = 1; $n > 0; $abs = preg_replace($re, '/', $abs, -1, $n)) {
 						}
 	
-						/* absolute URL is ready! */
+		 
 	
 						return ($scheme . '://' . $abs);
 	}
-
+ 
+	
 	public static function getRoot(){
 		$root = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
 		return $root;
@@ -317,7 +316,7 @@ class WebUtil {
 		// If you're also interested in other URL components prior to the path (e.g. credentials), you could also use strstr() on the full URL, with the "path" as the needle, e.g.		
 		// $url = 'http://user:pass@localhost:80/some/folder/containing/something/here/or/there';
 		$parsedUrl = parse_url($url);
-		$root = strstr($url, $parsedUrl['path'], true) . '/';//gives 'http://user:pass@localhost:80/
+		$root = strstr($url, $parsedUrl['path'], true) . '/';
 		return $root;
 	}
 		
