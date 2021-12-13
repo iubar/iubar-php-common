@@ -310,11 +310,9 @@ class WebUtil {
 	}
 	
 	public static function parseRoot($url){
-
 		// $parsedUrl = parse_url('http://localhost/some/folder/containing/something/here/or/there');
 		// $root = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . '/';
 		// If you're also interested in other URL components prior to the path (e.g. credentials), you could also use strstr() on the full URL, with the "path" as the needle, e.g.		
-		// $url = 'http://user:pass@localhost:80/some/folder/containing/something/here/or/there';
 		$parsedUrl = parse_url($url);
 		$root = strstr($url, $parsedUrl['path'], true) . '/';
 		return $root;
