@@ -11,8 +11,7 @@ script:
   - composer install --no-progress --no-interaction
   - vendor/bin/parallel-lint --exclude vendor .
   - vendor/bin/phpstan -V
-  - vendor/bin/phpstan analyse src --no-interaction --no-progress --level 0
-  - vendor/bin/phpstan analyse src --no-interaction --no-progress --level max || true
+  - vendor/bin/phpstan analyse --no-interaction --no-progress
   - phpunit
   - vendor/bin/var-dump-check --exclude vendor . || true
   - vendor/bin/psalm --version
@@ -20,7 +19,7 @@ script:
 #  - vendor/bin/psalm --long-progress || true
   - vendor/bin/psalm --taint-analysis || true # https://psalm.dev/docs/security_analysis/
   - vendor/bin/psalm --set-baseline=psalm-baseline.xml || true # https://psalm.dev/docs/running_psalm/dealing_with_code_issues/#using-a-baseline-file
-  - vendor/bin/psalm --shepherd || true
+#  - vendor/bin/psalm --shepherd || true
 notifications:
   email:
     recipients:
