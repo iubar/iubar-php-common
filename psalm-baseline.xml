@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.13.0@cd489407a0219b93cadd04d5aff9845a942f7e5d">
+  <file src="src/Iubar/Common/FileUtil.php">
+    <InvalidArrayOffset occurrences="1">
+      <code>$units[$pow]</code>
+    </InvalidArrayOffset>
+    <InvalidParamDefault occurrences="1">
+      <code>int</code>
+    </InvalidParamDefault>
+    <InvalidPassByReference occurrences="1">
+      <code>explode('/', dirname($uri))</code>
+    </InvalidPassByReference>
+    <InvalidReturnStatement occurrences="2">
+      <code>$array</code>
+      <code>''</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="2">
+      <code>\RecursiveIteratorIterator[]|\FilesystemIterator[]</code>
+      <code>array</code>
+    </InvalidReturnType>
+    <UndefinedConstant occurrences="1">
+      <code>bytes</code>
+    </UndefinedConstant>
+  </file>
+  <file src="src/Iubar/Common/HostingUtil.php">
+    <NullArgument occurrences="1">
+      <code>null</code>
+    </NullArgument>
+  </file>
+  <file src="src/Iubar/Common/INI.php">
+    <InvalidArgument occurrences="2">
+      <code>$ini</code>
+      <code>array('INI', 'replace_consts')</code>
+    </InvalidArgument>
+  </file>
+  <file src="src/Iubar/Common/LoggingUtil.php">
+    <ParadoxicalCondition occurrences="4">
+      <code>LOG_ALERT</code>
+      <code>LOG_CRIT</code>
+      <code>LOG_DEBUG</code>
+      <code>LOG_INFO</code>
+    </ParadoxicalCondition>
+    <UndefinedConstant occurrences="1">
+      <code>NOTICE</code>
+    </UndefinedConstant>
+  </file>
+  <file src="src/Iubar/Common/OsUtil.php">
+    <InvalidPassByReference occurrences="2">
+      <code>explode(' ', php_uname('s'))</code>
+      <code>explode(' ', php_uname('s'))</code>
+    </InvalidPassByReference>
+  </file>
+  <file src="src/Iubar/Common/Ping.php">
+    <NullArgument occurrences="1">
+      <code>null</code>
+    </NullArgument>
+  </file>
+  <file src="src/Iubar/Common/Validator.php">
+    <InvalidArgument occurrences="2">
+      <code>$s</code>
+      <code>$s</code>
+    </InvalidArgument>
+  </file>
+  <file src="src/Iubar/Crypt/AesCbcNoPadding.php">
+    <ParamNameMismatch occurrences="1">
+      <code>$encrypted</code>
+    </ParamNameMismatch>
+    <UndefinedConstant occurrences="4">
+      <code>MCRYPT_MODE_CBC</code>
+      <code>MCRYPT_MODE_CBC</code>
+      <code>MCRYPT_RIJNDAEL_128</code>
+      <code>MCRYPT_RIJNDAEL_128</code>
+    </UndefinedConstant>
+  </file>
+  <file src="src/Iubar/Crypt/AesCbcPkcs5Padding.php">
+    <ParamNameMismatch occurrences="1">
+      <code>$encrypted</code>
+    </ParamNameMismatch>
+  </file>
+  <file src="src/Iubar/Crypt/AesEcbPkcs5Padding.php">
+    <ParamNameMismatch occurrences="4">
+      <code>$input</code>
+      <code>$key</code>
+      <code>$sKey</code>
+      <code>$sStr</code>
+    </ParamNameMismatch>
+    <UndefinedConstant occurrences="7">
+      <code>MCRYPT_MODE_ECB</code>
+      <code>MCRYPT_MODE_ECB</code>
+      <code>MCRYPT_MODE_ECB</code>
+      <code>MCRYPT_RAND</code>
+      <code>MCRYPT_RIJNDAEL_128</code>
+      <code>MCRYPT_RIJNDAEL_128</code>
+      <code>MCRYPT_RIJNDAEL_128</code>
+    </UndefinedConstant>
+  </file>
+  <file src="src/Iubar/Misc/MiscUtils.php">
+    <UndefinedInterfaceMethod occurrences="1">
+      <code>setLevel</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="src/Iubar/Net/Pop3.php">
+    <InvalidReturnStatement occurrences="1">
+      <code>$n</code>
+    </InvalidReturnStatement>
+    <UndefinedDocblockClass occurrences="1">
+      <code>number</code>
+    </UndefinedDocblockClass>
+  </file>
+</files>
