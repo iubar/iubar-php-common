@@ -140,7 +140,7 @@ class StringUtil {
 				if (is_array($elem)){
 					$content .= '[' . StringUtil::arrayToText2($elem) . ']';
 				}else{
-				//echo $i . StringUtil::NL;;
+				//echo $i . PHP_EOL;;
 				//$content = $content . $elem . $sep; // BUG HERE: VERY SLOWWWWW !!!!!!
 				$content .= $elem . $sep;
 				//$i++;

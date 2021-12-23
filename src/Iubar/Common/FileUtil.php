@@ -82,7 +82,7 @@ public static function getFilesInPath($target_path, $ext = "", $recursive=true){
 	// per i nomi dei file da ricercare
 	// Poi vedi anche il metodo rglob e se è il caso di cancellarlo perchè obsoleto, oppure no
 	
-	$array = array();
+	$array = [];
 	$iterator = NULL;
 	if(!is_dir($target_path)){
 		die("Quit: error in getFilesInPath() wrong path: '$target_path'" . PHP_EOL);
@@ -321,17 +321,17 @@ public static function writeContent($filename, $somecontent){
 	// The file pointer is at the bottom of the file hence
 	// that's where $somecontent will go when we fwrite() it.
 	if (!$handle = fopen($filename, 'wb+')) {
-		 echo "Cannot open file ($filename)" . StringUtil::NL;
+		 echo "Cannot open file ($filename)" . PHP_EOL;
 		 exit;
 	}
 
 	// Write $somecontent to our opened file.
 	if (fwrite($handle, $somecontent) === FALSE) {
-		echo "Cannot write to file ($filename)" . StringUtil::NL;
+		echo "Cannot write to file ($filename)" . PHP_EOL;
 		exit;
 	}
 
-	//echo "Success, wrote ($somecontent) to file ($filename)" . StringUtil::NL;
+	//echo "Success, wrote ($somecontent) to file ($filename)" . PHP_EOL;
 
 	fclose($handle);
 
@@ -345,22 +345,22 @@ public static function appendContent($filename, $somecontent){
 		// The file pointer is at the bottom of the file hence
 		// that's where $somecontent will go when we fwrite() it.
 		if (!$handle = fopen($filename, 'a')) {
-			 echo "Cannot open file ($filename)" . StringUtil::NL;
+			 echo "Cannot open file ($filename)" . PHP_EOL;
 			 exit;
 		}
 
 		// Write $somecontent to our opened file.
 		if (fwrite($handle, $somecontent) === FALSE) {
-			echo "Cannot write to file ($filename)" . StringUtil::NL;
+			echo "Cannot write to file ($filename)" . PHP_EOL;
 			exit;
 		}
 
-		//echo "Success, wrote ($somecontent) to file ($filename)" . StringUtil::NL;
+		//echo "Success, wrote ($somecontent) to file ($filename)" . PHP_EOL;
 
 		fclose($handle);
 
 	} else {
-		echo "The file $filename is not writable" . StringUtil::NL;
+		echo "The file $filename is not writable" . PHP_EOL;
 	}
 }
 
@@ -727,7 +727,7 @@ public static function destroyDir($dir, $only_content=true) {
 		$dir = $dir . "/";
 	}
 
-	$array = array();
+	$array = [];
 	$mydir = opendir($dir);
 	while(false !== ($file = readdir($mydir))) {
 		if($file != "." && $file != "..") {
@@ -785,7 +785,7 @@ public static function array2string($array){
 		if($str==""){
 			$str = $elem;
 		}else{
-			$str = $str . StringUtil::NL . $elem;
+			$str = $str . PHP_EOL . $elem;
 		}
 	}
 	return $str;
@@ -848,7 +848,7 @@ public static function bfglob($path, $pattern = '*', $flags = 0, $depth = 0) {
 // $flags  - glob flags
 // $depth  - 0 for current folder only, 1 to descend 1 folder down, and so on. -1 for no limit.
 
-	$matches = array();
+	$matches = [];
 	$folders = array(rtrim($path, DIRECTORY_SEPARATOR));
 
 	while($folder = array_shift($folders)) {
@@ -941,7 +941,7 @@ public static function checkIsWritable($path){
 
 
 public static function searchFileByPattern($path, $regex){
-	$result = array();
+	$result = [];
 	$iterator = new \RecursiveDirectoryIterator($path);
 	$flattened = new \RecursiveIteratorIterator($iterator);
 	$files = new \RegexIterator($flattened, $regex); // esempio '/^.*\.(jpg|jpeg|png|gif)$/i'
@@ -960,7 +960,7 @@ public static function searchFileByPattern($path, $regex){
 public static function getFileByPattern($path='.', $regex=''){ // $regex example '/^.*\.(php|dat)$/' oppure /^.+\.php$/i
 	$iterator = new \RecursiveDirectoryIterator($path);
 	$filter = new \RegexIterator($iterator->getChildren(), $regex);
-	// 	$filelist = array();
+	// 	$filelist = [];
 	// 	foreach($filter as $entry) {
 	// 		$filelist[] = $entry->getFilename();
 	// 	}
@@ -1095,7 +1095,7 @@ public static function get_disks(){
 		// unix
 		$data=`mount`;
 		$data=explode(' ',$data);
-		$disks=array();
+		$disks=[];
 		foreach($data as $token)if(substr($token,0,5)=='/dev/')$disks[]=$token;
 		return $disks;
 	}
@@ -1123,12 +1123,12 @@ public static function decodeSize($bytes){
  * @todo rinominare il metodo, qui "Last" ha il significato di "Newer"
  * @return null|string
  */
-public static function getLastFileByPattern($path='.', $pattern=''){  
+public static function getLastFileByPattern(string $path='.', string $pattern=''){  
 	$last_file = null;
 	$iterator = self::getFileByPattern($path, $pattern);
 	// print_r($iterator);
 	
-	$filelist = array();
+	$filelist = [];
 	foreach($iterator as $entry) {
 		// echo "File: " . $entry->getFilename() . ' MTime: ' . self::timestampToString($entry->getMTime()) . PHP_EOL; // Get last modification time
 		$mtime = $entry->getMTime();

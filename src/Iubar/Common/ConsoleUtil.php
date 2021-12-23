@@ -28,7 +28,7 @@ public static function getUserFolderPath($win=true){ // Only for WINDOWS
 
 public static function pressAKeyToContinue(){
 	$f = fopen('php://stdin', 'r');
-	echo "Premi [invio] per continuare..." . StringUtil::NL;
+	echo "Premi [invio] per continuare..." . PHP_EOL;
 	$line = fgets($f, 1024); // read the special file to get the user input from keyboard
 	fclose($f);
 }
@@ -80,7 +80,7 @@ public static function isYes($str){
 }
 
 public static function writeSeparator(){
-	echo "--------------------------------------" . StringUtil::NL;
+	echo "--------------------------------------" . PHP_EOL;
 }
 
 
@@ -204,7 +204,7 @@ public static function askValue($txt, $def_value=null){
 // TODO: rinominare in confirm()
 public static function askQuestion($question, $def_boolean=true){
 	$b = false;
-	echo StringUtil::NL;
+	echo PHP_EOL;
 	$f = fopen('php://stdin', 'r');
 
 	if($def_boolean){
@@ -232,7 +232,7 @@ public static function askQuestion($question, $def_boolean=true){
 							static $bars;
 							if(!isset($bars[$label])) {
 								$new_bar = TRUE;
-								fputs(STDOUT,"$label Progress:" . StringUtil::NL);
+								fputs(STDOUT,"$label Progress:" . PHP_EOL);
 							}
 							if($current == $bars[$label]) return 0;
 						
@@ -256,7 +256,7 @@ public static function askQuestion($question, $def_boolean=true){
 							echo " $perc%";
 						
 							if($current == $total) {
-							echo StringUtil::NL;        // if it's the end, add a new line
+							echo PHP_EOL;        // if it's the end, add a new line
 							unset($bars[$label]);
 							}
 							}
@@ -354,17 +354,17 @@ public static function showStatus($done, $total, $size=30) {
 
 	// when done, send a newline
 	if($done == $total) {
-		echo StringUtil::NL;
+		echo PHP_EOL;
 	}
 
 }
 	
 public static function printTitle($title){
-	echo StringUtil::NL;
-	echo "---------------" . StringUtil::NL;
-	echo $title . StringUtil::NL;
-	echo "---------------" . StringUtil::NL;
-	echo StringUtil::NL;
+	echo PHP_EOL;
+	echo "---------------" . PHP_EOL;
+	echo $title . PHP_EOL;
+	echo "---------------" . PHP_EOL;
+	echo PHP_EOL;
 }		
 
 public static function stackTrace() {

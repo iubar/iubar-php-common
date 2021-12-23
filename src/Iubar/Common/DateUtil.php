@@ -396,21 +396,21 @@ public static function test_diff_2(){
 	$d2 = mktime($h2, $m, $s, $month, $day, $year);
 	$diff3 = $d1 - $d2;
 
-	echo "diff1: " . self::secondsToHours($diff1) . " h." . StringUtil::NL;
-	echo "diff2: " . self::secondsToHours($diff2) . " h." . StringUtil::NL;
-	echo "diff3: " . self::secondsToHours($diff3) . " h." . StringUtil::NL;
+	echo "diff1: " . self::secondsToHours($diff1) . " h." . PHP_EOL;
+	echo "diff2: " . self::secondsToHours($diff2) . " h." . PHP_EOL;
+	echo "diff3: " . self::secondsToHours($diff3) . " h." . PHP_EOL;
 }
 
 public static function test_diff(){
  
 	// ATTENZIONE: Qui la timezone è probabilmente (!) uguale a GMT+1
 	$hours_diff = strtotime("20:00:00") - strtotime("19:00:00");
-	echo  date('h:i', $hours_diff) . " Hours" . StringUtil::NL;
+	echo  date('h:i', $hours_diff) . " Hours" . PHP_EOL;
 	// it shows: 02:00 Hours
 	// but if you use a default UTC time:
 	date_default_timezone_set('UTC');
 	$hours_diff = strtotime("20:00:00") - strtotime("19:00:00");
-	echo date('h:i', $hours_diff) . " Hours" . StringUtil::NL;
+	echo date('h:i', $hours_diff) . " Hours" . PHP_EOL;
 }
 
 public static function test_tz(){
