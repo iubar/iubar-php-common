@@ -87,7 +87,7 @@ class SmtpMailerTest extends TestCase {
         $to = 'tester@email-test.had.dnsops.gov';
         $m = $this->factorySmtpMailer('amazonses');
         $m->setFrom($from);
-        $m->setTo($to);
+        $m->addTo($to);
         $m->subject = $subject;
 	    $m->smtp_usr = self::$amazonses_user;
 	    $m->smtp_pwd = self::$amazonses_password;
