@@ -48,7 +48,8 @@ class EmailValidator {
 		$hostname = $mailparts[1];
 		
 		// get mx addresses by getmxrr
-		
+		$mx_records = null;
+		$mx_weight = null;
 		if ($check_mx) {
 			$b_mx_avail = getmxrr($hostname, $mx_records, $mx_weight); // Get MX records corresponding to a given Internet host name
 			// oppure  return checkdnsrr($hostname, 'MX'); // Check DNS records corresponding to a given Internet host name or IP address

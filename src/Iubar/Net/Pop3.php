@@ -144,6 +144,7 @@ class Pop3 {
      *
      */
     private function mail_parse_headers($headers) {
+		$result = [];
         $headers = preg_replace('/\r\n\s+/m', '', $headers);
         preg_match_all('/([^: ]+): (.+?(?:\r\n\s(?:.+?))*)?\r\n/m', $headers, $matches);
         foreach ($matches[1] as $key => $value)

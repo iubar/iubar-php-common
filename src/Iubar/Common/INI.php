@@ -60,6 +60,7 @@ class INI extends BaseClass {
 		$section = 'default';
 		$multi = '';
 		foreach($lines as $line) {
+			$key = '';
 			if (substr($line, 0, 1) !== ';') {
 				$line = str_replace("\r", "", str_replace("\n", "", $line));
 				if (preg_match('/^\[(.*)\]/', $line, $m)) {

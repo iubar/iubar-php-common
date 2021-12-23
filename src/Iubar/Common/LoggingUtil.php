@@ -99,7 +99,7 @@ class LoggingUtil {
 				$txt = "WARNING";
 				break;
 			case LogLevel::NOTICE:
-				$txt= NOTICE;
+				$txt= "NOTICE";
 				break;
 			case LogLevel::INFO:
 				$txt = "INFO";

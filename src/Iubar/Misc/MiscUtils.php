@@ -29,6 +29,8 @@ class MiscUtils {
 
 
 	public static function rotatingLoggerFactoryloggerFactory($logger_name, $log_level, $log_file="log.rot", $log_to_shell=true){
+		$error = null;
+		$log_file = null;
 		$logger = new Logger($logger_name); // create a log channel
 		if($log_file){
 			$log_path = dirname($log_file);

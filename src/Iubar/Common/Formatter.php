@@ -309,6 +309,7 @@ class Formatter extends BaseClass {
 	
 
 	public static function formatBytes2($file, $type) {
+		$filesize = 0;
 	    switch ($type) {
 	        case "KB":
 	            $filesize = filesize($file) * .0009765625; // bytes to KB

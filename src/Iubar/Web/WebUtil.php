@@ -38,6 +38,7 @@ class WebUtil {
 	}
 	
 	public static function isUrl2($str){
+		$b = false;
 		if(filter_var($str, FILTER_VALIDATE_URL)){
 			$b = true;
 		}

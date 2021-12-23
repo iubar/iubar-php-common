@@ -86,6 +86,7 @@ public static function writeSeparator(){
 
 
 public static function beep($int_beeps = 1) {
+	$string_beeps = '';
 	for ($i = 0; $i < $int_beeps; $i++): $string_beeps .= "\x07"; endfor;
 	print $string_beeps;
 }
@@ -226,7 +227,7 @@ public static function askQuestion($question, $def_boolean=true){
 }
 
 						public static function progressBarForLinuxTerminal($current=0, $total=100, $label="", $size=50) {
-						
+							$new_bar = false;
 							//Don't have to call $current=0
 							//Bar status is stored between calls
 							static $bars;

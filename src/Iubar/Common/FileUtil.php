@@ -148,7 +148,7 @@ public static function writeToFile2($filename, $text) {
 		// Scrive $somecontent nel file aperto.
 		$bytes = fwrite($handle, $text);
 		
-		if (!bytes) {
+		if (!$bytes) {
 			echo "Non posso scrivere nel file ($filename)"  . "<br/>";
 			exit;
 		}
@@ -1059,6 +1059,7 @@ public static function get_dir_size($dir_name){
 	//print "Directory $dir_name size : $total_size MB";
 	
 	$dir_size =0;
+	$dh = null;
 	if (is_dir($dir_name)) {
 		if ($dh = opendir($dir_name)) {
 			while (($file = readdir($dh)) !== false) {

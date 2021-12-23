@@ -70,9 +70,9 @@ function replace_invalid_byte_sequence6($str) {
 	$ret = '';
 
 	$pos = 0;
-	$char;
-	$char_size;
-	$valid;
+	$char = null;
+	$char_size = null;
+	$valid = null;
 
 	while (utf8_get_next_char($str, $size, $pos, $char, $char_size, $valid)) {
 		$ret .= $valid ? $char : $substitute;
