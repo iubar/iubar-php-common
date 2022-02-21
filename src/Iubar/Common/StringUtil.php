@@ -335,6 +335,14 @@ class StringUtil {
 		return $utf8;
 	}
 	
+	public static function isNotEmpty($str){
+		return $str !== null && $str !== '';
+	}
+	
+	public static function isEmpty($str){
+		return !self::isNotEmpty($str);
+	}
+	
 } // end class
 
 ?>
