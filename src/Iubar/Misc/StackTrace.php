@@ -36,7 +36,7 @@ class StackTrace {
 			$skip_args = false;
 			$caller = @$backtrace[$i+1]['function'];
 			// Display caller function (if not a require or include)
-			if(isset($caller) && !in_array($caller, $ignore_functions)){
+			if(!in_array($caller, $ignore_functions)){
 				$function = ' in function '.$before.$caller.$after;
 			}
 			else{
