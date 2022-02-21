@@ -8,7 +8,7 @@ before_script:
   - cat /etc/os-release
   - php -v
 script:
-  - apt-get install -y php-mcrypt
+  - sudo apt-get install -y php-mcrypt
   - composer install --no-progress --no-interaction
   - vendor/bin/parallel-lint --exclude vendor .
   - vendor/bin/phpstan -V
