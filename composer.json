@@ -15,7 +15,7 @@
 	"require" : {
 		"php" : ">=7.3",
 		"ext-mbstring": "*",
-		"ext-mcrypt": "*",
+		"ext-openssl": "*",
 		"psr/log" : "^1.0",
 		"monolog/monolog" : "^2.3",
 		"bramus/monolog-colored-line-formatter" : "^3.0",

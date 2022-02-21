@@ -2,14 +2,9 @@
 
 namespace Iubar\Crypt;
 
-// Implementa l'algoritmo "AES/CBC/NoPadding"
-
-use Iubar\Crypt\AesBase;
-use Iubar\Crypt\AesInterface;
-
 /**
- * @deprecated mcrypt was DEPRECATED in PHP 7.1.0, and REMOVED in PHP 7.2.0.
- */
+ * Implementa l'algoritmo "AES/CBC/NoPadding"
+ */ 
 class AesCbcNoPadding extends AesBase implements AesInterface {
 
 	public function __construct($key){
@@ -17,13 +12,11 @@ class AesCbcNoPadding extends AesBase implements AesInterface {
 	}
 
 	public function encrypt($plaintext, $iv){
-		$encrypted = @mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $this->key, $plaintext, MCRYPT_MODE_CBC, $iv);
-		return (base64_encode($encrypted));
+		 
 	}
 
 	public function decrypt($encrypted, $iv){
-		$decrypted = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $this->key, base64_decode($encrypted), MCRYPT_MODE_CBC, $iv);
-		return $decrypted;
+	 
 	}
 
 }
