@@ -21,7 +21,7 @@
 		"bramus/monolog-colored-line-formatter" : "^3.0",
 		"league/climate" : "^3.8",
 		"goodby/csv" : "*",
-		"symfony/mailer": "^6.0",
+		"symfony/mailer": "^5.4",
 		"doctrine/sql-formatter" : "^1.1"
 	},
 	"require-dev" : {
@@ -41,6 +41,11 @@
 	"autoload-dev" : {
 		"psr-4" : {
 			"Iubar\\Tests\\" : "tests/Iubar/"
+		}
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
 		}
 	}
 }
