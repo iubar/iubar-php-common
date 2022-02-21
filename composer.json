@@ -13,16 +13,19 @@
 		}
 	],
 	"require" : {
-		"psr/log" : "*",
-		"monolog/monolog" : "*",
-		"bramus/monolog-colored-line-formatter" : "*",
-		"league/climate" : "*",
+		"php" : ">=7.3",
+		"ext-mbstring": "*",
+		"ext-mcrypt": "*",
+		"psr/log" : "^1.0",
+		"monolog/monolog" : "^2.3",
+		"bramus/monolog-colored-line-formatter" : "^3.0",
+		"league/climate" : "^3.8",
 		"goodby/csv" : "*",
-		"symfony/mailer": "^5.3",
-		"doctrine/sql-formatter" : "*"
+		"symfony/mailer": "^6.0",
+		"doctrine/sql-formatter" : "^1.1"
 	},
 	"require-dev" : {
-		"phpunit/phpunit" : "^8.0",
+		"phpunit/phpunit" : "^9.5",
 		"phpstan/phpstan" : "*",
 		"vimeo/psalm" : "*",
 		"php-parallel-lint/php-parallel-lint": "*",

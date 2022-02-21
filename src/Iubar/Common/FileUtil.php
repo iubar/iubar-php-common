@@ -76,7 +76,7 @@ public static function deleteDir($dirPath) {
  * @param boolean $recursive
  * @return \RecursiveIteratorIterator[]|\FilesystemIterator[]
  */
-public static function getFilesInPath($target_path, $ext = "", $recursive=true){
+public static function getFilesInPath(string $target_path, string $ext = "", bool $recursive=true) : array {
 	
 	// TODO: scrivere un metodo analogo che accetta anche come parametro un pattern 
 	// per i nomi dei file da ricercare
@@ -95,7 +95,7 @@ public static function getFilesInPath($target_path, $ext = "", $recursive=true){
 		$iterator = new \FilesystemIterator ($target_path);
 	}
 	// $filter = new \RegexIterator($iterator, '/t.(php|dat)$/');
-	$tot_size = 0;
+	// $tot_size = 0;
 	foreach ($iterator as $fileInfo) {
 	 
 		if ($fileInfo->isFile()) {			
