@@ -343,6 +343,15 @@ class StringUtil {
 		return !self::isNotEmpty($str);
 	}
 	
+	public static function isTrue(string $str){
+		$b = false;
+		if ($str == 'true' || intval($str) == 1){
+			$b = true;
+		}
+		
+		return $b;
+	}
+	
 } // end class
 
 ?>
