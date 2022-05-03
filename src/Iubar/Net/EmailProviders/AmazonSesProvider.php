@@ -7,11 +7,12 @@ use Iubar\Net\IEmailProvider;
 use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
 
 /**
-* @see https://docs.aws.amazon.com/ses/index.html
-* In alternativa ll'utilizzo del client Smtp (come implementato da questa classe), potrei istanziare il client dell'sdk di AmazonSes, vedi i seguenti documeti
-* @see https://docs.aws.amazon.com/en_us/ses/latest/DeveloperGuide/send-using-sdk-php.html
-* @see https://docs.aws.amazon.com/en_us/sdk-for-php/v3/developer-guide/getting-started_basic-usage.html
-* @see https://github.com/aws/aws-sdk-php
+* Amazon SES: @see https://docs.aws.amazon.com/ses/index.html
+* Eventualmente, in alternativa all'utilizzo di Symfony Mailer, implementato in questa classe (!),
+* si potrebbe istanziare direttamente il client dell'sdk di AmazonSes come illustrato nella documentazione seguente
+*  - https://docs.aws.amazon.com/en_us/ses/latest/DeveloperGuide/send-using-sdk-php.html
+*  - https://docs.aws.amazon.com/en_us/sdk-for-php/v3/developer-guide/getting-started_basic-usage.html
+*  - https://github.com/aws/aws-sdk-php
 */
 class AmazonSesProvider extends AbstractEmailProvider implements IEmailProvider {
 
@@ -20,8 +21,13 @@ class AmazonSesProvider extends AbstractEmailProvider implements IEmailProvider 
 	}
 	
 	/**
-	 * 
+	 * Il metodo implementa accesso SMPT al servizio SES.
 	 * @see http://docs.aws.amazon.com/ses/latest/DeveloperGuide/smtp-connect.html
+	 *  
+	 * Per un'eventuale utilizzo alternativo tramite REST API, si veda 
+	 *   - https://github.com/symfony/amazon-mailer/blob/5.4/Tests/Transport/SesApiTransportTest.php
+	 *   - https://symfony.com/doc/current/mailer.html#using-a-3rd-party-transport 
+	 *
 	 * {@inheritDoc}
 	 * @see \Iubar\Net\AbstractEmailProvider::getTransport()
 	 */

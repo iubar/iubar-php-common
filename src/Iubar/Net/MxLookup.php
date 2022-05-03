@@ -2,6 +2,14 @@
 
 namespace Iubar\Net;
 
+/**
+ * A way to do mx-lookup on a windows platform.
+ * (from https://www.php.net/manual/en/function.getmxrr.php#49290 )
+ * 
+ * @deprecated perchè classe poco documentata, con bug evidenti, nessun test
+ * @todo cercare implementazione più semplice 
+ *
+ */
 class MxLookup {
 	var $dns_socket = NULL;
 	var $QNAME = "";
@@ -67,7 +75,7 @@ class MxLookup {
 				if($byte==192) //compressed
 				{
 				$tmpIx = $this->cIx;
-				$this->cIx = ord($this->gdi($cIx));
+				$this->cIx = ord($this->gdi($this->cIx));
 					$tmpName = $retval;
 					$this->parse_data($tmpName);
 						$retval=$retval.".".$tmpName;
