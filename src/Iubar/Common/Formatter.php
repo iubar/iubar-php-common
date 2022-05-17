@@ -427,4 +427,16 @@ class Formatter extends BaseClass {
 	    return $formatter->format($query);
 	}
 	
+	public static function pretty ($var) : string {
+		return gettype($var) . ' ' . json_encode(
+			$var,
+			JSON_UNESCAPED_SLASHES |
+			JSON_UNESCAPED_UNICODE |
+			JSON_PRETTY_PRINT |
+			JSON_PARTIAL_OUTPUT_ON_ERROR |
+			JSON_INVALID_UTF8_SUBSTITUTE
+			);
+	}
+	
+	
 } // end class
