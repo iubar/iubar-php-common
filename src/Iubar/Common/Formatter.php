@@ -252,10 +252,10 @@ class Formatter extends BaseClass {
 		if ($yoursize < 1024) {
 			$str = "{$yoursize} bytes";
 		} elseif ($yoursize < 1048576) {
-			$size_kb = round ( $yoursize / 1024 );
+			$size_kb = round ( $yoursize / 1024, 2);
 			$str = "{$size_kb} KB";
 		} else {
-			$size_mb = round ( $yoursize / 1048576, 1 );
+			$size_mb = round ( $yoursize / 1048576, 2);
 			$str = "{$size_mb} MB";
 		}
 		return $str;
