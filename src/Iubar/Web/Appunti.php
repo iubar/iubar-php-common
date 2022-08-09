@@ -8,7 +8,7 @@
 // // Nota inoltre la differenza tra "%20" e "+":
 
 // // - multipart/form-data uses MIME encoding
-// // - application/x-www-form-urlencoded uses '+' 
+// // - application/x-www-form-urlencoded uses '+'
 // // - properly encoded URIs use %20
 
 // function html_entities_demo(){
@@ -21,7 +21,7 @@
 // 	echo PHP_EOL . PHP_EOL;
 // 	echo "htmlentities(HTML5): " . htmlentities($text, ENT_QUOTES | ENT_HTML5, "UTF-8");
 // 	echo PHP_EOL . PHP_EOL;
-// 	echo "htmlentities(ENT_HTML401): " . htmlentities($text, ENT_QUOTES | ENT_HTML401, "UTF-8");	
+// 	echo "htmlentities(ENT_HTML401): " . htmlentities($text, ENT_QUOTES | ENT_HTML401, "UTF-8");
 // 	echo PHP_EOL . PHP_EOL;
 // 	echo "htmlentities(ENT_XHTML): " . htmlentities($text, ENT_QUOTES | ENT_XHTML, "UTF-8");
 // 	echo PHP_EOL . PHP_EOL;
@@ -40,7 +40,7 @@
 // 	echo PHP_EOL . PHP_EOL;
 // 	echo "xml_entities(): " . xml_entities($text);
 // 	echo PHP_EOL . PHP_EOL;
-// 	echo "htmlspecialchars(): " . htmlspecialchars($text, ENT_QUOTES, 'UTF-8');  // solo 5 conversioni 
+// 	echo "htmlspecialchars(): " . htmlspecialchars($text, ENT_QUOTES, 'UTF-8');  // solo 5 conversioni
 // 														// htmlspecialchars() è la soluzione migliore !!!!
 // 	echo PHP_EOL . PHP_EOL;
 // }
@@ -71,7 +71,4 @@
 // 			)
 // 	);
 // }
-
-
-
 ?>

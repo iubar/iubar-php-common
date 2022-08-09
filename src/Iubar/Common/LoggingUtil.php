@@ -5,9 +5,7 @@ namespace Iubar\Common;
 use Psr\Log\LogLevel;
 
 class LoggingUtil {
-	
-	public static function syslogLeveltoPsr($priority){
-		
+	public static function syslogLeveltoPsr($priority) {
 		/**
 		 LOG_EMERG		system is unusable
 		 LOG_ALERT		action must be taken immediately
@@ -18,7 +16,7 @@ class LoggingUtil {
 		 LOG_INFO		informational message
 		 LOG_DEBUG		debug-level message
 		 **/
-		
+
 		$level = null;
 		switch ($priority) {
 			case LOG_EMERG:
@@ -48,8 +46,8 @@ class LoggingUtil {
 		}
 		return $level;
 	}
-	
-	public static function psrLeveltoSyslog($level){
+
+	public static function psrLeveltoSyslog($level) {
 		$priority = null;
 		switch ($level) {
 			case LogLevel::EMERGENCY:
@@ -79,37 +77,35 @@ class LoggingUtil {
 		}
 		return $priority;
 	}
-	
-	public static function psrLeveltoString($level){
+
+	public static function psrLeveltoString($level) {
 		$txt = null;
 		switch ($level) {
 			case LogLevel::EMERGENCY:
-				$txt = "EMERGENCY";
+				$txt = 'EMERGENCY';
 				break;
 			case LogLevel::ALERT:
-				$txt = "ALERT";
+				$txt = 'ALERT';
 				break;
 			case LogLevel::CRITICAL:
-				$txt = "CRITICAL";
+				$txt = 'CRITICAL';
 				break;
 			case LogLevel::ERROR:
-				$txt = "ERROR";
+				$txt = 'ERROR';
 				break;
 			case LogLevel::WARNING:
-				$txt = "WARNING";
+				$txt = 'WARNING';
 				break;
 			case LogLevel::NOTICE:
-				$txt= "NOTICE";
+				$txt = 'NOTICE';
 				break;
 			case LogLevel::INFO:
-				$txt = "INFO";
+				$txt = 'INFO';
 				break;
 			case LogLevel::DEBUG:
-				$txt = "DEBUG";
+				$txt = 'DEBUG';
 				break;
 		}
 		return $txt;
 	}
-	
 }
-

@@ -2,13 +2,12 @@
 namespace Iubar\Misc;
 
 class Bench {
-
-	private static $array = array();
- // start times
-	private static $array2 = array();
- // stop times
+	private static $array = [];
+	// start times
+	private static $array2 = [];
+	// stop times
 	public static $debug = false;
-	
+
 	public static $def_format = 'H:i:s.u'; // oppure 'Y-m-d H:i:s.u'
 
 	public static function startTimer(string $timer_name) {
@@ -18,9 +17,12 @@ class Bench {
 		if (self::$debug) {
 			// http://php.net/manual/en/function.debug-backtrace.php
 			$backtrace = debug_backtrace();
-			$calling_method = $backtrace[1]["function"];
-			echo $calling_method . " : has been started at " . $starttime . ' (unix timestamp)' . PHP_EOL;
-			echo $calling_method . " : has been started at " . self::timeToString($starttime, new \DateTimeZone('Europe/Rome')) . PHP_EOL;
+			$calling_method = $backtrace[1]['function'];
+			echo $calling_method . ' : has been started at ' . $starttime . ' (unix timestamp)' . PHP_EOL;
+			echo $calling_method .
+				' : has been started at ' .
+				self::timeToString($starttime, new \DateTimeZone('Europe/Rome')) .
+				PHP_EOL;
 		}
 	}
 
@@ -29,7 +31,7 @@ class Bench {
 		self::$array2[$timer_name] = $endtime;
 		$str = self::getDiffAsString($timer_name, $endtime);
 		if ($verbose) {
-			$str = "[" . $timer_name . "]" . " elapsed time: " . $str;
+			$str = '[' . $timer_name . ']' . ' elapsed time: ' . $str;
 		}
 		if (self::$debug) {
 			echo $str . PHP_EOL;
@@ -65,14 +67,14 @@ class Bench {
 
 	private static function getDiffAsString(string $timer_name, $endtime, $format = null) {
 		$str = null;
-		if(!$format){
+		if (!$format) {
 			$format = self::$def_format;
 		}
 		$diff = self::getDiff($timer_name, $endtime);
 		if (self::$debug) {
 			$backtrace = debug_backtrace();
-			$calling_method = $backtrace[1]["function"];
-			echo "[" . $timer_name . "]" . $calling_method . " elapsed time (unix timestamp): " . $diff . PHP_EOL;
+			$calling_method = $backtrace[1]['function'];
+			echo '[' . $timer_name . ']' . $calling_method . ' elapsed time (unix timestamp): ' . $diff . PHP_EOL;
 		}
 		if ($diff !== null) {
 			$str = self::microtimeToString($diff, $format);
@@ -91,22 +93,22 @@ class Bench {
 
 	/**
 	 * Nota che $mtime rappresenta i secondi perchè è valorizzato con la funzione microtime(true)
-	 * 
+	 *
 	 * @see http://php.net/manual/en/function.microtime.php
 	 * @see http://php.net/manual/en/datetime.createfromformat.php
 	 */
 	public static function microtimeToString($mtime, $format) {
-		if(!$mtime){
-		  return "<undefined micro time>";
-		}		
+		if (!$mtime) {
+			return '<undefined micro time>';
+		}
 		$str = null;
 		// echo "MTIME " . $mtime . PHP_EOL;
 		// if($mtime==0){
 		// $mtime = '0.0';
 		// }
 		// list($sec,$ms) = explode(".", $mtime);
-		$utc = new \DateTimeZone("UTC");
-		
+		$utc = new \DateTimeZone('UTC');
+
 		// Format explained:
 		// U: Seconds since the Unix Epoch (January 1 1970 00:00:00 GMT) Example: 1292177455
 		// u: Microseconds (up to six digits) Example: 45, 654321
@@ -127,8 +129,8 @@ class Bench {
 	 *      RFC850 = "l, d-M-y H:i:s T"
 	 */
 	private static function timeToString($unixtime, \DateTimeZone $tz) {
-		if(!$unixtime){
-		  return "<undefined time>";
+		if (!$unixtime) {
+			return '<undefined time>';
 		}
 		$dt = \DateTime::createFromFormat('U.u', $unixtime);
 		$dt->setTimezone($tz);
@@ -150,7 +152,7 @@ class Bench {
 		$unixtime = self::$array2[$timer_name];
 		return self::timeToString($unixtime, $tz);
 	}
-	
+
 	public static function getNowAsString(\DateTimeZone $tz = null) {
 		if ($tz == null) {
 			$tz = new \DateTimeZone('Europe/Rome');
@@ -159,8 +161,4 @@ class Bench {
 		$dt->setTimezone($tz);
 		return $dt->format(\DateTime::RFC850);
 	}
-	
-	
 }
-
-

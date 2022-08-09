@@ -3,7 +3,6 @@
 namespace Iubar\Crypt;
 
 class CryptUtils {
-
 	private static $PADDING = true; // Se true, qualora $data non contenga i caratteri di padding, li aggiungo
 
 	public static function base64UrlEncode($data) {
@@ -15,11 +14,15 @@ class CryptUtils {
 	}
 
 	public static function base64SpecialCharsDecode($data) {
-		if(self::$PADDING){
-			return str_pad(strtr($data, '-_', '+/'), strlen($data) + (4 - strlen($data) % 4) % 4, '=', STR_PAD_RIGHT);
-		}else{
+		if (self::$PADDING) {
+			return str_pad(
+				strtr($data, '-_', '+/'),
+				strlen($data) + ((4 - (strlen($data) % 4)) % 4),
+				'=',
+				STR_PAD_RIGHT
+			);
+		} else {
 			return strtr($data, '-_', '+/');
 		}
 	}
-
 }

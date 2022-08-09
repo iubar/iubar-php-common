@@ -6,11 +6,10 @@ use PHPUnit\Framework\TestCase;
 use Iubar\Net\EmailValidator;
 
 class EmailValidatorTest extends TestCase {
-
-	public function testEmailValidator(){
-		$email1 = "pippo@iubar.it";
-		$email2 = "pippo@iubarzzxxx.it";
-		$email4 = "pippo@iubarzzxxx";
+	public function testEmailValidator() {
+		$email1 = 'pippo@iubar.it';
+		$email2 = 'pippo@iubarzzxxx.it';
+		$email4 = 'pippo@iubarzzxxx';
 		$validator = new EmailValidator();
 		$b1 = $validator->validate($email1, true, false);
 		$this->assertTrue($b1);

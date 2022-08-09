@@ -6,264 +6,270 @@ use Iubar\Common\LangUtil;
 use League\CLImate\CLImate;
 
 /**
- * Alternative 
+ * Alternative
  * https://symfony.com/doc/current/components/console/helpers/questionhelper.html
  * https://github.com/thephpleague/climate
- * 
+ *
  * @deprecated
  * @author Borgo
  *
  */
 class ConsoleUtil {
-	
-public static function getUserFolderPath($win=true){ // Only for WINDOWS
-	$out = ".";
-	if($win){
-		$var = "%USERPROFILE%";
-		$cmd = "echo " . $var;
-		$out = trim(shell_exec($cmd));
-	}
-	return $out;
-}
-
-public static function pressAKeyToContinue(){
-	$f = fopen('php://stdin', 'r');
-	echo "Premi [invio] per continuare..." . PHP_EOL;
-	$line = fgets($f, 1024); // read the special file to get the user input from keyboard
-	fclose($f);
-}
-
-public static function echoContinue($def_boolean=true){
-	$f = fopen('php://stdin', 'r');
-
-	if($def_boolean){
-		echo "Continuare ? [s]: ";
-	}else{
-		echo "Continuare ? [n]: ";
-	}
-
-	$line = trim(fgets($f));
-
-	if($line=="" && strlen($line)==0){
-		if($def_boolean){
-			$line = "y";
-		}else{
-			$line = "n";
+	public static function getUserFolderPath($win = true) {
+		// Only for WINDOWS
+		$out = '.';
+		if ($win) {
+			$var = '%USERPROFILE%';
+			$cmd = 'echo ' . $var;
+			$out = trim(shell_exec($cmd));
 		}
+		return $out;
 	}
 
-	fclose($f);
-	return ConsoleUtil::isYes($line);
-}
-
-public static function isNo($line){
-	return !ConsoleUtil::isYes($line);
-}
-
-
-public static function yesToBoolean($str){
-	$b=false;
-	if(ConsoleUtil::isYes($str)){
-		$b=true;
+	public static function pressAKeyToContinue() {
+		$f = fopen('php://stdin', 'r');
+		echo 'Premi [invio] per continuare...' . PHP_EOL;
+		$line = fgets($f, 1024); // read the special file to get the user input from keyboard
+		fclose($f);
 	}
-	return $b;
-}
 
-public static function isYes($str){
-	$b=false;
-	$str = strtolower(trim($str));
-	$array = array("sì", "si", "s", "yes", "y", "1");
-	if (in_array($str, $array)) {
-		$b=true;
-	}
-	return $b;
-}
+	public static function echoContinue($def_boolean = true) {
+		$f = fopen('php://stdin', 'r');
 
-public static function writeSeparator(){
-	echo "--------------------------------------" . PHP_EOL;
-}
-
-
-
-public static function beep($int_beeps = 1) {
-	$string_beeps = '';
-	for ($i = 0; $i < $int_beeps; $i++): $string_beeps .= "\x07"; endfor;
-	print $string_beeps;
-}
-
-
-public static function read($length=255) {
-	// FIXME: se digito la seguente string fgets() restituisce una stringa vuota:
-	// cifaro61òlibero.it	
-	// Ho provato con stream_get_line() ma ho ottenuto stesso risultato
-	if (!isset ($GLOBALS['StdinPointer'])) {
-		$GLOBALS['StdinPointer'] = fopen ("php://stdin", "r");
-	}
-	$line = fgets ($GLOBALS['StdinPointer'], $length);
-	return trim($line);
-}
-
-private static function printMenu($array){
-	foreach ($array as $key=>$value){				
-		$prefix = "";
-		if(LangUtil::is_assoc($array)){
-			$index = array_search($key, array_keys($array)) + 1;
-			$prefix = $index . ") " . $key . " => ";
-		}else{
-			$index = $key + 1;
-			$prefix = $index . ") ";
+		if ($def_boolean) {
+			echo 'Continuare ? [s]: ';
+		} else {
+			echo 'Continuare ? [n]: ';
 		}
-		if(!is_array($value)){
-			echo $prefix . $value . PHP_EOL;
-		}else{
-			echo $prefix . json_encode($value) . PHP_EOL;
-		}		
-	}
-}
 
-public static function showMenu($array, $title="", $def=1){
-	$result = null;
-	if($title){
-		self::printTitle($title);
-	}
-	if($array==null || count($array)==0){
-		echo "Errore: impossibile visualizzare il menu, l'elenco è vuoto." . PHP_EOL;
-		self::pressAKeyToContinue();
-	}else{
-		self::printMenu($array);
-		echo PHP_EOL;
-		$choice = self::askValue("Scegli" , $def) - 1;
-		if(LangUtil::is_assoc($array)){
-			$keys = array_keys($array);
-			$result = $keys[$choice]; // il risultato è la chiave dell'elemento dell'array associativo scelto
-		}else{
-			$result = $array[$choice]; // il risultato è il valore corrispondente all'indice scelto
-		}
-	}
-	return $result;
-}
+		$line = trim(fgets($f));
 
-private static function askValue2($txt, array $answers, $def_value=null){
-
-	$question = $txt . ' [' . implode(",", $answers) . ']';
-	if($def_value){
-		$question .= ' [' . $def_value. ']: ';
-	}else{
-		$question .= ": ";
-	}
-	echo $question;
-	$value = ConsoleUtil::read();
-	if(!$value && $def_value){
-		$value = $def_value;
-	}
-
-	return $value;
-}
-
-public static function askValueWithAnswer($txt, array $answers, $def_index){
-	$def_value = null;
-	if(isset($answers[$def_index])){
-		$def_value  = $answers[$def_index];
-	}
-	while (true) {		
-		$value = self::askValue2($txt, $answers, $def_value);
-		if($value){
-			foreach ($answers as $answer){
-				if($value === $answer){
-					break 2; // exit from the while loop
-				}
+		if ($line == '' && strlen($line) == 0) {
+			if ($def_boolean) {
+				$line = 'y';
+			} else {
+				$line = 'n';
 			}
-		}else if($def_value){
-			$value = $def_value;
-			break; // exit from the while loop
-		}else{
-			echo "Risposta '$value' non valida" . PHP_EOL;
+		}
+
+		fclose($f);
+		return ConsoleUtil::isYes($line);
+	}
+
+	public static function isNo($line) {
+		return !ConsoleUtil::isYes($line);
+	}
+
+	public static function yesToBoolean($str) {
+		$b = false;
+		if (ConsoleUtil::isYes($str)) {
+			$b = true;
+		}
+		return $b;
+	}
+
+	public static function isYes($str) {
+		$b = false;
+		$str = strtolower(trim($str));
+		$array = ['sì', 'si', 's', 'yes', 'y', '1'];
+		if (in_array($str, $array)) {
+			$b = true;
+		}
+		return $b;
+	}
+
+	public static function writeSeparator() {
+		echo '--------------------------------------' . PHP_EOL;
+	}
+
+	public static function beep($int_beeps = 1) {
+		$string_beeps = '';
+		for ($i = 0; $i < $int_beeps; $i++):
+			$string_beeps .= "\x07";
+		endfor;
+		print $string_beeps;
+	}
+
+	public static function read($length = 255) {
+		// FIXME: se digito la seguente string fgets() restituisce una stringa vuota:
+		// cifaro61òlibero.it
+		// Ho provato con stream_get_line() ma ho ottenuto stesso risultato
+		if (!isset($GLOBALS['StdinPointer'])) {
+			$GLOBALS['StdinPointer'] = fopen('php://stdin', 'r');
+		}
+		$line = fgets($GLOBALS['StdinPointer'], $length);
+		return trim($line);
+	}
+
+	private static function printMenu($array) {
+		foreach ($array as $key => $value) {
+			$prefix = '';
+			if (LangUtil::is_assoc($array)) {
+				$index = array_search($key, array_keys($array)) + 1;
+				$prefix = $index . ') ' . $key . ' => ';
+			} else {
+				$index = $key + 1;
+				$prefix = $index . ') ';
+			}
+			if (!is_array($value)) {
+				echo $prefix . $value . PHP_EOL;
+			} else {
+				echo $prefix . json_encode($value) . PHP_EOL;
+			}
 		}
 	}
-	return $value;
-}
 
-// Rinominare in ask()
-public static function askValue($txt, $def_value=null){
-
-	$question = $txt;
-	if($def_value){
-		$question .= ' [' . $def_value. ']: ';
-	}else{
-		$question .= ": ";
-	}
-	
-	echo $question;
-	$value = ConsoleUtil::read();
-	if(!$value && $def_value){
-		$value = $def_value;
-	}
-		
-	return $value;
-}
-
-// TODO: rinominare in confirm()
-public static function askQuestion($question, $def_boolean=true){
-	$b = false;
-	echo PHP_EOL;
-	$f = fopen('php://stdin', 'r');
-
-	if($def_boolean){
-		echo $question . ' [si]: ';
-	}else{
-		echo $question . ' [no]: ';
+	public static function showMenu($array, $title = '', $def = 1) {
+		$result = null;
+		if ($title) {
+			self::printTitle($title);
+		}
+		if ($array == null || count($array) == 0) {
+			echo "Errore: impossibile visualizzare il menu, l'elenco è vuoto." . PHP_EOL;
+			self::pressAKeyToContinue();
+		} else {
+			self::printMenu($array);
+			echo PHP_EOL;
+			$choice = self::askValue('Scegli', $def) - 1;
+			if (LangUtil::is_assoc($array)) {
+				$keys = array_keys($array);
+				$result = $keys[$choice]; // il risultato è la chiave dell'elemento dell'array associativo scelto
+			} else {
+				$result = $array[$choice]; // il risultato è il valore corrispondente all'indice scelto
+			}
+		}
+		return $result;
 	}
 
-	$line = trim(fgets($f));
+	private static function askValue2($txt, array $answers, $def_value = null) {
+		$question = $txt . ' [' . implode(',', $answers) . ']';
+		if ($def_value) {
+			$question .= ' [' . $def_value . ']: ';
+		} else {
+			$question .= ': ';
+		}
+		echo $question;
+		$value = ConsoleUtil::read();
+		if (!$value && $def_value) {
+			$value = $def_value;
+		}
 
-	if($line=="" && strlen($line)==0){
-		$b = $def_boolean;
-	}else{
-		$b = ConsoleUtil::isYes($line);
+		return $value;
 	}
 
-	fclose($f);
-	return $b;
-}
+	public static function askValueWithAnswer($txt, array $answers, $def_index) {
+		$def_value = null;
+		if (isset($answers[$def_index])) {
+			$def_value = $answers[$def_index];
+		}
+		while (true) {
+			$value = self::askValue2($txt, $answers, $def_value);
+			if ($value) {
+				foreach ($answers as $answer) {
+					if ($value === $answer) {
+						break 2; // exit from the while loop
+					}
+				}
+			} elseif ($def_value) {
+				$value = $def_value;
+				break; // exit from the while loop
+			} else {
+				echo "Risposta '$value' non valida" . PHP_EOL;
+			}
+		}
+		return $value;
+	}
 
-						public static function progressBarForLinuxTerminal($current=0, $total=100, $label="", $size=50) {
-							$new_bar = false;
-							//Don't have to call $current=0
-							//Bar status is stored between calls
-							static $bars;
-							if(!isset($bars[$label])) {
-								$new_bar = TRUE;
-								fputs(STDOUT,"$label Progress:" . PHP_EOL);
-							}
-							if($current == $bars[$label]) return 0;
-						
-							$perc = round(($current/$total)*100,2);        //Percentage round off for a more clean, consistent look
-							for($i=strlen($perc); $i<=4; $i++) $perc = ' '.$perc;    // percent indicator must be four characters, if shorter, add some spaces
-						
-							$total_size = $size + $i + 3;
-							// if it's not first go, remove the previous bar
-							if(!$new_bar) {
-								for($place = $total_size; $place > 0; $place--) echo "\x08";    // echo a backspace (hex:08) to remove the previous character
-							}
-							 
-							$bars[$label]=$current; //saves bar status for next call
-							// output the progess bar as it should be
-							for($place = 0; $place <= $size; $place++) {
-								if($place <= ($current / $total * $size)) echo '[42m [0m';    // output green spaces if we're finished through this point
-								else echo '[47m [0m';                    // or grey spaces if not
-							}
-						
-							// end a bar with a percent indicator
-							echo " $perc%";
-						
-							if($current == $total) {
-							echo PHP_EOL;        // if it's the end, add a new line
-							unset($bars[$label]);
-							}
-							}
-													
-										
-/*
+	// Rinominare in ask()
+	public static function askValue($txt, $def_value = null) {
+		$question = $txt;
+		if ($def_value) {
+			$question .= ' [' . $def_value . ']: ';
+		} else {
+			$question .= ': ';
+		}
+
+		echo $question;
+		$value = ConsoleUtil::read();
+		if (!$value && $def_value) {
+			$value = $def_value;
+		}
+
+		return $value;
+	}
+
+	// TODO: rinominare in confirm()
+	public static function askQuestion($question, $def_boolean = true) {
+		$b = false;
+		echo PHP_EOL;
+		$f = fopen('php://stdin', 'r');
+
+		if ($def_boolean) {
+			echo $question . ' [si]: ';
+		} else {
+			echo $question . ' [no]: ';
+		}
+
+		$line = trim(fgets($f));
+
+		if ($line == '' && strlen($line) == 0) {
+			$b = $def_boolean;
+		} else {
+			$b = ConsoleUtil::isYes($line);
+		}
+
+		fclose($f);
+		return $b;
+	}
+
+	public static function progressBarForLinuxTerminal($current = 0, $total = 100, $label = '', $size = 50) {
+		$new_bar = false;
+		//Don't have to call $current=0
+		//Bar status is stored between calls
+		static $bars;
+		if (!isset($bars[$label])) {
+			$new_bar = true;
+			fputs(STDOUT, "$label Progress:" . PHP_EOL);
+		}
+		if ($current == $bars[$label]) {
+			return 0;
+		}
+
+		$perc = round(($current / $total) * 100, 2); //Percentage round off for a more clean, consistent look
+		for ($i = strlen($perc); $i <= 4; $i++) {
+			$perc = ' ' . $perc;
+		} // percent indicator must be four characters, if shorter, add some spaces
+
+		$total_size = $size + $i + 3;
+		// if it's not first go, remove the previous bar
+		if (!$new_bar) {
+			for ($place = $total_size; $place > 0; $place--) {
+				echo "\x08";
+			} // echo a backspace (hex:08) to remove the previous character
+		}
+
+		$bars[$label] = $current; //saves bar status for next call
+		// output the progess bar as it should be
+		for ($place = 0; $place <= $size; $place++) {
+			if ($place <= ($current / $total) * $size) {
+				echo '[42m [0m';
+			}
+			// output green spaces if we're finished through this point
+			else {
+				echo '[47m [0m';
+			} // or grey spaces if not
+		}
+
+		// end a bar with a percent indicator
+		echo " $perc%";
+
+		if ($current == $total) {
+			echo PHP_EOL; // if it's the end, add a new line
+			unset($bars[$label]);
+		}
+	}
+
+	/*
 
 Copyright (c) 2010, dealnews.com, Inc.
 All rights reserved.
@@ -294,134 +300,139 @@ POSSIBILITY OF SUCH DAMAGE.
 
 */
 
-/**
- * show a status bar in the console
-*
-* <code>
-* for($x=1;$x<=100;$x++){
-*
-*     show_status($x, 100);
-*
-*     usleep(100000);
-*
-* }
-* </code>
-*
-* @param   int     $done   how many items are completed
-* @param   int     $total  how many items are to be done total
-* @param   int     $size   optional size of the status bar
-* @return  void
-*
-*/
+	/**
+	 * show a status bar in the console
+	 *
+	 * <code>
+	 * for($x=1;$x<=100;$x++){
+	 *
+	 *     show_status($x, 100);
+	 *
+	 *     usleep(100000);
+	 *
+	 * }
+	 * </code>
+	 *
+	 * @param   int     $done   how many items are completed
+	 * @param   int     $total  how many items are to be done total
+	 * @param   int     $size   optional size of the status bar
+	 * @return  void
+	 *
+	 */
 
-public static function showStatus($done, $total, $size=30) {
+	public static function showStatus($done, $total, $size = 30) {
+		static $start_time;
 
-	static $start_time;
+		// if we go over our bound, just ignore it
+		if ($done > $total) {
+			return;
+		}
 
-	// if we go over our bound, just ignore it
-	if($done > $total) return;
+		if (empty($start_time)) {
+			$start_time = time();
+		}
+		$now = time();
 
-	if(empty($start_time)) $start_time=time();
-	$now = time();
+		$perc = (float) ($done / $total);
 
-	$perc=(double)($done/$total);
+		$bar = floor($perc * $size);
 
-	$bar=floor($perc*$size);
+		$status_bar = "\r[";
+		$status_bar .= str_repeat('=', $bar);
+		if ($bar < $size) {
+			$status_bar .= '>';
+			$status_bar .= str_repeat(' ', $size - $bar);
+		} else {
+			$status_bar .= '=';
+		}
 
-	$status_bar="\r[";
-	$status_bar.=str_repeat("=", $bar);
-	if($bar<$size){
-		$status_bar.=">";
-		$status_bar.=str_repeat(" ", $size-$bar);
-	} else {
-		$status_bar.="=";
+		$disp = number_format($perc * 100, 0);
+
+		$status_bar .= "] $disp%  $done/$total";
+
+		$rate = ($now - $start_time) / $done;
+		$left = $total - $done;
+		$eta = round($rate * $left, 2);
+
+		$elapsed = $now - $start_time;
+
+		$status_bar .= ' remaining: ' . number_format($eta) . ' sec.  elapsed: ' . number_format($elapsed) . ' sec.';
+
+		echo "$status_bar  ";
+
+		flush();
+
+		// when done, send a newline
+		if ($done == $total) {
+			echo PHP_EOL;
+		}
 	}
 
-	$disp=number_format($perc*100, 0);
-
-	$status_bar.="] $disp%  $done/$total";
-
-	$rate = ($now-$start_time)/$done;
-	$left = $total - $done;
-	$eta = round($rate * $left, 2);
-
-	$elapsed = $now - $start_time;
-
-	$status_bar.= " remaining: ".number_format($eta)." sec.  elapsed: ".number_format($elapsed)." sec.";
-
-	echo "$status_bar  ";
-
-	flush();
-
-	// when done, send a newline
-	if($done == $total) {
+	public static function printTitle($title) {
+		echo PHP_EOL;
+		echo '---------------' . PHP_EOL;
+		echo $title . PHP_EOL;
+		echo '---------------' . PHP_EOL;
 		echo PHP_EOL;
 	}
 
-}
-	
-public static function printTitle($title){
-	echo PHP_EOL;
-	echo "---------------" . PHP_EOL;
-	echo $title . PHP_EOL;
-	echo "---------------" . PHP_EOL;
-	echo PHP_EOL;
-}		
+	public static function stackTrace() {
+		$stack = debug_backtrace();
+		$output = '';
 
-public static function stackTrace() {
-    $stack = debug_backtrace();
-    $output = '';
+		$stackLen = count($stack);
+		for ($i = 1; $i < $stackLen; $i++) {
+			$entry = $stack[$i];
 
-    $stackLen = count($stack);
-    for ($i = 1; $i < $stackLen; $i++) {
-        $entry = $stack[$i];
+			$func = $entry['function'] . '(';
+			$argsLen = count($entry['args']);
+			for ($j = 0; $j < $argsLen; $j++) {
+				$my_entry = $entry['args'][$j];
+				if (is_string($my_entry)) {
+					$func .= $my_entry;
+				}
+				if ($j < $argsLen - 1) {
+					$func .= ', ';
+				}
+			}
+			$func .= ')';
 
-        $func = $entry['function'] . '(';
-        $argsLen = count($entry['args']);
-        for ($j = 0; $j < $argsLen; $j++) {
-            $my_entry = $entry['args'][$j];
-            if (is_string($my_entry)) {
-                $func .= $my_entry;
-            }
-            if ($j < $argsLen - 1) $func .= ', ';
-        }
-        $func .= ')';
+			$entry_file = 'NO_FILE';
+			if (array_key_exists('file', $entry)) {
+				$entry_file = $entry['file'];
+			}
+			$entry_line = 'NO_LINE';
+			if (array_key_exists('line', $entry)) {
+				$entry_line = $entry['line'];
+			}
+			$output .= $entry_file . ':' . $entry_line . ' - ' . $func . PHP_EOL;
+		}
+		return $output;
+	}
 
-        $entry_file = 'NO_FILE';
-        if (array_key_exists('file', $entry)) {
-            $entry_file = $entry['file'];               
-        }
-        $entry_line = 'NO_LINE';
-        if (array_key_exists('line', $entry)) {
-            $entry_line = $entry['line'];
-        }           
-        $output .= $entry_file . ':' . $entry_line . ' - ' . $func . PHP_EOL;
-    }
-    return $output;
-}
+	public static function stackTrace2() {
+		$stack = debug_backtrace();
+		$output = 'Stack trace:' . PHP_EOL;
 
-public static function stackTrace2() {
-    $stack = debug_backtrace();
-    $output = 'Stack trace:' . PHP_EOL;
+		$stackLen = count($stack);
+		for ($i = 1; $i < $stackLen; $i++) {
+			$entry = $stack[$i];
 
-    $stackLen = count($stack);
-    for ($i = 1; $i < $stackLen; $i++) {
-        $entry = $stack[$i];
+			$func = $entry['function'] . '(';
+			$argsLen = count($entry['args']);
+			for ($j = 0; $j < $argsLen; $j++) {
+				$func .= $entry['args'][$j];
+				if ($j < $argsLen - 1) {
+					$func .= ', ';
+				}
+			}
+			$func .= ')';
 
-        $func = $entry['function'] . '(';
-        $argsLen = count($entry['args']);
-        for ($j = 0; $j < $argsLen; $j++) {
-            $func .= $entry['args'][$j];
-            if ($j < $argsLen - 1) $func .= ', ';
-        }
-        $func .= ')';
+			$output .= '#' . ($i - 1) . ' ' . $entry['file'] . ':' . $entry['line'] . ' - ' . $func . PHP_EOL;
+		}
 
-        $output .= '#' . ($i - 1) . ' ' . $entry['file'] . ':' . $entry['line'] . ' - ' . $func . PHP_EOL;
-    }
+		return $output;
+	}
+} // end class
 
-    return $output;
-}
-	
-} // end class	
-	
 ?>

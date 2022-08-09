@@ -13,16 +13,14 @@ use PHPUnit\Framework\TestCase;
  * Test commentato in phpunit.xml
  */
 class FileUtilTest extends TestCase {
-
-	const REGEX_SQL = "/update_db_(.*)\.sql/i";
-	public function testGetFileByPattern1(){
+	const REGEX_SQL = '/update_db_(.*)\.sql/i';
+	public function testGetFileByPattern1() {
 		$dir = __DIR__ . DIRECTORY_SEPARATOR . 'emtpy-dir';
 		$files = FileUtil::getFileByPattern($dir, self::REGEX_SQL);
 	}
 
-	public function testGetFileByPattern2(){
+	public function testGetFileByPattern2() {
 		$dir = __DIR__ . DIRECTORY_SEPARATOR . 'locked-dir';
 		$files = FileUtil::getFileByPattern($dir, self::REGEX_SQL);
 	}
-
 }
