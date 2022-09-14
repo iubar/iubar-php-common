@@ -1,6 +1,6 @@
-[![Build Status](https://app.travis-ci.com/iubar/iubar-php-common.svg?branch=master)](https://app.travis-ci.com/github/iubar/iubar-php-common)
+ 
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/2b36e3d82fe04762a152fc18dbacef11)](https://www.codacy.com/gh/iubar/iubar-php-common/dashboard)
-![Shepherd Badge](https://shepherd.dev/github/iubar/iubar-php-common/coverage.svg)
+ 
 
 # iubar-php-common
 

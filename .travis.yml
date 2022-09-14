@@ -30,5 +30,4 @@ notifications:
       - ${EMAIL_BORGO}
     on_success: change  # options: [always|never|change] default: changes
     on_failure: always  # options: [always|never|change] default: always
-
     

@@ -32,7 +32,6 @@
 		"php-parallel-lint/php-parallel-lint" : "*",
 		"php-parallel-lint/php-console-highlighter" : "*",
 		"php-parallel-lint/php-var-dump-check" : "*",
-		"slevomat/coding-standard" : "*"
 	},
 	"autoload" : {
 		"psr-4" : {
