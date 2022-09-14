@@ -32,7 +32,8 @@ jobs:
       - run: 
           name: Test
           command: |
-            phpunit
+            ls -la
+            vendor/bin/phpunit
 # 
 # 
 # Visual Editor: https://circleci-public.github.io/visual-config-editor/
