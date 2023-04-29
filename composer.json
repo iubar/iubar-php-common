@@ -17,7 +17,7 @@
 		"ext-mbstring" : "*",
 		"ext-pdo" : "*",
 		"ext-openssl" : "*",
-		"psr/log" : "^1.1",
+		"psr/log" : "^3.0",
 		"monolog/monolog" : "^3.3",
 		"bramus/monolog-colored-line-formatter" : "^3.1",
 		"league/climate" : "^3.8",
