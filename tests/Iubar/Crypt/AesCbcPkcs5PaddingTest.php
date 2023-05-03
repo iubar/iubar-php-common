@@ -22,7 +22,7 @@ class AesCbcPkcs5PaddingTest extends TestCase {
 		$aes = new AesCbcPkcs5Padding(self::$config['key']);
 		$encrypted = $aes->encrypt(self::$config['plaintext'], self::$config['iv']);
 		$data = $aes->getCryptedDataFromSignature($encrypted);
-		$this->assertEquals($encrypted, $data);
-		$this->assertTrue(true);
+		$this->assertEquals($encrypted, $data); // TODO: spiegare il senso di questo test
+		//$this->assertTrue(true);
 	}
 }
