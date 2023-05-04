@@ -69,7 +69,7 @@ class EmailValidator {
 			ksort($mxs, SORT_NUMERIC);
 			reset($mxs);
 			$b_server_found = 0;
-			while ([$mx_weight, $mx_host] = each($mxs)) {
+			foreach ($mxs as $mx_weight => $mx_host) {
 				if ($b_server_found == 0) {
 					//try connection on port 25
 
