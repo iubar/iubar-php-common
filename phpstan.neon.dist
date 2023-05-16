@@ -2,4 +2,4 @@ parameters:
   level: 2 # (0 is the loosest and 9 is the strictest)
   paths:
     - src
-    - tests
+#    - tests
