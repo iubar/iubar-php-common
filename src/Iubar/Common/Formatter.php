@@ -11,19 +11,19 @@ class Formatter extends BaseClass {
 		$cf = strtoupper($cf);
 		return $cf;
 	}
-	public static function formatProvincia($provincia) {
+	public static function formatProvincia(string $provincia) {
 		$provincia = trim($provincia);
 		$provincia = str_replace('(', '', $provincia);
 		$provincia = str_replace(')', '', $provincia);
 		$provincia = strtoupper($provincia);
 		return $provincia;
 	}
-	public static function formatEmail($email) {
+	public static function formatEmail(string $email) {
 		$email = Formatter::cleanEmail($email);
 		$email = strtolower($email);
 		return $email;
 	}
-	public static function formatPhoneNum($tel) {
+	public static function formatPhoneNum(string $tel) {
 		$tel = Formatter::cleanPhoneNum($tel);
 		return $tel;
 	}
@@ -159,7 +159,7 @@ class Formatter extends BaseClass {
 		return $num;
 	}
 
-	public static function cleanPath($path) {
+	public static function cleanPath(string $path) {
 		$path = trim($path);
 		$path = str_replace("\"", '', $path);
 		$path = str_replace("'", '', $path);
@@ -169,7 +169,7 @@ class Formatter extends BaseClass {
 		return $path;
 	}
 
-	public static function cleanEmail($email) {
+	public static function cleanEmail(string $email) {
 		if ($email) {
 			$email = strip_tags($email);
 
@@ -184,11 +184,11 @@ class Formatter extends BaseClass {
 		}
 		return $email;
 	}
-	public static function mb_trim($str) {
+	public static function mb_trim(string $str) {
 		// multibyte-safe trim
 		return preg_replace("/(^\s+)|(\s+$)/us", '', $str);
 	}
-	public static function formatSeconds($sec) {
+	public static function formatSeconds(float $sec) {
 		// number_format($sec, 2, ',', '.') . " s"
 		$hours = (int) ($sec / 60 / 60);
 		$minutes = (int) ($sec / 60) - $hours * 60;
@@ -196,9 +196,9 @@ class Formatter extends BaseClass {
 		$str = $hours . ' ore, ' . $minutes . ' minuti, ' . $seconds . ' secondi';
 		return $str;
 	}
-	public static function formatSeconds2($sec, $show_ms = false) {
+	public static function formatSeconds2(float $sec, $show_ms = false) {
 		$milliseconds = (int) ($sec * 1000);
-		$seconds = $milliseconds / 1000;
+		$seconds = (int) $milliseconds / 1000;
 		$minutes = (int) ($sec / 60);
 		$hours = (int) ($minutes / 60);
 
@@ -212,12 +212,12 @@ class Formatter extends BaseClass {
 		}
 		return $str;
 	}
-	public static function formatMicroTimeAsDate($sec) {
+	public static function formatMicroTimeAsDate(float $sec) {
 		$str = date('l jS F \@ g:i a', $sec);
 		return $str;
 	}
 
-	public static function formatFloatIt($number, $dec = 0) {
+	public static function formatFloatIt(float $number, int $dec = 0) {
 		$number_format_it = number_format($number, $dec, ',', '.');
 		return $number_format_it;
 	}
@@ -240,11 +240,11 @@ class Formatter extends BaseClass {
 		$str = Formatter::formatBytes($yoursize) . '/s';
 		return $str;
 	}
-	public static function formatTimestamp($time) {
+	public static function formatTimestamp(int $time) {
 		$str = date('F d Y H:i:s.', $time); // TODO: controllare se è formato italiano
 		return $str;
 	}
-	public static function replaceAccents($str) {
+	public static function replaceAccents(string $str) {
 		$search = explode(
 			',',
 			'ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,ø,Ø,Å,Á,À,Â,Ä,È,É,Ê,Ë,Í,Î,Ï,Ì,Ò,Ó,Ô,Ö,Ú,Ù,Û,Ü,Ÿ,Ç,Æ,Œ'
@@ -257,7 +257,7 @@ class Formatter extends BaseClass {
 		$str = $str . "'";
 		return $str;
 	}
-	public static function removeMultipleSpaces($string) {
+	public static function removeMultipleSpaces(string $string) {
 		//echo "Before removeMultipleSpaces() : '$string'" . PHP_EOL; // Debug
 		$enc = mb_detect_encoding($string);
 		if ($enc == 'UTF-8') {
@@ -269,7 +269,7 @@ class Formatter extends BaseClass {
 		//echo "After removeMultipleSpaces(): '$string'" . PHP_EOL; // Debug
 		return $string;
 	}
-	public static function removeSpaces($string) {
+	public static function removeSpaces(string $string) {
 		$string = preg_replace('/\s/', ' ', $string);
 		return $string;
 	}
@@ -285,7 +285,7 @@ class Formatter extends BaseClass {
 		// echo "mb_detect_encoding(à): " . mb_detect_encoding("à") . PHP_EOL; // VALE SEMPRE 'UTF-8' se il file è utf-8
 	}
 
-	public static function formatBytes2($file, $type) {
+	public static function formatBytes2(string $file, string $type) {
 		$filesize = 0;
 		switch ($type) {
 			case 'KB':
@@ -306,7 +306,7 @@ class Formatter extends BaseClass {
 		}
 	}
 
-	public static function secondsToWords($seconds) {
+	public static function secondsToWords(float $seconds) {
 		$ret = '';
 		$hours = intval(intval($seconds) / 3600);
 
@@ -323,7 +323,7 @@ class Formatter extends BaseClass {
 		return $ret;
 	}
 
-	public static function secondsToWords2($seconds) {
+	public static function secondsToWords2(float $seconds) {
 		/**
 		 * * number of days **
 		 */
@@ -360,7 +360,7 @@ class Formatter extends BaseClass {
 		return sprintf("%d $plural, %d hours, %d min, %d sec", $days, $hours, $mins, $secs);
 	}
 
-	public static function secondsToWords3($secs) {
+	public static function secondsToWords3(float $secs) {
 		$vals = [
 			'w' => (int) ($secs / 86400 / 7),
 
