@@ -12,8 +12,11 @@ jobs:
       - checkout
       - restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
           keys:
+            # Find a cache corresponding to this specific composer.lock checksum
+            # when this file is changed, this key will fail          
             - composer-v1-{{ checksum "composer.lock" }}
             # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/caching/)
+            # (match the most recently generated cache used from any branch)
             - composer-v1-
       - run: 
           name: Install
