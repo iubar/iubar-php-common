@@ -2,7 +2,7 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: cimg/php:8.1-browsers
+      - image: cimg/php:8.1
       # https://circleci.com/docs/language-php
       # https://github.com/CircleCI-Public/cimg-php
       # https://hub.docker.com/r/cimg/php
@@ -30,7 +30,7 @@ jobs:
           command: |
             vendor/bin/parallel-lint --exclude vendor .
             vendor/bin/phpstan -V
-            vendor/bin/phpstan analyse --no-interaction --no-progress --memory-limit=5G
+            vendor/bin/phpstan analyse --no-interaction --no-progress
             vendor/bin/var-dump-check --exclude vendor . || true            
       - run: 
           name: Test
