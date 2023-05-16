@@ -198,7 +198,7 @@ class Formatter extends BaseClass {
 	}
 	public static function formatSeconds2(float $sec, $show_ms = false) {
 		$milliseconds = (int) ($sec * 1000);
-		$seconds = (int) $milliseconds / 1000;
+		$seconds = (int) ($milliseconds / 1000);
 		$minutes = (int) ($sec / 60);
 		$hours = (int) ($minutes / 60);
 
