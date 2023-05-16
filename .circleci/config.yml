@@ -30,7 +30,7 @@ jobs:
           command: |
             vendor/bin/parallel-lint --exclude vendor .
             vendor/bin/phpstan -V
-            vendor/bin/phpstan analyse --no-interaction --no-progress --memory-limit 5G
+            vendor/bin/phpstan analyse --no-interaction --no-progress --memory-limit=4294967304
             vendor/bin/var-dump-check --exclude vendor . || true            
       - run: 
           name: Test
