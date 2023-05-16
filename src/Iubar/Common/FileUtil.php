@@ -944,7 +944,7 @@ class FileUtil {
 	 */
 
 	/**
-	 * @param int $pattern
+	 * @param string $pattern
 	 *  the pattern passed to glob()
 	 * @param int $flags
 	 *  the flags passed to glob()
@@ -954,7 +954,7 @@ class FileUtil {
 	 *  an array of string in the given path matching the pattern.
 	 */
 
-	public static function rglob($pattern = '*', $flags = 0, $path = '') {
+	public static function rglob(string $pattern = '*', int $flags = 0, string $path = '') {
 		/*
 	
 	Glob Valid flags:

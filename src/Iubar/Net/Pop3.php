@@ -123,8 +123,6 @@ class Pop3 {
 
 	/**
 	 * Close the connection
-	 *
-	 * @param string $conn the connection
 	 */
 	public function pop3_close() {
 		imap_close($this->connection);

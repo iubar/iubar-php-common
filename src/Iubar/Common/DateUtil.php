@@ -105,9 +105,11 @@ class DateUtil {
 		return strftime($str, $nTimestamp);
 	}
 
-	public static function strange2min($strange) {
+	public static function strange2min(string $strange) {
 		$h24h = substr($strange, -2);
-		[$hour, $minute] = preg_split('/(?i:am|pm|:)/', $strange);
+		[$hour_str, $minute_str] = preg_split('/(?i:am|pm|:)/', $strange);
+		$hour = intval($hour_str);
+		$minute = intval($minute_str);
 		if ($h24h == 'am' && $hour == 12) {
 			$hour = 0;
 		} elseif ($h24h == 'pm') {

@@ -17,7 +17,7 @@ jobs:
             - composer-v1-{{ checksum "composer.lock" }}
             # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/caching/)
             # (match the most recently generated cache used from any branch)
-            #- composer-v1-
+            - composer-v1-
       - run: 
           name: Install
           command: composer install --no-progress --no-interaction --prefer-dist

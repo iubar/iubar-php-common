@@ -219,14 +219,5 @@ class MiscUtils {
 		$content = file_get_contents($fn);
 		return mb_convert_encoding($content, 'UTF-8', mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
 	}
-
-	public static function setLoggerLevelForAllHandlers(Logger $logger, $level = null) {
-		$handlers = $logger->getHandlers();
-		foreach ($handlers as $handler) {
-			if (!$level) {
-				$level = LogLevel::DEBUG;
-			}
-			$handler->setLevel($level);
-		}
-	}
+ 
 } // end class
