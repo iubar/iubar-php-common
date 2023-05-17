@@ -10,14 +10,14 @@ jobs:
     steps:    
       - run: php -v
       - checkout
-      #- restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
-      #    keys:
+      - restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
+          keys:
             # Find a cache corresponding to this specific composer.lock checksum
             # when this file is changed, this key will fail          
-      #      - composer-v1-{{ checksum "composer.lock" }}
+            - composer-v1-{{ checksum "composer.lock" }}
             # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/caching/)
             # (match the most recently generated cache used from any branch)
-      #      - composer-v1-
+            - composer-v1-
       - run: 
           name: Install
           command: composer install --no-progress --no-interaction --prefer-dist
@@ -28,19 +28,15 @@ jobs:
       - run: 
           name: Lint
           command: |
-            vendor/bin/phpstan
-            vendor/bin/var-dump-check --exclude vendor . || true            
+            vendor/bin/parallel-lint --exclude vendor .          
+            vendor/bin/phpstan -V
+            vendor/bin/phpstan analyse --no-interaction --no-progress
+            vendor/bin/var-dump-check --exclude vendor . || true              
       - run: 
           name: Test
           command: |
             ls -la
-            vendor/bin/phpunit
-            
-# Ho rimosso.. per via delel limitazioni del piano gratuito di CircleCI che prevedono il limite della memoria a 4GB
-#vendor/bin/parallel-lint --exclude vendor .
-#vendor/bin/phpstan -V
-#vendor/bin/phpstan analyse --no-interaction --no-progress
-            
+            vendor/bin/phpunit         
 # 
 # 
 # Visual Editor: https://circleci-public.github.io/visual-config-editor/
