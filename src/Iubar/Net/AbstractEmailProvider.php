@@ -42,11 +42,11 @@ abstract class AbstractEmailProvider {
 	public function __construct() {
 	}
 
-	public function send() {
+	public function send() : int {
 		return $this->sendThrough($this->getTransport());
 	}
 
-	protected function sendThrough($transport) {
+	protected function sendThrough($transport) : int{
 		$result = 0;
 
 		$smtp_usr = $transport->getUsername();
@@ -99,23 +99,23 @@ abstract class AbstractEmailProvider {
 		$this->logger = $logger;
 	}
 
-	public function setFrom($email, $name = '') {
+	public function setFrom(string $email, string $name = '') : void {
 		$this->from_address = new Address($email, $name);
 	}
 
-	public function setReplyTo($email, $name = '') {
+	public function setReplyTo($email, $name = '') : void {
 		$this->reply_to_address = new Address($email, $name);
 	}
 
-	public function addTo($email, $name = '') {
+	public function addTo(string $email, string $name = '') : void {
 		$this->to_array[$email] = $name;
 	}
 
-	public function setSubject($subject) {
+	public function setSubject(string $subject): void {
 		$this->subject = $subject;
 	}
 
-	public function setBodyHtml($html) {
+	public function setBodyHtml(string $html): void {
 		$this->body_html = $html;
 	}
 
@@ -123,14 +123,18 @@ abstract class AbstractEmailProvider {
 		$this->body_txt = $txt;
 	}
 
-	public function setSmtpUser($user) {
+	public function setSmtpUser(string $user) : void {
 		$this->smtp_usr = $user;
 	}
 
-	public function setSmtpPassword($password) {
+	public function setSmtpPassword(string $password) : void {
 		$this->smtp_pwd = $password;
 	}
-
+	
+	public function setSmtpPort(int $smtp_port) : void {
+	    $this->smtp_port = $smtp_port;
+	}
+	
 	public function addAttachment($filename, $type = null) {
 		$this->attachments[$filename] = $type;
 	}
