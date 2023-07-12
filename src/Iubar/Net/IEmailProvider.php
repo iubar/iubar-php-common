@@ -13,5 +13,7 @@ interface IEmailProvider {
  	public function addTo(string $email, string $name = '') : void;
 	public function setSubject(string $subject): void;
 	public function setBodyHtml(string $html): void;
-	public function getFromAddress(): Address;		
+	public function setBodyTxt(string $txt): void;	
+	public function getFromAddress(): Address;
+	public function setLogger($logger) : void;
 }

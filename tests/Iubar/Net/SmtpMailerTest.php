@@ -76,8 +76,8 @@ class SmtpMailerTest extends TestCase {
 
 		$m = SmtpMailer::factory($type);
 		$m->setLogger($logger);
-		$m->body_txt = 'Questa è una prova.';
-		$m->body_html = '<h2>Questo è un <b>test</b></h2>';
+		$m->setBodyTxt('Questa è una prova.');
+		$m->setBodyHtml('<h2>Questo è un <b>test</b></h2>');
 		return $m;
 	}
 
