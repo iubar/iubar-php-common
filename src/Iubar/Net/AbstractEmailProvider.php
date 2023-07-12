@@ -139,11 +139,11 @@ abstract class AbstractEmailProvider {
 	    $this->smtp_port = $smtp_port;
 	}
 	
-	public function addAttachment($filename, $type = null) {
+	public function addAttachment(string $filename, $type = null) : void {
 		$this->attachments[$filename] = $type;
 	}
 
-	public function addAttachments($files = []) {
+	public function addAttachments(array $files = []) : void {
 		foreach ($files as $file) {
 			$this->addAttachment($file);
 		}

@@ -16,4 +16,7 @@ interface IEmailProvider {
 	public function setBodyTxt(string $txt): void;	
 	public function getFromAddress(): Address;
 	public function setLogger($logger) : void;
+	public function addAttachment(string $filename, $type = null);
+	public function addAttachments(array $files): void;
+	
 }
