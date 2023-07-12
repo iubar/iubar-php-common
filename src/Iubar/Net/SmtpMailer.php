@@ -9,8 +9,10 @@ use Iubar\Net\EmailProviders\ArubaProvider;
  * Usage:
  *
  * $mailer = SmtpMailer::factory('amazonses');
- * $mailer->smtp_usr = ...;
+ * $mailer->smtp_user = ...;
  * $mailer->smtp_pwd = ...;
+ * $mailer->setSmtpUser($smtp_user);
+ * $mailer->setSmtpPassword($smtp_pwd);     
  * $mailer->setFrom($config['from']);
  * $mailer->setTo($config['to']);
  * $mailer->setLogger($logger);
@@ -23,7 +25,7 @@ use Iubar\Net\EmailProviders\ArubaProvider;
  *
  */
 class SmtpMailer {
-	public static function factory($provider_name) {
+    public static function factory(string $provider_name) : IEmailProvider {
 		$provider = null;
 		switch ($provider_name) {
 			case 'aruba':
@@ -39,7 +41,7 @@ class SmtpMailer {
 		return $provider;
 	}
 
-	public static function getDomainFromEmail($email) {
+	public static function getDomainFromEmail(string $email) : string {
 		// Get the data after the @ sign
 		$array = explode('@', $email);
 		$domain = $array[1];

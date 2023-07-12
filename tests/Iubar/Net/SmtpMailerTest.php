@@ -87,10 +87,11 @@ class SmtpMailerTest extends TestCase {
 		$m = $this->factorySmtpMailer('amazonses');
 		$m->setFrom($from);
 		$m->addTo($to);
-		$m->subject = $subject;
-		$m->smtp_usr = self::$amazonses_user;
-		$m->smtp_pwd = self::$amazonses_password;
-		$m->smtp_port = self::$amazonses_port;
+		$m->setSubject($subject);
+		$m->setSmtpUser(self::$amazonses_user);
+		$m->setSmtpPassword(self::$amazonses_password);
+		$m->setSmtpPort(self::$amazonses_port);
+		
 		$result = $m->send();
 		return $result;
 	}

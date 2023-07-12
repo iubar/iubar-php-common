@@ -16,10 +16,9 @@ class ArubaProvider extends AbstractEmailProvider implements IEmailProvider {
 		$transport = null;
 		if ($this->smtp_ssl) {
 			$transport = new EsmtpTransport('smtps.aruba.it', 465);
-			$transport->setUsername($this->smtp_usr);
+			$transport->setUsername($this->smtp_user);
 			$transport->setPassword($this->smtp_pwd);
 		}
-
 		return $transport;
 	}
 }

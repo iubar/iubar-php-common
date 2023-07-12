@@ -39,7 +39,7 @@ class AmazonSesProvider extends AbstractEmailProvider implements IEmailProvider 
 		}
 
 		$transport = new EsmtpTransport('email-smtp.eu-west-1.amazonaws.com', $port);
-		$transport->setUsername($this->smtp_usr);
+		$transport->setUsername($this->smtp_user);
 		$transport->setPassword($this->smtp_pwd);
 
 		return $transport;

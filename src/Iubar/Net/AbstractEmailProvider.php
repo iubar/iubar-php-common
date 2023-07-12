@@ -21,27 +21,31 @@ use Symfony\Component\Mime\Email;
 abstract class AbstractEmailProvider {
 	const TIMEOUT = 4; // 4 secondi
 
-	public $smtp_usr = null;
-	public $smtp_ssl = false;
-	public $smtp_pwd = null;
-	public $smtp_port = null;
+	protected string $smtp_user = '';
+	protected bool $smtp_ssl = false;
+	protected string $smtp_pwd = '';
+	protected int $smtp_port = 0;
 
-	public $subject = null;
-	public $body_txt = null;
-	public $body_html = null;
-	public $attachments = []; // ie: array('/path/to/image.jpg'=>'image/jpeg');
+	protected string $subject = '';
+	protected string $body_txt = '';
+	protected string $body_html = '';
+	protected array $attachments = []; // ie: array('/path/to/image.jpg'=>'image/jpeg');
 
-	public $to_array = [];
-	public $from_address = null;
-	public $reply_to_address = null;
+	protected array $to_array = [];
+	protected ?Address $from_address = null;
+	protected ?Address $reply_to_address = null;
 
-	private $logger = null;
+	protected $logger = null;
 
 	abstract protected function getTransport();
 
 	public function __construct() {
 	}
 
+	public function getFromAddress(): Address {
+	    return $this->from_address;
+	}
+	
 	public function send() : int {
 		return $this->sendThrough($this->getTransport());
 	}
@@ -49,10 +53,10 @@ abstract class AbstractEmailProvider {
 	protected function sendThrough($transport) : int{
 		$result = 0;
 
-		$smtp_usr = $transport->getUsername();
+		$smtp_user = $transport->getUsername();
 		$smtp_pwd = $transport->getPassword();
 
-		if (!$smtp_usr || !$smtp_pwd) {
+		if (!$smtp_user || !$smtp_pwd) {
 			die('QUIT: smtp user or password not set' . PHP_EOL);
 		} else {
 			$host = $transport->getStream()->getHost();
@@ -89,13 +93,13 @@ abstract class AbstractEmailProvider {
 		return $result;
 	}
 
-	private function log($level, $msg) {
+	private function log($level, string $msg) : void {
 		if ($this->logger) {
 			$this->logger->log($level, $msg);
 		}
 	}
 
-	public function setLogger($logger) {
+	public function setLogger($logger) : void {
 		$this->logger = $logger;
 	}
 
@@ -103,7 +107,7 @@ abstract class AbstractEmailProvider {
 		$this->from_address = new Address($email, $name);
 	}
 
-	public function setReplyTo($email, $name = '') : void {
+	public function setReplyTo(string $email, string $name = '') : void {
 		$this->reply_to_address = new Address($email, $name);
 	}
 
@@ -119,12 +123,12 @@ abstract class AbstractEmailProvider {
 		$this->body_html = $html;
 	}
 
-	public function setBodyTxt($txt) {
+	public function setBodyTxt(string $txt) : void {
 		$this->body_txt = $txt;
 	}
 
 	public function setSmtpUser(string $user) : void {
-		$this->smtp_usr = $user;
+		$this->smtp_user = $user;
 	}
 
 	public function setSmtpPassword(string $password) : void {
