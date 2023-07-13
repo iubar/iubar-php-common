@@ -14,12 +14,12 @@ class BaseClass {
 	// 	const INFO      = 'info';
 	// 	const DEBUG     = 'debug';
 
-	protected $logger = null;
+    protected ?LoggerInterface $logger = null;
 
 	public function __construct() {
 	}
 
-	public function setLogger(LoggerInterface $logger) {
+	public function setLogger(LoggerInterface $logger): void {
 		$this->logger = $logger;
 		$this->log(LogLevel::DEBUG, 'BaseClass: logger inizialized');
 	}
@@ -28,33 +28,33 @@ class BaseClass {
 		return $this->logger;
 	}
 
-	public function logDebug($message, array $context = []) {
+	public function logDebug($message, array $context = []): void {
 		if ($this->logger != null) {
 			$this->log(LogLevel::DEBUG, $message, $context);
 		}
 	}
-	public function logError($message, array $context = []) {
+	public function logError($message, array $context = []): void {
 		if ($this->logger != null) {
 			$this->log(LogLevel::ERROR, $message, $context);
 		}
 	}
-	public function logCritical($message, array $context = []) {
+	public function logCritical($message, array $context = []): void {
 		if ($this->logger != null) {
 			$this->log(LogLevel::CRITICAL, $message, $context);
 		}
 	}
-	public function logInfo($message, array $context = []) {
+	public function logInfo($message, array $context = []): void {
 		if ($this->logger != null) {
 			$this->log(LogLevel::INFO, $message, $context);
 		}
 	}
-	public function logWarning($message, array $context = []) {
+	public function logWarning($message, array $context = []): void {
 		if ($this->logger != null) {
 			$this->log(LogLevel::WARNING, $message, $context);
 		}
 	}
 
-	public function log($level, $message, array $context = []) {
+	public function log($level, $message, array $context = []): void {
 		if ($this->logger != null) {
 			$this->logger->log($level, $message, $context);
 		}
