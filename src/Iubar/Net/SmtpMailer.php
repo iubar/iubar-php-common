@@ -21,8 +21,6 @@ use Iubar\Net\EmailProviders\ArubaProvider;
  * $numSent = $mailer->send();
  *
  *
- * @author Borgo
- *
  */
 class SmtpMailer {
     public static function factory(string $provider_name) : IEmailProvider {
