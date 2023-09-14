@@ -222,7 +222,13 @@ class Formatter extends BaseClass {
 		return $number_format_it;
 	}
 
-	public static function formatBytes($yoursize) {
+	/**
+	 * @see https://en.wikipedia.org/wiki/Byte#Multiple-byte_units
+	 * 
+	 * @param float $yoursize
+	 * @return string
+	 */
+	public static function formatBytes(float $yoursize) : string  {
 		// $r = number_format($yoursize / 1024, 2, ',', '.')
 		$str = null;
 		if ($yoursize < 1024) {
@@ -236,7 +242,7 @@ class Formatter extends BaseClass {
 		}
 		return $str;
 	}
-	public static function formatBytesPerSec($yoursize) {
+	public static function formatBytesPerSec(float $yoursize) : string {
 		$str = Formatter::formatBytes($yoursize) . '/s';
 		return $str;
 	}
@@ -244,7 +250,7 @@ class Formatter extends BaseClass {
 		$str = date('F d Y H:i:s.', $time); // TODO: controllare se è formato italiano
 		return $str;
 	}
-	public static function replaceAccents(string $str) {
+	public static function replaceAccents(string $str) : string {
 		$search = explode(
 			',',
 			'ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,ø,Ø,Å,Á,À,Â,Ä,È,É,Ê,Ë,Í,Î,Ï,Ì,Ò,Ó,Ô,Ö,Ú,Ù,Û,Ü,Ÿ,Ç,Æ,Œ'
@@ -285,6 +291,13 @@ class Formatter extends BaseClass {
 		// echo "mb_detect_encoding(à): " . mb_detect_encoding("à") . PHP_EOL; // VALE SEMPRE 'UTF-8' se il file è utf-8
 	}
 
+	/**
+	 * @see https://en.wikipedia.org/wiki/Byte#Multiple-byte_units
+	 * 
+	 * @param string $file
+	 * @param string $type
+	 * @return string
+	 */
 	public static function formatBytes2(string $file, string $type) {
 		$filesize = 0;
 		switch ($type) {
