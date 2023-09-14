@@ -6,6 +6,7 @@ use Psr\Log\LogLevel;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Email;
+use Psr\Log\LoggerInterface;
 
 /**
  *
@@ -35,7 +36,7 @@ abstract class AbstractEmailProvider {
 	protected ?Address $from_address = null;
 	protected ?Address $reply_to_address = null;
 
-	protected $logger = null;
+	protected LoggerInterface $logger;
 
 	abstract protected function getTransport();
 
@@ -93,13 +94,17 @@ abstract class AbstractEmailProvider {
 		return $result;
 	}
 
-	private function log($level, string $msg) : void {
+	public function setSmtpSsl(bool $useSsl) : void{
+	    $this->smtp_ssl = $useSsl;
+	}
+	
+	private function log(string $level, string $msg) : void {
 		if ($this->logger) {
 			$this->logger->log($level, $msg);
 		}
 	}
 
-	public function setLogger($logger) : void {
+	public function setLogger(LoggerInterface $logger) : void {
 		$this->logger = $logger;
 	}
 

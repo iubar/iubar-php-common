@@ -2,12 +2,10 @@
 
 namespace Iubar\Misc;
 
-use Psr\Log\LogLevel;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
-use Monolog\Formatter\LineFormatter;
 use Bramus\Monolog\Formatter\ColoredLineFormatter;
-use Bramus\Monolog\Formatter\ColorSchemes\TrafficLight;
+use Monolog\Logger;
+use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\StreamHandler;
 
 class MiscUtils {
 	private static $useConEmuOnWin = true;
@@ -55,11 +53,11 @@ class MiscUtils {
 	}
 
 	public static function loggerFactory(
-		$logger_name,
-		$log_level,
-		$log_file,
-		$overwrite_log = true,
-		$log_to_shell = true
+		string $logger_name,
+		string $log_level,
+		string $log_file,
+		bool $overwrite_log = true,
+		bool $log_to_shell = true
 	) {
 		$error = '';
 		$logger = new Logger($logger_name); // create a log channel

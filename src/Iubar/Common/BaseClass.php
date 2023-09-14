@@ -28,33 +28,33 @@ class BaseClass {
 		return $this->logger;
 	}
 
-	public function logDebug($message, array $context = []): void {
+	public function logDebug(string $message, array $context = []): void {
 		if ($this->logger != null) {
 			$this->log(LogLevel::DEBUG, $message, $context);
 		}
 	}
-	public function logError($message, array $context = []): void {
+	public function logError(string $message, array $context = []): void {
 		if ($this->logger != null) {
 			$this->log(LogLevel::ERROR, $message, $context);
 		}
 	}
-	public function logCritical($message, array $context = []): void {
+	public function logCritical(string $message, array $context = []): void {
 		if ($this->logger != null) {
 			$this->log(LogLevel::CRITICAL, $message, $context);
 		}
 	}
-	public function logInfo($message, array $context = []): void {
+	public function logInfo(string $message, array $context = []): void {
 		if ($this->logger != null) {
 			$this->log(LogLevel::INFO, $message, $context);
 		}
 	}
-	public function logWarning($message, array $context = []): void {
+	public function logWarning(string $message, array $context = []): void {
 		if ($this->logger != null) {
 			$this->log(LogLevel::WARNING, $message, $context);
 		}
 	}
 
-	public function log($level, $message, array $context = []): void {
+	public function log(string $level, string $message, array $context = []): void {
 		if ($this->logger != null) {
 			$this->logger->log($level, $message, $context);
 		}
