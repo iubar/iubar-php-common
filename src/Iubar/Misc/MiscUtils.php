@@ -6,6 +6,7 @@ use Bramus\Monolog\Formatter\ColoredLineFormatter;
 use Monolog\Logger;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
+use Psr\Log\LoggerInterface;
 
 class MiscUtils {
 	private static $useConEmuOnWin = true;
@@ -131,7 +132,12 @@ class MiscUtils {
 		}
 	}
 
-	public static function logToShell(Logger $logger, $log_level) {
+	/**
+	 * 
+	 * @param Logger $logger non posso usare LoggerInterface perchè di seguito uso il metodo pushHandler()
+	 * @param string $log_level
+	 */
+	public static function logToShell(Logger $logger, string $log_level) {
 		$handler = new StreamHandler('php://stdout', $log_level);
 		// const SIMPLE_FORMAT = "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n";
 		$format = '%channel%.%level_name%: %message% %context% %extra%' . PHP_EOL;
@@ -213,7 +219,7 @@ class MiscUtils {
 		return $stream;
 	}
 
-	public static function file_get_contents_utf8($fn) {
+	public static function file_get_contents_utf8(string $fn) {
 		$content = file_get_contents($fn);
 		return mb_convert_encoding($content, 'UTF-8', mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
 	}
