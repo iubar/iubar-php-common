@@ -3,9 +3,9 @@
 namespace Iubar\System;
 
 class Desktop {
-	private static $isLinux = false;
+	private static bool $isLinux = false;
 
-	public static function openBrowser($url) {
+	public static function openBrowser(string $url) : void {
 		if (System::isWindows()) {
 			$cmd = 'start ' . $url;
 			exec($cmd);
@@ -15,7 +15,8 @@ class Desktop {
 			die('Quit: Unknown system detected.' . PHP_EOL);
 		}
 	}
-	public static function openChrome($url) {
+	
+	public static function openChrome(string $url) : void {
 		$cmd = '';
 		// 		if($default){
 		// 			$cmd = "start link" . " " . $url;
@@ -32,14 +33,20 @@ class Desktop {
 
 			$path = Desktop::readRegistry($reg_key);
 
-			$cmd = "\"" . $path . "\"" . ' ' . $url;
+			$cmd = "\"" . $path . "\"" . ' ' . "\"" . $url . "\"";
 
-			echo 'eseguo: ' . $cmd . PHP_EOL;
-			exec($cmd, $output, $return_vars);
-			echo "\$output: " . PHP_EOL;
-			print_r($output);
-			echo "\$return_vars: " . PHP_EOL;
-			print_r($return_vars);
+			echo 'Eseguo: ' . $cmd . PHP_EOL;
+			$output = [];
+			$exit_code = 0;
+			exec($cmd, $output, $exit_code);
+			if(!empty($output)){
+			     echo "Cmd output: " . PHP_EOL;
+			     print_r($output);
+			     echo PHP_EOL;
+			}
+			if($exit_code){
+			    echo "ERROR, exit_code is " . $exit_code . PHP_EOL;
+			}
 		} elseif (self::$isLinux) {
 			die('Quit: Linux system detected.' . PHP_EOL);
 		} else {
@@ -78,7 +85,7 @@ class Desktop {
 		return $result;
 	}
 
-	public static function getWorkspace() {
+	public static function getWorkspace() : string {
 		$workspace = '';
 		echo 'I have been run on ' . php_uname('s') . PHP_EOL;
 		$user = get_current_user();
@@ -111,5 +118,4 @@ class Desktop {
 // You can search words (term) with your default search engine, enter:
 // $ /usr/bin/firefox -search "term"
 // $ /usr/bin/firefox -search "linux add user to group"
-
-?>
+ 

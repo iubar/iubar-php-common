@@ -813,7 +813,8 @@ class FileUtil {
 
 	public static function bfglob($path, $pattern = '*', $flags = 0, $depth = 0) {
 		// Description
-		// non-recursive implementation for recursive glob with a depth parameter. The search is done breadth-first and specifying -1 for the depth means no limit.
+		// non-recursive implementation for recursive glob with a depth parameter. 
+		// The search is done breadth-first and specifying -1 for the depth means no limit.
 		// Parameters:
 		// $path   - path of folder to search
 		// $pattern- glob pattern
