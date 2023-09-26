@@ -54,7 +54,7 @@ class Desktop {
 		}
 	}
 
-	public static function readRegistry($reg_key, $value = '') {
+	public static function readRegistry(string $reg_key, string $value = '') : string {
 		// http://ss64.com/nt/reg.html
 		// https://technet.microsoft.com/en-us/library/cc742028.aspx
 		//
@@ -68,16 +68,17 @@ class Desktop {
 			$cmd = "REG QUERY \"" . $reg_key . "\" /v" . ' ' . $value;
 		}
 
-		echo 'eseguo: ' . $cmd . PHP_EOL;
-		exec($cmd, $output, $return_vars);
+		// echo 'eseguo: ' . $cmd . PHP_EOL;
 
-		echo "\$output: " . PHP_EOL;
-		print_r($output);
-		echo "\$return_vars: " . PHP_EOL;
-		print_r($return_vars);
+		exec($cmd, $output, $return_vars);
+		
+		// echo "\$output: " . PHP_EOL;
+		// print_r($output);
+		// echo "\$return_vars: " . PHP_EOL;
+		// print_r($return_vars);
 
 		$line = trim($output[2]);
-		echo "\$line: " . $line . PHP_EOL;
+		// echo "\$line: " . $line . PHP_EOL;
 		// ad esempio line può valere
 		// (Predefinito)    REG_SZ    C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
 		$tokens = explode('    ', $line);
