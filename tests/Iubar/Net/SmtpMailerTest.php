@@ -74,7 +74,7 @@ class SmtpMailerTest extends TestCase {
 	}
 
 	private function factorySmtpMailer(string $type) : IEmailProvider {
-		$logger = MiscUtils::loggerFactory('my_logger', LogLevel::DEBUG, null);
+		$logger = MiscUtils::loggerFactory('my_logger', LogLevel::DEBUG);
 
 		$m = SmtpMailer::factory($type);
 		$m->setLogger($logger);

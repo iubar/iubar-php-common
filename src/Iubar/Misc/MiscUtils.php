@@ -56,7 +56,7 @@ class MiscUtils {
 	public static function loggerFactory(
 		string $logger_name,
 		string $log_level,
-		string $log_file,
+		string $log_file = '',
 		bool $overwrite_log = true,
 		bool $log_to_shell = true
 	) {
