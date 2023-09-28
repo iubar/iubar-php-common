@@ -30,7 +30,7 @@ class MiscUtils {
 	    string $log_file = 'log.rot',
 		bool $log_to_shell = true
 	) {
-		$error = null;
+		$error = '';
 		$log_file = null;
 		$log_path = null;
 		$logger = new Logger($logger_name); // create a log channel
@@ -102,7 +102,7 @@ class MiscUtils {
 		return $error;
 	}
 
-	private static function checkLogPath(string $log_path) {
+	private static function checkLogPath(string $log_path) : string {
 		$error = '';
 		echo "Log path is '" . $log_path . "'" . PHP_EOL;
 		if (!is_readable($log_path)) {
