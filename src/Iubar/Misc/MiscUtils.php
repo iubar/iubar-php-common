@@ -31,8 +31,8 @@ class MiscUtils {
 		bool $log_to_shell = true
 	) {
 		$error = '';
-		$log_file = null;
-		$log_path = null;
+		$log_file = '';
+		$log_path = '';
 		$logger = new Logger($logger_name); // create a log channel
 		if ($log_file) {
 			$log_path = dirname($log_file);
