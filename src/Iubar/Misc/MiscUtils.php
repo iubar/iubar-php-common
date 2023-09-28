@@ -25,10 +25,10 @@ class MiscUtils {
 	 */
 
 	public static function rotatingLoggerFactoryloggerFactory(
-		$logger_name,
-		$log_level,
-		$log_file = 'log.rot',
-		$log_to_shell = true
+	    string $logger_name,
+	    string $log_level,
+	    string $log_file = 'log.rot',
+		bool $log_to_shell = true
 	) {
 		$error = null;
 		$log_file = null;
@@ -49,7 +49,7 @@ class MiscUtils {
 		if ($log_to_shell) {
 			self::logToShell($logger, $log_level);
 		}
-		self::logInfo($logger, $error, $log_path, $log_to_shell);
+		self::checkError($logger, $error, $log_path, $log_to_shell);
 		return $logger;
 	}
 
@@ -85,11 +85,11 @@ class MiscUtils {
 		if ($log_to_shell) {
 			self::logToShell($logger, $log_level);
 		}
-		self::logInfo($logger, $error, $log_file, $log_to_shell);
+		self::checkError($logger, $error, $log_file, $log_to_shell);
 		return $logger;
 	}
 
-	private static function checkLogFile($log_file) {
+	private static function checkLogFile(string $log_file) {
 		$error = '';
 		// echo "Log file is '" . $log_file . "'" . PHP_EOL;
 		if (file_exists($log_file)) {
@@ -102,7 +102,7 @@ class MiscUtils {
 		return $error;
 	}
 
-	private static function checkLogPath($log_path) {
+	private static function checkLogPath(string $log_path) {
 		$error = '';
 		echo "Log path is '" . $log_path . "'" . PHP_EOL;
 		if (!is_readable($log_path)) {
@@ -113,21 +113,21 @@ class MiscUtils {
 		return $error;
 	}
 
-	private static function logInfo(Logger $logger, $error, $log_file, $log_to_shell) {
+	private static function checkError(Logger $logger, string $error, string $log_file_or_path, bool $log_to_shell) : void {
 		$NO_HANDLER = 'All log handlers are disabled: you should choose between screen or file logging';
-		if ($error != '') {
-			if (!$log_to_shell) {
-				die($NO_HANDLER . PHP_EOL);
-			} else {
+		if ($error) {
+		    if ($log_to_shell || $log_file_or_path) {
 				$logger->error($error);
+			} else {
+			    die('ERROR 1 : ' . $NO_HANDLER . PHP_EOL);
 			}
-		} elseif (!$log_file) {
+		} elseif (!$log_file_or_path) {
 			if ($log_to_shell) {
 				$logger->notice('Log to file is disabled');
 				$msg = 'All log messages will be show only on screen';
 				$logger->notice($msg);
 			} else {
-				die($NO_HANDLER . PHP_EOL);
+			    die('ERROR 2 : ' . $NO_HANDLER . PHP_EOL);
 			}
 		}
 	}
