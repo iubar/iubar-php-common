@@ -13,24 +13,24 @@ class Validator extends BaseClass {
 	// http://www.utf8-chartable.de/unicode-utf8-table.pl?unicodeinhtml=dec&htmlent=1
 	// http://www.utf8-chartable.de/
 
-	public static $regex_only_words = "/^[a-zA-Z]*$/";
-	public static $regex_only_numbers = "/^[0-9]*$/";
+	public static string $regex_only_words = "/^[a-zA-Z]*$/";
+	public static string $regex_only_numbers = "/^[0-9]*$/";
 
-	public static $regex_phrase_of_words = "/^[A-Za-z]+(\\s[A-Za-zàèìòù`´'@\.]+)*$/";
+	public static string $regex_phrase_of_words = "/^[A-Za-z]+(\\s[A-Za-zàèìòù`´'@\.]+)*$/";
 	// La stringa precedente non è valida per UTF8
 
-	public static $regex_phrase_of_number = "/^[0-9]+(\\s[0-9]+)*$/";
-	public static $regex_phone_number = "/^[\+0-9]+(\\s[0-9]+)*$/"; // a differenza di $regex_phrase_of_number, prevede che un numero telefonico possa iniziare con il carattere '+'
+	public static string $regex_phrase_of_number = "/^[0-9]+(\\s[0-9]+)*$/";
+	public static string $regex_phone_number = "/^[\+0-9]+(\\s[0-9]+)*$/"; // a differenza di $regex_phrase_of_number, prevede che un numero telefonico possa iniziare con il carattere '+'
 
-	public static $regex_email = "/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,10})$/i";
+	public static string $regex_email = "/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,10})$/i";
 
 	// Attenzione: La provincia di Roma potrebbe essere indicata con la vecchia dicitura (ROMA)
-	public static $regex_provincia1 = '/[\\(]([A-Z]{2})[\\)]/';
-	public static $regex_provincia2 = "/[\\s]([A-Z]{2})$/";
-	public static $regex_provincia3 = '/[\\s]([A-Z]{2})[\\s]/';
-	public static $regex_provincia4 = '/[\\s\\S]([A-Z]{2})[\\s\\S]/';
+	public static string $regex_provincia1 = '/[\\(]([A-Z]{2})[\\)]/';
+	public static string $regex_provincia2 = "/[\\s]([A-Z]{2})$/";
+	public static string $regex_provincia3 = '/[\\s]([A-Z]{2})[\\s]/';
+	public static string $regex_provincia4 = '/[\\s\\S]([A-Z]{2})[\\s\\S]/';
 
-	public static $toponimi = [
+	public static array $toponimi = [
 		'via',
 		'v.',
 		'viale',
@@ -63,7 +63,7 @@ class Validator extends BaseClass {
 		parent::__construct();
 	}
 
-	public function setLocaleIt() {
+	public function setLocaleIt() : void {
 		$locale_array = ['it_IT.UTF-8', 'it_IT@euro', 'it_IT', 'italian'];
 		setlocale(LC_ALL, $locale_array);
 	}
@@ -107,15 +107,15 @@ class Validator extends BaseClass {
 		return $regex_phrase_of_words_utf8;
 	}
 
-	public static function isAValidSelectQuery($query) {
+	public static function isAValidSelectQuery(string $query) {
 		$commands = ['SELECT '];
 		return self::isAValidQuery($query, $commands);
 	}
-	public static function isAValidDmlQuery($query) {
+	public static function isAValidDmlQuery(string $query) {
 		$commands = ['INSERT ', 'UPDATE ', 'SELECT ', 'DELETE '];
 		return self::isAValidQuery($query, $commands);
 	}
-	private static function isAValidQuery($query, $commands) {
+	private static function isAValidQuery(string $query, array $commands) {
 		$b = false;
 
 		$len = strlen($query);
@@ -146,7 +146,7 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function isAValidCf($cf) {
+	public static function isAValidCf(string $cf) : bool {
 		$b = false;
 		$cf = trim($cf);
 		$len = strlen($cf);
@@ -156,7 +156,7 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function isAValidPiva($piva) {
+	public static function isAValidPiva(string $piva) : bool {
 		$b = false;
 		$piva = trim($piva);
 		$len = strlen($piva);
@@ -166,7 +166,7 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function isAValidEmail($email) {
+	public static function isAValidEmail(string $email) : bool {
 		$b = false;
 		$email = Formatter::cleanEmail($email);
 		$b = preg_match(Validator::$regex_email, $email, $matches);
@@ -179,7 +179,7 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function isAValidMySqlDate($txt) {
+	public static function isAValidMySqlDate(string $txt): bool  {
 		$b = false;
 		// $now = date("Y-m-d H:i:s")
 		// $mysqltime = date("Y-m-d H:i:s", $phptime); // http://php.net/manual/en/function.time.php
@@ -202,7 +202,7 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function isAlphabetical($str) {
+	public static function isAlphabetical(string $str): bool  {
 		// TODO: testare il metodo con la stringa "Cantù" quando questa proviene da file in formato ANSI o da file in formato UTF-8. Sembrano esserci differenze
 
 		$b = false;
@@ -228,7 +228,7 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function isNumeric($str) {
+	public static function isNumeric(string $str) : bool {
 		$b = false;
 		$str = trim($str);
 		$b = preg_match(Validator::$regex_phrase_of_number, $str, $matches);
@@ -242,7 +242,7 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function isAValidCap($cap) {
+	public static function isAValidCap(string $cap): bool  {
 		$b = false;
 		$cap = trim($cap);
 		$len = strlen($cap);
@@ -252,7 +252,7 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function isAValidPhoneNum($tel) {
+	public static function isAValidPhoneNum(string $tel) : bool {
 		// TODO: prevedere una lunghezza minima per la stringa, almeno 3
 		$b = false;
 		$tel = Formatter::cleanPhoneNum($tel);
@@ -273,7 +273,7 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function demoRegEx() {
+	public static function demoRegEx() :void {
 		// preg_match("/^[A-Za-z]+(\s[A-Za-z]+)*$/", $nome_cognome, $matches2);		// match any words with a space between
 		// preg_match("/^[A-Z][a-z]+(\s[A-Z]a-z]+)*$/", $nome_cognome, $matches2);	// match any camel-case words with a space between
 		// preg_match("/^[A-Z]+(\s[A-Z]+)*$/", $nome_cognome, $matches3);			// match any uppercase words with a space between
@@ -302,7 +302,7 @@ class Validator extends BaseClass {
 		$matches = self::test(Validator::$regex_provincia2, $text103);
 	}
 
-	private static function test($regex, $text) {
+	private static function test(string $regex, string $text) : array {
 		$NL = "\r\n";
 		echo 'Text is ' . $text . ' and regex is ' . $regex . $NL;
 		preg_match_all($regex, $text, $matches);
@@ -311,7 +311,7 @@ class Validator extends BaseClass {
 		return $matches;
 	}
 
-	public static function isBalanced($s) {
+	public static function isBalanced(string $s) : bool {
 		// Determine if there is an equal number of parentheses
 		// and if they balance logically, i.e.
 		// ()()) = Bad (trailing ")")
@@ -350,7 +350,7 @@ class Validator extends BaseClass {
 		return true;
 	}
 
-	public static function testIsBalanced() {
+	public static function testIsBalanced() : void {
 		$tests = [
 			'(())' => '' /* should pass */,
 			')()()' => '' /* should fail - leading close */,
