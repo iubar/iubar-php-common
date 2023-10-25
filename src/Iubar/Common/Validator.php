@@ -188,10 +188,9 @@ class Validator extends BaseClass {
 	}
 
 	public static function isPec($email) {
-		// Metodo non utilizzato. Per utilizzi futuri !!!
 		$b = false;
 		$email = Formatter::cleanEmail($email);
-		$patterns = ['legalmail.it', 'pec.it', 'pec.com', 'consulentidellavoropec.it', '@pec.'];
+		$patterns = ['postecert.it', 'cert.cna.it', 'pecaruba.it', 'legalmail.it', 'pec.it', 'pec.com', 'consulentidellavoropec.it', 'actaliscertymail.it', 'pec.poste.it', '@pec.'];
 		foreach ($patterns as $pattern) {
 			$pos = strpos($email, $pattern);
 			if ($pos !== false) {
