@@ -54,11 +54,10 @@ class DateUtil {
 %Z or %z - time zone offset or name or abbreviation (Operating System dependent)
 %% - a literal `%' character
 */
-
+	// TODO: cambiare in : 
 	// $dateTime = new DateTime("now", new DateTimeZone('Europe/Rome'));
 	// $mysqldate = $dateTime->format("Y-m-d H:i:s");
-	// echo $mysqldate;
-
+	// echo $mysqldate;	
 	public static function getMysqlTodayString($type = 'DATE') {
 		$date = null;
 		$time = time();
