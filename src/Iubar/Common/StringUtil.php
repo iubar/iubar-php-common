@@ -340,6 +340,14 @@ class StringUtil {
 
 		return $b;
 	}
+	
+	public static function trimString(?string $str = null){
+		if ($str !== null){
+			return trim($str);
+		} else {
+			return null;
+		}
+	}
 } // end class
 
 ?>
