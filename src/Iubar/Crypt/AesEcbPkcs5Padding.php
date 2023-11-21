@@ -12,13 +12,14 @@ class AesEcbPkcs5Padding extends AesBase implements AesInterface {
 
 	public function encrypt(string $input, string $key) : string|false {
 	    return false;
-	}
+ 	}
 
 	private static function pkcs5_pad(string $text, string $blocksize)  : string|false {
 	    return false;
 	}
-
+ 
 	public function decrypt(string $str, string $sKey)  : string|false {
 	    return false;
+ 
 	}
 }
