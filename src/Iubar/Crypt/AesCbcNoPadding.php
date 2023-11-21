@@ -10,9 +10,11 @@ class AesCbcNoPadding extends AesBase implements AesInterface {
 		parent::__construct($key);
 	}
 
-	public function encrypt($plaintext, $iv) {
+	public function encrypt(string $plaintext, string $iv) : string|false {
+		return '';
 	}
 
-	public function decrypt($encrypted, $iv) {
+	public function decrypt(string $encrypted, string $iv) : string|false {
+		return '';
 	}
 }
