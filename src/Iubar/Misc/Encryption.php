@@ -39,7 +39,7 @@ class Encryption {
 	 * @return bool
 	 * @see https://github.com/sarciszewski/php-future/blob/bd6c91fb924b2b35a3e4f4074a642868bd051baf/src/Security.php#L36
 	 */
-	public static function hashEquals($hmac, $compare) {
+	public static function hashEquals(string $hmac, string $compare) {
 		if (function_exists('hash_equals')) {
 			return hash_equals($hmac, $compare);
 		}

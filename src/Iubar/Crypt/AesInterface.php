@@ -3,7 +3,8 @@
 namespace Iubar\Crypt;
 
 interface AesInterface {
-	function encrypt($plaintext, $iv);
-
-	function decrypt($crypted, $iv);
+    function encrypt(string $plaintext, string $iv) : string|false;
+    
+    function decrypt(string $crypted, string $iv) : string|false;
+    
 }
