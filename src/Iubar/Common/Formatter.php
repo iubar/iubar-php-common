@@ -101,9 +101,9 @@ class Formatter extends BaseClass {
 		// e infine sostituire "' " con il semplice "'"
 
 		// echo "Before toCamelCase(): '$str'" . PHP_EOL; // Debug
-		$enc = mb_detect_encoding($str);
+	    $isUtf8 = mb_check_encoding($str, 'UTF-8');
 		$str = trim($str);
-		if ($enc == 'UTF-8') {
+		if ($isUtf8) {
 			// echo "\$enc is: " . $enc . PHP_EOL;
 
 			//$str = mb_strtolower($str, 'UTF-8');
@@ -265,8 +265,8 @@ class Formatter extends BaseClass {
 	}
 	public static function removeMultipleSpaces(string $string) {
 		//echo "Before removeMultipleSpaces() : '$string'" . PHP_EOL; // Debug
-		$enc = mb_detect_encoding($string);
-		if ($enc == 'UTF-8') {
+	    $isUtf8 = mb_check_encoding($string, 'UTF-8');
+	    if ($isUtf8) {
 			//echo "\$enc is: " . $enc . PHP_EOL;
 			$string = preg_replace('/\s+/u', ' ', $string);
 		} else {

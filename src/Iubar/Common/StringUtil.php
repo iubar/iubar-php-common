@@ -323,6 +323,21 @@ class StringUtil {
 		$utf8 = iconv(mb_detect_encoding($str, mb_detect_order(), true), 'UTF-8', $str);
 		return $utf8;
 	}
+	
+	function is_utf8_1(string $str): bool
+	{
+	    return mb_check_encoding($str, 'UTF-8');
+	}
+	
+	function is_utf8_2(string $str): bool
+	{
+	    return (bool) preg_match('//u', $str);
+	}
+	
+	function is_utf8_3(string $str): bool
+	{
+	    return iconv('UTF-8', 'UTF-8//IGNORE', $str) === $str;
+	}
 
 	public static function isNotEmpty(string $str) : bool  {
 		return $str !== null && $str !== '';
