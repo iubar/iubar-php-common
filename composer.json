@@ -15,7 +15,10 @@
     "config": {
       "platform": {
         "php": "8.1.2"
-      }
+      },
+	  "allow-plugins" : {
+			"dealerdirect/phpcodesniffer-composer-installer" : true
+		}	  
     },	
 	"require" : {
 		"php" : ">=8.1",
@@ -46,11 +49,6 @@
 	"autoload-dev" : {
 		"psr-4" : {
 			"Iubar\\Tests\\" : "tests/Iubar/"
-		}
-	},
-	"config" : {
-		"allow-plugins" : {
-			"dealerdirect/phpcodesniffer-composer-installer" : true
 		}
 	}
 }
