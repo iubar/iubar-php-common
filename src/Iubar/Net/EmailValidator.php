@@ -78,7 +78,7 @@ class EmailValidator {
 						$ms_resp = '';
 						// say HELO to mailserver (or EHLO)
 
-						// @see https://www.abuseat.org/lookup.cgi?ip=217.133.38.27
+						// @see https://www.abuseat.org/lookup.cgi?ip=94.32.182.56
 						// @see https://www.abuseat.org/advanced.html
 						$ms_resp .= $this->send_command($fp, 'HELO iubar.it');
 						//
