@@ -138,7 +138,7 @@ class Bench {
 	}
 
 	public static function getStartTimeAsString(string $timer_name, \DateTimeZone $tz = null) {
-		if ($tz == null) {
+		if (!$tz) {
 			$tz = new \DateTimeZone('Europe/Rome');
 		}
 		$unixtime = self::$array[$timer_name];
@@ -146,7 +146,7 @@ class Bench {
 	}
 
 	public static function getStopTimeAsString(string $timer_name, \DateTimeZone $tz = null) {
-		if ($tz == null) {
+	    if (!$tz) {
 			$tz = new \DateTimeZone('Europe/Rome');
 		}
 		$unixtime = self::$array2[$timer_name];
@@ -154,7 +154,7 @@ class Bench {
 	}
 
 	public static function getNowAsString(\DateTimeZone $tz = null) {
-		if ($tz == null) {
+	    if (!$tz) {
 			$tz = new \DateTimeZone('Europe/Rome');
 		}
 		$dt = new \DateTime();

@@ -124,7 +124,7 @@ class ConsoleUtil {
 		if ($title) {
 			self::printTitle($title);
 		}
-		if ($array == null || count($array) == 0) {
+		if (!$array) {
 			echo "Errore: impossibile visualizzare il menu, l'elenco è vuoto." . PHP_EOL;
 			self::pressAKeyToContinue();
 		} else {
