@@ -8,6 +8,7 @@ use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Psr\Log\LoggerInterface;
 use App\Logger\ClimateConsoleHandler;
+use Psr\Log\LogLevel;
 
 class MiscUtils {
 	private static $useConEmuOnWin = true;
@@ -27,11 +28,11 @@ class MiscUtils {
 
 	public static function rotatingLoggerFactoryloggerFactory(
 	    string $logger_name,
-	    string $log_level,
+	    string  $log_level,
 	    string $log_file = 'log.rot',
 	    bool $log_to_shell = true,
 	    bool $use_climate = false
-	    ) {
+	    ) : LoggerInterface {
 	        $error = '';
 	        $log_path = '';
 	        $logger = new Logger($logger_name); // create a log channel
@@ -56,12 +57,12 @@ class MiscUtils {
 	
 	public static function loggerFactory(
 	    string $logger_name,
-	    string $log_level,
+	    string  $log_level,
 	    string $log_file = '',
 	    bool $overwrite_log = true,
 	    bool $log_to_shell = true,
 	    bool $use_climate = false
-	    ) {
+	    ) : LoggerInterface {
 	        $error = '';
 	        $logger = new Logger($logger_name); // create a log channel
 	        if ($log_file) {
@@ -91,7 +92,7 @@ class MiscUtils {
 	        return $logger;
 	}
 
-	protected static function checkLogFile(string $log_file) {
+	protected static function checkLogFile(string $log_file) : string {
 		$error = '';
 		// echo "Log file is '" . $log_file . "'" . PHP_EOL;
 		if (file_exists($log_file)) {
@@ -115,7 +116,7 @@ class MiscUtils {
 		return $error;
 	}
 
-	private static function checkError(Logger $logger, string $error, string $log_file_or_path, bool $log_to_shell) : void {
+	private static function checkError(LoggerInterface $logger, string $error, string $log_file_or_path, bool $log_to_shell) : void {
 		$NO_HANDLER = 'All log handlers are disabled: you should choose between screen or file logging';
 		if ($error) {
 		    if ($log_to_shell || $log_file_or_path) {
@@ -139,12 +140,12 @@ class MiscUtils {
 	 * @param Logger $logger non posso usare LoggerInterface perchè di seguito uso il metodo pushHandler()
 	 * @param string $log_level
 	 */
-	public static function logToShell(Logger $logger, string $log_level) {
+	public static function logToShell(LoggerInterface $logger, string $log_level, bool $use_climate) : void {
 	    $handler = null;
 	    if($use_climate){
 	        $handler = new StreamHandler('php://stdout', $log_level);
 	    }else{
-	        $handler = new ClimateConsoleHandler(log_level);
+	        $handler = new ClimateConsoleHandler($log_level);
 	    }
 	    // const SIMPLE_FORMAT = "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n";
 	    $format = '%channel%.%level_name%: %message% %context% %extra%' . PHP_EOL;
@@ -173,7 +174,7 @@ class MiscUtils {
 
 	////////////////////////////////
 
-	public static function getWorkspacePath() {
+	public static function getWorkspacePath() : string {
 		$workspace = '';
 		echo 'I have been run on ' . php_uname('s') . PHP_EOL;
 		$user = get_current_user();
@@ -202,8 +203,8 @@ class MiscUtils {
 	// FUNCTIONS
 	// (da utilizzare quando non si può usare il trucco "2>&1")
 
-	public static function runCommand($bin, $command = '', $force = true) {
-		$stream = null;
+	public static function runCommand(string $bin, string $command = '', bool $force = true) : mixed {
+		$stream = false;
 		$bin .= $force ? ' 2>&1' : '';
 
 		$descriptorSpec = [
@@ -226,7 +227,7 @@ class MiscUtils {
 		return $stream;
 	}
 
-	public static function file_get_contents_utf8(string $fn) {
+	public static function file_get_contents_utf8(string $fn) : mixed {
 		$content = file_get_contents($fn);
 		return mb_convert_encoding($content, 'UTF-8', mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
 	}
