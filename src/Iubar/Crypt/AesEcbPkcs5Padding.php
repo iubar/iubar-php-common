@@ -11,15 +11,15 @@ class AesEcbPkcs5Padding extends AesBase implements AesInterface {
 	}
 
 	public function encrypt(string $input, string $key) : string|false {
-	    return false;
+	    throw new \BadMethodCallException("Questo metodo non è ancora implementato.");
  	}
 
-	private static function pkcs5_pad(string $text, string $blocksize)  : string|false {
-	    return false;
+	protected static function pkcs5_pad(string $text, string $blocksize)  : string|false {
+	    throw new \BadMethodCallException("Questo metodo non è ancora implementato.");
 	}
  
 	public function decrypt(string $str, string $sKey)  : string|false {
-	    return false;
+	    throw new \BadMethodCallException("Questo metodo non è ancora implementato.");
  
 	}
 }

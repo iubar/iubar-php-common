@@ -7,13 +7,14 @@ namespace Iubar\Common;
 use Psr\Log\LoggerInterface;
 
 class FileUtil {
-	private $logger = null;
+    
+    protected LoggerInterface $logger;
 
 	public function __construct(LoggerInterface $logger) {
 		$this->logger = $logger;
 	}
 
-	public static function clearDirectory($path) {
+	public static function clearDirectory(string $path) {
 		foreach (new \DirectoryIterator($path) as $fileInfo) {
 			if (!$fileInfo->isDot()) {
 				// $name = $fileInfo->getPathname(); meglio usare....
@@ -33,7 +34,7 @@ class FileUtil {
 		}
 	}
 
-	public static function fullPath2File($file) {
+	public static function fullPath2File(string $file) {
 		$array = explode('/', $file); // $array = explode("\\", $file);
 		$index = count($array) - 1;
 		$f = $array[$index];
@@ -123,14 +124,14 @@ class FileUtil {
 		return $array;
 	}
 
-	public static function countFilesInPath($target_path) {
+	public static function countFilesInPath(string $target_path) {
 		$recursive = false;
 		$array = FileUtil::getFilesInPath($target_path, '', $recursive);
 		$size = sizeof($array);
 		return $size;
 	}
 
-	public static function writeToFile2($filename, $text) {
+	public static function writeToFile2(string $filename, string $text) {
 		// Verifica che il file esista e sia riscrivibile
 		//if (is_writable($filename)) {
 
@@ -179,7 +180,7 @@ class FileUtil {
 		}
 	}
 
-	public static function readFileAndPrint($file) {
+	public static function readFileAndPrint(string $file) {
 		$handle = @fopen($file, 'r'); // Open file form read.
 		if ($handle) {
 			while (!feof($handle)) {
@@ -192,7 +193,7 @@ class FileUtil {
 		}
 	}
 
-	public static function change_ext($filename, $new_ext) {
+	public static function change_ext(string $filename, string $new_ext) {
 		$new_ext = str_replace('.', '', $new_ext);
 		$old_ext = FileUtil::getFileExtension($filename);
 		$new_filename = str_replace($old_ext, $new_ext, $filename);
@@ -211,18 +212,18 @@ class FileUtil {
 	}
 
 	//function to return file extension from a path or file name
-	public static function getFileExtension($path) {
+	public static function getFileExtension(string $path) {
 		$parts = pathinfo($path);
 		return $parts['extension'];
 	}
 
 	//function to return file name from a path
-	public static function getFileName($path) {
+	public static function getFileName(string $path) {
 		$parts = pathinfo($path);
 		return $parts['basename'];
 	}
 
-	public static function printCsv($file) {
+	public static function printCsv(string $file) {
 		$row = 1;
 		$handle = fopen($file, 'r');
 		while (($data = fgetcsv($handle, 1000, ',')) !== false) {
@@ -236,7 +237,7 @@ class FileUtil {
 		fclose($handle);
 	}
 
-	public static function deleteFile($file) {
+	public static function deleteFile(string $file) {
 		// TODO: convertire in chekFile((SplFileInfo) $file)
 		$b = false;
 		if (is_file($file)) {
@@ -245,7 +246,7 @@ class FileUtil {
 		return $b;
 	}
 
-	public static function createDir($folder, $clear_if_exists = false) {
+	public static function createDir(string $folder, bool $clear_if_exists = false) {
 		$msg = '';
 		$b = false;
 		if (file_exists($folder)) {
@@ -275,7 +276,7 @@ class FileUtil {
 		} else {
 			$uri = str_replace('\\', '/', __FILE__);
 		}
-		return end(explode('/', dirname($uri)));
+		return basename(dirname($uri));
 	}
 
 	public static function getCurrentDir() {
@@ -304,7 +305,7 @@ class FileUtil {
 		echo '__FILE__: ' . __FILE__ . "\n";
 	}
 
-	public static function writeContent($filename, $somecontent) {
+	public static function writeContent(string $filename, string $somecontent) {
 		// In our example we're opening $filename in append mode.
 		// The file pointer is at the bottom of the file hence
 		// that's where $somecontent will go when we fwrite() it.
@@ -324,7 +325,7 @@ class FileUtil {
 		fclose($handle);
 	}
 
-	public static function appendContent($filename, $somecontent) {
+	public static function appendContent(string $filename, string $somecontent) {
 		// Let's make sure the file exists and is writable first.
 		if (is_writable($filename)) {
 			// In our example we're opening $filename in append mode.
@@ -357,7 +358,7 @@ class FileUtil {
 	 * @author Svetoslav Marinov
 	 * @author http://www.www
 	 */
-	public static function filesize2bytes($str) {
+	public static function filesize2bytes(string $str) {
 		$bytes = 0;
 
 		$bytes_array = [
@@ -386,21 +387,21 @@ class FileUtil {
 	 * Il metodo restituisce gli stessi risultati di formatBytes()
 	 * Nota che le sigle Gb, Kb, Mb, dovrebbero essere GB, KB, MB
 	 */
-	public static function convertBytes($number) {
+	public static function convertBytes(string $number) {
 		$len = strlen($number);
 		if ($len < 4) {
 			return sprintf('%d b', $number);
 		}
-		if ($len >= 4 && $len <= 6) {
-			return sprintf('%0.2f Kb', $number / pow(1024, 1));
+		if ($len <= 6) {
+			return sprintf('%0.2f Kb', floatval($number) / pow(1024, 1));
 		}
-		if ($len >= 7 && $len <= 9) {
-			return sprintf('%0.2f Mb', $number / pow(1024, 2));
+		if ($len <= 9) {
+		    return sprintf('%0.2f Mb', floatval($number) / pow(1024, 2));
 		}
-		return sprintf('%0.2f Gb', $number / pow(1024, 3)); // verificare se formatta in italiano, ad esempio 1.002,03
+		return sprintf('%0.2f Gb', floatval($number) / pow(1024, 3)); // verificare se formatta in italiano, ad esempio 1.002,03
 	}
 
-	public static function toBytes($size, $type) {
+	public static function toBytes(float $size, string $type) {
 		// https://blogs.gnome.org/cneumair/2008/09/30/1-kb-1024-bytes-no-1-kb-1000-bytes/
 		$bytes = $size;
 		switch ($type) {
@@ -436,7 +437,7 @@ class FileUtil {
 	/**
 	 * @deprecated: da spostare nella classe Formatter
 	 */
-	public static function formatBytes2($file, $type) {
+	public static function formatBytes2(string $file, string $type) {
 		$filesize = 0;
 		$size = filesize($file);
 		switch ($type) {
@@ -457,7 +458,7 @@ class FileUtil {
 		}
 	}
 
-	public static function getTotFileSize($array) {
+	public static function getTotFileSize(array $array) : int {
 		$size = 0;
 		foreach ($array as $filename) {
 			$size = $size + self::getFileSize($filename);
@@ -465,7 +466,7 @@ class FileUtil {
 		return $size;
 	}
 
-	public static function getFileSize($filename) {
+	public static function getFileSize(string $filename) {
 		$size = 0;
 		if (file_exists($filename)) {
 			$size = filesize($filename);
@@ -473,7 +474,7 @@ class FileUtil {
 		return $size;
 	}
 
-	public static function dirSize($directory) {
+	public static function dirSize(string $directory) {
 		// http://www.php.net/manual/en/book.spl.php Standard PHP Library (SPL)
 		$size = 0;
 		foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($directory)) as $file) {
@@ -482,7 +483,7 @@ class FileUtil {
 		return $size;
 	}
 
-	public static function appendToFile2($filename, $content) {
+	public static function appendToFile2(string $filename, string $content) {
 		// Let's make sure the file exists and is writable first.
 		if (is_writable($filename)) {
 			// In our example we're opening $filename in append mode.
@@ -508,7 +509,7 @@ class FileUtil {
 		}
 	}
 
-	public static function appendToFile($file, $content) {
+	public static function appendToFile(string $file, string $content) {
 		if (is_writable($file)) {
 			file_put_contents($file, $content, FILE_APPEND);
 		} else {
@@ -517,7 +518,7 @@ class FileUtil {
 		}
 	}
 
-	public static function createUtf8File($filename, $bom = false) {
+	public static function createUtf8File(string $filename, bool $bom = false) {
 		if (!file_exists($filename)) {
 			$path_parts = pathinfo($filename);
 
@@ -542,7 +543,7 @@ class FileUtil {
 	 * @param string $filename
 	 * @param string $content
 	 */
-	public static function appendToFileUtf8($filename, $content) {
+	public static function appendToFileUtf8(string $filename, string $content) {
 		// Let's make sure the file exists and is writable first.
 
 		if (!file_exists($filename)) {
@@ -573,7 +574,7 @@ class FileUtil {
 		}
 	}
 
-	public static function writeToFile($file, $content) {
+	public static function writeToFile(string $file, string $content) {
 		file_put_contents($file, $content); // overwrite content if file exists
 	}
 
@@ -582,20 +583,22 @@ class FileUtil {
 		fwrite($fh, $header); // E' NECESSARIO AFFINCHE' IL FILE SIA CREATO IN UTF8 !!!!
 	}
 
-	public static function createFile($file) {
+	public static function createFile(string $file) {
 		$handle = fopen($file, 'wb+'); // delete file if it exists
 		fclose($handle);
 	}
 
-	public static function writeToFileUtf8($filename, $content, $bom = false) {
-		($handle = fopen($filename, 'wb+')) or die("can't open file");
-		if ($handle) {
+	public static function writeToFileUtf8(string $filename, $content, bool $bom = false) {
+		$handle = fopen($filename, 'wb+');
+		if ($handle===false) {
+		    throw new \Exception("Can't open file : " . $filename);
+		}
 			if ($bom) {
 				FileUtil::writeUtf8Header($handle);
 			}
 			fwrite($handle, utf8_encode($content));
 			fclose($handle);
-		}
+ 
 	}
 
 	public static function writeToFileUtf8_2($filename, $content) {
@@ -610,7 +613,7 @@ class FileUtil {
 	 * @param string $dir Directory name
 	 * @param boolean $deleteRootToo Delete specified top-level directory as well
 	 */
-	public static function unlinkRecursive($dir, $deleteRootToo = true) {
+	public static function unlinkRecursive(string $dir, bool $deleteRootToo = true) {
 		if (!($dh = @opendir($dir))) {
 			return;
 		}
@@ -633,7 +636,7 @@ class FileUtil {
 		return;
 	}
 
-	public static function delTree($dir) {
+	public static function delTree(string $dir) {
 		$files = glob($dir . '*', GLOB_MARK);
 		foreach ($files as $file) {
 			//if( substr( $file, -1 ) == '/' ){
@@ -648,7 +651,7 @@ class FileUtil {
 		}
 	}
 
-	public static function deleteAll($directory, $empty = false) {
+	public static function deleteAll(string $directory, bool $empty = false) {
 		// $empty==false means don't delete the root path
 		if (substr($directory, -1) == '/') {
 			$directory = substr($directory, 0, -1);
@@ -685,7 +688,7 @@ class FileUtil {
 		}
 	}
 
-	public static function is_empty_dir($dir) {
+	public static function is_empty_dir(string $dir) {
 		// NOTE: you should obviously be checking beforehand if $dir is actually a directory,
 		// and that it is readable, as only relying on this you would assume that in both cases
 		// you have a non-empty readable directory.
@@ -696,7 +699,7 @@ class FileUtil {
 		return false;
 	}
 
-	public static function destroyDir($dir, $only_content = true) {
+	public static function destroyDir(string $dir, bool $only_content = true) {
 		if (strlen($dir) > 3) {
 			$last_char = substr($dir, -1);
 			if ($last_char != '/') {
@@ -739,7 +742,7 @@ class FileUtil {
 		// foreach($files as $file) unlink($file);
 	}
 
-	public static function rrmdir($dir) {
+	public static function rrmdir(string $dir) {
 		if (is_dir($dir)) {
 			$objects = scandir($dir);
 			foreach ($objects as $object) {
@@ -756,7 +759,7 @@ class FileUtil {
 		}
 	}
 
-	public static function array2string($array) {
+	public static function array2string(array $array) {
 		$str = '';
 		foreach ($array as $elem) {
 			if ($str == '') {
@@ -778,7 +781,7 @@ class FileUtil {
 	 * @param       string   $dest      Destination path
 	 * @return      bool     Returns TRUE on success, FALSE on failure
 	 */
-	public static function copyr($source, $dest) {
+	public static function copyr(string $source, string $dest) {
 		// Check for symlinks
 		if (is_link($source)) {
 			return symlink(readlink($source), $dest);
@@ -811,7 +814,7 @@ class FileUtil {
 		return true;
 	}
 
-	public static function bfglob($path, $pattern = '*', $flags = 0, $depth = 0) {
+	public static function bfglob(string $path, string $pattern = '*', int $flags = 0, int $depth = 0) {
 		// Description
 		// non-recursive implementation for recursive glob with a depth parameter. 
 		// The search is done breadth-first and specifying -1 for the depth means no limit.
@@ -835,7 +838,7 @@ class FileUtil {
 		return $matches;
 	}
 
-	public static function getRelativePath($from, $to) {
+	public static function getRelativePath(string $from, string $to) {
 		// some compatibility fixes for Windows paths
 		$from = is_dir($from) ? rtrim($from, '\/') . '/' : $from;
 		$to = is_dir($to) ? rtrim($to, '\/') . '/' : $to;
@@ -867,7 +870,7 @@ class FileUtil {
 		return implode('/', $relPath);
 	}
 
-	public static function checkDir($path) {
+	public static function checkDir(string $path) {
 		$msg = '';
 		if (!is_dir($path)) {
 			$msg = "The path '" . $path . "' does not exist.";
@@ -882,7 +885,7 @@ class FileUtil {
 		return $msg;
 	}
 
-	public static function checkFile($filename) {
+	public static function checkFile(string $filename) {
 		// TODO: convertire in chekFile((SplFileInfo) $file)
 		$msg = '';
 		if (!is_file($filename)) {
@@ -898,7 +901,7 @@ class FileUtil {
 		return $msg;
 	}
 
-	public static function checkIsWritable($path) {
+	public static function checkIsWritable(string $path) {
 		$msg = '';
 		if (!is_readable($path)) {
 			$msg = "The path '" . $path . "' is not readable.";
@@ -912,7 +915,7 @@ class FileUtil {
 		return $msg;
 	}
 
-	public static function searchFileByPattern($path, $regex) {
+	public static function searchFileByPattern(string $path, string $regex) {
 		$result = [];
 		$iterator = new \RecursiveDirectoryIterator($path);
 		$flattened = new \RecursiveIteratorIterator($iterator);
@@ -977,13 +980,13 @@ class FileUtil {
 		return $files;
 	}
 
-	private static function timestampToDate($timestamp) {
+	private static function timestampToDate(int $timestamp) {
 		$date = new \DateTime();
 		$date->setTimestamp($timestamp);
 		return $date;
 	}
 
-	private static function timestampToString($timestamp) {
+	protected static function timestampToString(int $timestamp) {
 		$date = self::timestampToDate($timestamp);
 		$datetimeFormat = 'Y-m-d H:i:s';
 		$str = $date->format($datetimeFormat);
@@ -995,7 +998,7 @@ class FileUtil {
 	 * Stessi risultati di filesize_r()
 	 *
 	 */
-	public static function folderSize($dir) {
+	public static function folderSize(string $dir) {
 		$size = 0;
 		foreach (glob(rtrim($dir, '/') . '/*', GLOB_NOSORT) as $each) {
 			$size += is_file($each) ? filesize($each) : self::folderSize($each);
@@ -1020,7 +1023,7 @@ class FileUtil {
 		return $ret;
 	}
 
-	public static function get_dir_size($dir_name) {
+	public static function get_dir_size(string $dir_name) {
 		// USAGE;
 		//$dir_name = "directory name here";
 		// /* 1048576 bytes == 1MB */
@@ -1052,31 +1055,39 @@ class FileUtil {
 	 * Finds a list of disk drives on the server.
 	 * @return array The array velues are the existing disks.
 	 */
-	public static function get_disks() {
-		if (php_uname('s') == 'Windows NT') {
-			// windows
-			$disks = `fsutil fsinfo drives`;
-			$disks = str_word_count($disks, 1);
-			if ($disks[0] != 'Drives') {
-				return '';
-			}
-			unset($disks[0]);
-			foreach ($disks as $key => $disk) {
-				$disks[$key] = $disk . ':\\';
-			}
-			return $disks;
+	public static function get_disks() : array {
+	    $disks= [];
+	    if (strpos(php_uname(), 'Windows') !== false) { // oppure if(strpos(PHP_OS, 'WIN') === 0){
+		    // Esegui il comando WMIC per ottenere i nomi delle unità logiche
+		    $output = shell_exec('wmic logicaldisk get name');
+		    
+		    // Gestisci l'output per rimuovere l'intestazione e ottenere solo i nomi delle unità
+		    $lines = explode("\n", trim($output));
+		    array_shift($lines);  // Rimuovi l'intestazione
+		    
+		    // Rimuovi eventuali spazi vuoti dalle righe
+		    $lines = array_map('trim', $lines);
+		    
+		    // Filtra le righe non vuote
+		    $lines = array_filter($lines, function($line) {
+		        return !empty($line);
+		    });
 		} else {
 			// unix
-			$data = `mount`;
-			$data = explode(' ', $data);
-			$disks = [];
-			foreach ($data as $token) {
-				if (substr($token, 0, 5) == '/dev/') {
-					$disks[] = $token;
-				}
-			}
-			return $disks;
+// 			$data = `mount`;
+// 			$data = explode(' ', $data);
+// 			$disks = [];
+// 			foreach ($data as $token) {
+// 				if (substr($token, 0, 5) == '/dev/') {
+// 					$disks[] = $token;
+// 				}
+// 			}
+		    $output = shell_exec('lsblk -d -o NAME');		    
+		    // Elenco dei dischi
+		    $disks = explode("\n", trim($output));
+		    array_shift($disks);  // Rimuovi l'intestazione
 		}
+			return $disks;
 	}
 
 	public static function getSubfolders($folder) {

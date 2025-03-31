@@ -36,7 +36,7 @@ abstract class AbstractEmailProvider {
 	protected ?Address $from_address = null;
 	protected ?Address $reply_to_address = null;
 
-	protected LoggerInterface $logger;
+	protected ?LoggerInterface $logger;
 
 	abstract protected function getTransport();
 

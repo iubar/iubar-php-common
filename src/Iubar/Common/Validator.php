@@ -209,12 +209,11 @@ class Validator extends BaseClass {
 		$enc = mb_detect_encoding($str);
 		$str = trim($str);
 		$regex = '';
-		if (true) {
-			// if($enc=="UTF-8"){
+// 		if (true) {
 			$regex = Validator::getUtf8RegExPhraseOfWords(); // sembra funzionare indipendentemente dall'encoding
-		} else {
-			$regex = Validator::$regex_phrase_of_words;
-		}
+// 		} else {
+// 			$regex = Validator::$regex_phrase_of_words;
+// 		}
 
 		$b = preg_match($regex, $str, $matches);
 
@@ -231,7 +230,7 @@ class Validator extends BaseClass {
 	public static function isNumeric(string $str) : bool {
 		$b = false;
 		$str = trim($str);
-		$b = preg_match(Validator::$regex_phrase_of_number, $str, $matches);
+		$b = preg_match(self::$regex_phrase_of_number, $str, $matches);
 		// 			if(isset($matches[0][0])){						// TODO: verificare se corretto
 		// 				$str2 = $matches[0][0];
 		// 				if($str2 != ""){
@@ -325,8 +324,8 @@ class Validator extends BaseClass {
 			return false;
 		}
 		// Loop through each char
-		if (is_array($s)) {
-			for ($i = 0; $i < count($s); $i++) {
+		$array = str_split($s);
+		for ($i = 0; $i < count($array); $i++) {
 				if (substr($s, $i, 1) == '(') {
 					// Increase the open count
 					$open++;
@@ -341,8 +340,7 @@ class Validator extends BaseClass {
 					echo "Closed $open \n";
 				}
 			}
-		}
-
+ 
 		if ($open != 0) {
 			return false;
 		}

@@ -11,10 +11,10 @@ class AesCbcNoPadding extends AesBase implements AesInterface {
 	}
 
  	public function encrypt(string $plaintext, string $iv) : string|false{
-	   return false;
+ 	    throw new \BadMethodCallException("Questo metodo non è ancora implementato.");
 	}
 
 	public function decrypt(string $encrypted, string $iv) : string|false{
-	   return false;
+	    throw new \BadMethodCallException("Questo metodo non è ancora implementato.");
 	}
 }

@@ -34,7 +34,7 @@ class SmtpMailer {
 				break;
 			default:
 				throw new \Exception('Provider not supported: ' . $provider_name);
-				break;
+				// break;
 		}
 		return $provider;
 	}

@@ -52,14 +52,16 @@ class OsUtil {
 	public static function is_windows() {
 		// Purpose:    Check if server is Windows
 		$isWindows = false;
-		$svr_os = strtolower(reset(explode(' ', php_uname('s'))));
+		$array = explode(' ', php_uname('s'));
+		$svr_os = strtolower($array[0]);
 		$isWindows = $svr_os === 'windows';
 		return $isWindows;
 	}
 	public static function is_linux() {
 		// Purpose:    Check if server is Linux
 		$isLinux = false;
-		$svr_os = strtolower(reset(explode(' ', php_uname('s'))));
+		$array = explode(' ', php_uname('s'));
+		$svr_os = strtolower($array[0]);
 		$isLinux = $svr_os === 'linux';
 		return $isLinux;
 	}

@@ -8,7 +8,8 @@ use PHPUnit\Framework\TestCase;
 use Iubar\Crypt\AesCbcNoPadding;
 
 class AesCbcNoPaddingTest extends TestCase {
-	private static $config = [];
+	
+    protected static $config = [];
 
 	public static function setUpBeforeClass(): void {
 		$config_file = __DIR__ . DIRECTORY_SEPARATOR . 'config.php';
@@ -24,6 +25,5 @@ class AesCbcNoPaddingTest extends TestCase {
 		// 	$encrypted = $aes->encrypt(self::$config['plaintext'], self::$config['iv']);
 		// 	$data = $aes->getCryptedDataFromSignature($encrypted);
 		// 	$this->assertEquals($encrypted, $data);
-		$this->assertTrue(true);
 	}
 }

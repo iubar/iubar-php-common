@@ -34,7 +34,7 @@ class AmazonSesProvider extends AbstractEmailProvider implements IEmailProvider 
 		// Create the Transport
 		// Port 587 or 2587
 		$port = $this->smtp_port;
-		if ($port === null) {
+		if (!$port) {
 			$port = 587;
 		}
 

@@ -27,25 +27,21 @@ abstract class AesBase {
 
 	public function getIvsFromSignature(string $sig) : string{
 		$str = '';
-		if ($sig !== null) {
+		if ($sig) {
 			$array = explode($this->sig_delimiter, $sig);
 			if (isset($array[1])) {
 				$str = $array[1];
 			}
 		}
-
 		return $str;
 	}
 
 	public function getCryptedDataFromSignature(string $sig) : string{
 		$str = '';
-		if ($sig !== null) {
+		if ($sig) {
 			$array = explode($this->sig_delimiter, $sig);
-			if (isset($array[0])) {
-				$str = $array[0];
-			}
+			$str = $array[0];
 		}
-
 		return $str;
 	}
 }

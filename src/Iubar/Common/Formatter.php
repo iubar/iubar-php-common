@@ -202,22 +202,22 @@ class Formatter extends BaseClass {
 		$minutes = (int) ($sec / 60);
 		$hours = (int) ($minutes / 60);
 
-		$hours = str_pad($hours, 2, '0', STR_PAD_LEFT);
-		$minutes = str_pad($minutes % 60, 2, '0', STR_PAD_LEFT);
-		$seconds = str_pad($seconds % 60, 2, '0', STR_PAD_LEFT);
+		$hours = str_pad(strval($hours), 2, '0', STR_PAD_LEFT);
+		$minutes = str_pad(strval($minutes % 60), 2, '0', STR_PAD_LEFT);
+		$seconds = str_pad(strval($seconds % 60), 2, '0', STR_PAD_LEFT);
 
 		$str = $hours . ':' . $minutes . ':' . $seconds;
 		if ($show_ms) {
-			$str = $str . ($milliseconds === 0 ? '' : '.' . rtrim($milliseconds % 1000, '0'));
+		    $str = $str . ($milliseconds === 0 ? '' : '.' . rtrim(strval($milliseconds % 1000), '0'));
 		}
 		return $str;
 	}
-	public static function formatMicroTimeAsDate(float $sec) {
-		$str = date('l jS F \@ g:i a', $sec);
+	public static function formatMicroTimeAsDate(float $sec) : string {
+		$str = date('l jS F \@ g:i a', intval($sec));
 		return $str;
 	}
 
-	public static function formatFloatIt(float $number, int $dec = 0) {
+	public static function formatFloatIt(float $number, int $dec = 0) : string {
 		$number_format_it = number_format($number, $dec, ',', '.');
 		return $number_format_it;
 	}
@@ -318,25 +318,8 @@ class Formatter extends BaseClass {
 			return round($filesize, 2) . ' ' . $type;
 		}
 	}
-
+ 
 	public static function secondsToWords(float $seconds) {
-		$ret = '';
-		$hours = intval(intval($seconds) / 3600);
-
-		if ($hours > 0) {
-			$ret .= "$hours hours ";
-		}
-		$minutes = bcmod(intval($seconds) / 60, 60);
-
-		if ($hours > 0 || $minutes > 0) {
-			$ret .= "$minutes minutes ";
-		}
-		$seconds = bcmod(intval($seconds), 60);
-		$ret .= "$seconds seconds";
-		return $ret;
-	}
-
-	public static function secondsToWords2(float $seconds) {
 		/**
 		 * * number of days **
 		 */

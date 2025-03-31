@@ -7,6 +7,7 @@ use Monolog\Logger;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Psr\Log\LoggerInterface;
+use App\Logger\ClimateConsoleHandler;
 
 class MiscUtils {
 	private static $useConEmuOnWin = true;
@@ -28,67 +29,69 @@ class MiscUtils {
 	    string $logger_name,
 	    string $log_level,
 	    string $log_file = 'log.rot',
-		bool $log_to_shell = true
-	) {
-		$error = '';
- 		$log_path = '';
-		$logger = new Logger($logger_name); // create a log channel
-		if ($log_file) {
-			$log_path = dirname($log_file);
-			$error = self::checkLogPath($log_path);
-			if ($error) {
-				// Impossibile scrivere nel percorso $log_path
-				die('QUIT: ' . $error . PHP_EOL);
-			} else {
-				$rotating_handler = new \Monolog\Handler\RotatingFileHandler($log_file, 3, $log_level);
-				$rotating_handler->setFormatter(new LineFormatter(null, null, true, true)); // LineFormatter::__construct(string $format = null, string $dateFormat = null, bool $allowInlineLineBreaks = false, bool $ignoreEmptyContextAndExtra = false)
-				$logger->pushHandler($rotating_handler);
-			}
-		}
-		if ($log_to_shell) {
-			self::logToShell($logger, $log_level);
-		}
-		self::checkError($logger, $error, $log_path, $log_to_shell);
-		return $logger;
+	    bool $log_to_shell = true,
+	    bool $use_climate = false
+	    ) {
+	        $error = '';
+	        $log_path = '';
+	        $logger = new Logger($logger_name); // create a log channel
+	        if ($log_file) {
+	            $log_path = dirname($log_file);
+	            $error = self::checkLogPath($log_path);
+	            if ($error) {
+	                // Impossibile scrivere nel percorso $log_path
+	                die('QUIT: ' . $error . PHP_EOL);
+	            } else {
+	                $rotating_handler = new \Monolog\Handler\RotatingFileHandler($log_file, 3, $log_level);
+	                $rotating_handler->setFormatter(new LineFormatter(null, null, true, true)); // LineFormatter::__construct(string $format = null, string $dateFormat = null, bool $allowInlineLineBreaks = false, bool $ignoreEmptyContextAndExtra = false)
+	                $logger->pushHandler($rotating_handler);
+	            }
+	        }
+	        if ($log_to_shell) {
+	            self::logToShell($logger, $log_level, $use_climate);
+	        }
+	        self::checkError($logger, $error, $log_path, $log_to_shell);
+	        return $logger;
 	}
-
+	
 	public static function loggerFactory(
-		string $logger_name,
-		string $log_level,
-		string $log_file = '',
-		bool $overwrite_log = true,
-		bool $log_to_shell = true
-	) {
-		$error = '';
-		$logger = new Logger($logger_name); // create a log channel
-		if ($log_file) {
-			$log_path = dirname($log_file);
-			$error = self::checkLogPath($log_path);
-			// $error = self::checkLogFile($log_file);
-			if ($error) {
-				// Impossibile scrivere nel percorso $log_path
-				die('QUIT: ' . $error . PHP_EOL);
-			} else {
-				$handler = new StreamHandler($log_file, $log_level);
-				$handler->setFormatter(new LineFormatter(null, null, true, true)); // LineFormatter::__construct(string $format = null, string $dateFormat = null, bool $allowInlineLineBreaks = false, bool $ignoreEmptyContextAndExtra = false)
-				$logger->pushHandler($handler);
-				if ($overwrite_log) {
-					file_put_contents($log_file, '');
-					$logger->info('Log file cleared');
-				}
-			}
-		} else {
-			// log to file is disabled
-		}
-
-		if ($log_to_shell) {
-			self::logToShell($logger, $log_level);
-		}
-		self::checkError($logger, $error, $log_file, $log_to_shell);
-		return $logger;
+	    string $logger_name,
+	    string $log_level,
+	    string $log_file = '',
+	    bool $overwrite_log = true,
+	    bool $log_to_shell = true,
+	    bool $use_climate = false
+	    ) {
+	        $error = '';
+	        $logger = new Logger($logger_name); // create a log channel
+	        if ($log_file) {
+	            $log_path = dirname($log_file);
+	            $error = self::checkLogPath($log_path);
+	            // $error = self::checkLogFile($log_file);
+	            if ($error) {
+	                // Impossibile scrivere nel percorso $log_path
+	                die('QUIT: ' . $error . PHP_EOL);
+	            } else {
+	                $handler = new StreamHandler($log_file, $log_level);
+	                $handler->setFormatter(new LineFormatter(null, null, true, true)); // LineFormatter::__construct(string $format = null, string $dateFormat = null, bool $allowInlineLineBreaks = false, bool $ignoreEmptyContextAndExtra = false)
+	                $logger->pushHandler($handler);
+	                if ($overwrite_log) {
+	                    file_put_contents($log_file, '');
+	                    $logger->info('Log file cleared');
+	                }
+	            }
+	        } else {
+	            // log to file is disabled
+	        }
+	        
+	        if ($log_to_shell) {
+	            self::logToShell($logger, $log_level, $use_climate);
+	        }
+	        self::checkError($logger, $error, $log_file, $log_to_shell);
+	        return $logger;
 	}
 
-	private static function checkLogFile(string $log_file) {
+	protected static function checkLogFile(string $log_file) {
 		$error = '';
 		// echo "Log file is '" . $log_file . "'" . PHP_EOL;
 		if (file_exists($log_file)) {
@@ -137,30 +140,35 @@ class MiscUtils {
 	 * @param string $log_level
 	 */
 	public static function logToShell(Logger $logger, string $log_level) {
-		$handler = new StreamHandler('php://stdout', $log_level);
-		// const SIMPLE_FORMAT = "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n";
-		$format = '%channel%.%level_name%: %message% %context% %extra%' . PHP_EOL;
-		$colorScheme = null;
-		// $dateFormat = 'Y-m-d H:i:s';
-		$dateFormat = null;
-		$allowInlineLineBreaks = true;
-		$ignoreEmptyContextAndExtra = true;
-		if (self::$useConEmuOnWin || !self::isWindows()) {
-			// $colorScheme = new TrafficLight();
-			$handler->setFormatter(
-				new ColoredLineFormatter(
-					$colorScheme,
-					$format,
-					$dateFormat,
-					$allowInlineLineBreaks,
-					$ignoreEmptyContextAndExtra
-				)
-			);
-		} else {
-			$formatter = new LineFormatter($format, $dateFormat, $allowInlineLineBreaks, $ignoreEmptyContextAndExtra);
-			$handler->setFormatter($formatter);
-		}
-		$logger->pushHandler($handler);
+	    $handler = null;
+	    if($use_climate){
+	        $handler = new StreamHandler('php://stdout', $log_level);
+	    }else{
+	        $handler = new ClimateConsoleHandler(log_level);
+	    }
+	    // const SIMPLE_FORMAT = "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n";
+	    $format = '%channel%.%level_name%: %message% %context% %extra%' . PHP_EOL;
+	    $colorScheme = null;
+	    // $dateFormat = 'Y-m-d H:i:s';
+	    $dateFormat = null;
+	    $allowInlineLineBreaks = true;
+	    $ignoreEmptyContextAndExtra = true;
+	    $formatter = null;
+	    if (self::$useConEmuOnWin || !self::isWindows()) {
+	        // $colorScheme = new TrafficLight();
+	        $formatter = new ColoredLineFormatter(
+	            $colorScheme,
+	            $format,
+	            $dateFormat,
+	            $allowInlineLineBreaks,
+	            $ignoreEmptyContextAndExtra
+	            );
+	    } else {
+	        $formatter = new LineFormatter($format, $dateFormat, $allowInlineLineBreaks, $ignoreEmptyContextAndExtra);
+	        
+	    }
+	    $handler->setFormatter($formatter);
+	    $logger->pushHandler($handler);
 	}
 
 	////////////////////////////////

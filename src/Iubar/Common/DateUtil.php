@@ -163,8 +163,8 @@ class DateUtil {
 		}
 
 		[$dd, $mm, $yy] = explode('/', $date);
-		if ($dd != '' && $mm != '' && $yy != '') {
-			return checkdate($mm, $dd, $yy);
+		if ($dd && $mm && $yy ) {
+			return checkdate(intval($mm), intval($dd), intval($yy));
 		}
 
 		return false;
@@ -174,7 +174,7 @@ class DateUtil {
 		if (
 			preg_match("/^(\d{4})-(\d{2})-(\d{2}) ([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/", $dateTime, $matches)
 		) {
-			if (checkdate($matches[2], $matches[3], $matches[1])) {
+			if (checkdate(intval($matches[2]), intval($matches[3]), intval($matches[1]))) {
 				return true;
 			}
 		}
@@ -205,24 +205,7 @@ class DateUtil {
 		$diff = $end_ts - $start_ts;
 		return round($diff / 86400);
 	}
-
-	public static function getYesterday() {
-		return mktime(0, 0, 0, date('m'), date('d') - 1, date('Y'));
-	}
-
-	public static function getToday() {
-		// USAGE: date ("d-M-Y", DateUtil::getToday());
-		return mktime(0, 0, 0, date('m'), date('d'), date('Y'));
-	}
-
-	public static function dateToString($date) {
-		$str = strftime('%d/%m/%Y', $date);
-		return $str;
-	}
-
-	public static function dateToString2($date) {
-		return strftime('%d %B %Y', $date);
-	}
+ 
 
 	// Get the last day of the month
 	public static function lastDayOfMonth($month = '', $year = '') {
@@ -278,7 +261,7 @@ class DateUtil {
 					//echo "month " . $month . "\r\n";
 					//echo "year " . $year . "\r\n";
 
-					$d = mktime(0, 0, 0, $month, $day, $year);
+					$d = mktime(0, 0, 0, intval($month), intval($day), intval($year));
 				}
 			}
 		}
@@ -289,97 +272,7 @@ class DateUtil {
 		$h = $s / 3600;
 		return $h;
 	}
-
-	public static function isDayInTheFuture($date) {
-		$b = false;
-
-		$day = strftime('%d', $date);
-		$month = strftime('%m', $date);
-		$year = strftime('%Y', $date);
-
-		$today = self::getToday();
-
-		$day2 = strftime('%d', $today);
-		$month2 = strftime('%m', $today);
-		$year2 = strftime('%Y', $today);
-
-		if ($day > $day2 || $month > $month2 || $year > $year2) {
-			$b = true;
-		}
-
-		return $b;
-	}
-
-	public static function isToday($date) {
-		$b = false;
-
-		$day = strftime('%d', $date);
-		$month = strftime('%m', $date);
-		$year = strftime('%Y', $date);
-
-		$today = self::getToday();
-
-		$day2 = strftime('%d', $today);
-		$month2 = strftime('%m', $today);
-		$year2 = strftime('%Y', $today);
-
-		if ($day == $day2 && $month == $month2 && $year == $year2) {
-			$b = true;
-		}
-
-		return $b;
-	}
-
-	public static function isYesterday($date) {
-		$b = false;
-
-		$day = strftime('%d', $date);
-		$month = strftime('%m', $date);
-		$year = strftime('%Y', $date);
-
-		$yesterday = self::getYesterday();
-
-		$day2 = strftime('%d', $yesterday);
-		$month2 = strftime('%m', $yesterday);
-		$year2 = strftime('%Y', $yesterday);
-
-		if ($day == $day2 && $month == $month2 && $year == $year2) {
-			$b = true;
-		}
-
-		return $b;
-	}
-
-	//////////////////////////////////////////////////// TEST
-
-	public static function test_diff_2() {
-		// Il risultato esatto è 2 non 3 perchè vi è passaggio a ora legale
-		$s = 0;
-		$m = 0;
-		$h1 = 4;
-		$h2 = 1;
-		$day = '28';
-		$month = '3';
-		$year = '2010';
-		$d1 = mktime($h1, $m, $s, $month, $day, $year);
-		$d2 = mktime($h2, $m, $s, $month, $day, $year);
-		$diff1 = $d1 - $d2;
-
-		date_default_timezone_set('Brazil/Acre');
-		$d1 = mktime($h1, $m, $s, $month, $day, $year);
-		$d2 = mktime($h2, $m, $s, $month, $day, $year);
-		$diff2 = $d1 - $d2;
-
-		date_default_timezone_set('America/New_York');
-		$d1 = mktime($h1, $m, $s, $month, $day, $year);
-		$d2 = mktime($h2, $m, $s, $month, $day, $year);
-		$diff3 = $d1 - $d2;
-
-		echo 'diff1: ' . self::secondsToHours($diff1) . ' h.' . PHP_EOL;
-		echo 'diff2: ' . self::secondsToHours($diff2) . ' h.' . PHP_EOL;
-		echo 'diff3: ' . self::secondsToHours($diff3) . ' h.' . PHP_EOL;
-	}
-
+ 
 	public static function test_diff() {
 		// ATTENZIONE: Qui la timezone è probabilmente (!) uguale a GMT+1
 		$hours_diff = strtotime('20:00:00') - strtotime('19:00:00');

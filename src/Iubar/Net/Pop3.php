@@ -75,14 +75,12 @@ class Pop3 {
 
 	/**
 	 * Count the number of message in connection folder
-	 *
-	 * @return number the number of the messages
 	 */
-	public function countMessages() {
+	public function countMessages() : int {
 		$n = 0;
-		$check = imap_mailboxmsginfo($this->connection);
-		if ($check) {
-			$n = $check->Nmsgs;
+		$obj = imap_mailboxmsginfo($this->connection);
+		if ($obj->Mailbox) {
+		    $n = intval($obj->Nmsgs);
 		} else {
 			echo 'imap_mailboxmsginfo() failed: ' . imap_last_error() . PHP_EOL;
 		}
@@ -129,19 +127,16 @@ class Pop3 {
 	}
 
 	/**
-	 * unused method !
-	 *
-	 * @param string $message
 	 */
-	protected function pop3_retr($message) {
-		return imap_fetchheader($this->connection, $message, FT_PREFETCHTEXT);
+	protected function pop3_retr(int $message_num) : string | false {
+		return imap_fetchheader($this->connection, $message_num, FT_PREFETCHTEXT);
 	}
 
 	/**
 	 * unused function
 	 *
 	 */
-	private function mail_parse_headers($headers) {
+	private function mail_parse_headers(string $headers) : array {
 		$result = [];
 		$headers = preg_replace('/\r\n\s+/m', '', $headers);
 		$matches = [];
@@ -158,7 +153,7 @@ class Pop3 {
 	 * unused function
 	 *
 	 */
-	private function mail_mime_to_array($imap, $mid, $parse_headers = false) {
+	protected function mail_mime_to_array($imap, $mid, $parse_headers = false) {
 		$mail = imap_fetchstructure($imap, $mid);
 		$mail = $this->mail_get_parts($imap, $mid, $mail, 0);
 		if ($parse_headers) {
@@ -191,7 +186,7 @@ class Pop3 {
 	 * unused function
 	 *
 	 */
-	private function mail_decode_part($message_number, $part, $prefix) {
+	private function mail_decode_part(int $message_number, $part, $prefix) : array  {
 		$attachment = [];
 
 		if ($part->ifdparameters) {

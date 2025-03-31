@@ -2,15 +2,23 @@
 namespace Iubar\Misc;
 
 class Bench {
-	private static $array = [];
-	// start times
-	private static $array2 = [];
-	// stop times
-	public static $debug = false;
+    /**
+     * start times
+     * @var array<string,float>
+     */
+    private static $array = []; 
+ 
+	/**
+	 * stop times
+	 * @var array<string,float>
+	 */
+	private static $array2 = []; // float 
 
-	public static $def_format = 'H:i:s.u'; // oppure 'Y-m-d H:i:s.u'
+	public static bool $debug = false;
 
-	public static function startTimer(string $timer_name) {
+	public static string $def_format = 'H:i:s.u'; // oppure 'Y-m-d H:i:s.u'
+
+	public static function startTimer(string $timer_name) : void{
 		$starttime = microtime(true);
 		self::$array[$timer_name] = $starttime;
 		self::$array2[$timer_name] = 0;
@@ -26,7 +34,7 @@ class Bench {
 		}
 	}
 
-	public static function stopTimer(string $timer_name, $verbose = false) {
+	public static function stopTimer(string $timer_name, bool $verbose = false) : string {
 		$endtime = microtime(true);
 		self::$array2[$timer_name] = $endtime;
 		$str = self::getDiffAsString($timer_name, $endtime);
@@ -42,7 +50,7 @@ class Bench {
 	/**
 	 * Returns time elapsed from start to now
 	 */
-	public static function getElapsedTimeAsString(string $timer_name) {
+	public static function getElapsedTimeAsString(string $timer_name) : ?string {
 		$now = microtime(true);
 		return self::getDiffAsString($timer_name, $now);
 	}
@@ -55,17 +63,17 @@ class Bench {
 	/**
 	 * Returns time elapsed from start to stop
 	 */
-	public static function getTotalExecutionTimeAsString(string $timer_name) {
+	public static function getTotalExecutionTimeAsString(string $timer_name) : string {
 		$end = self::$array2[$timer_name];
 		return self::getDiffAsString($timer_name, $end);
 	}
 
-	public static function getTotalExecutionTime(string $timer_name) {
+	public static function getTotalExecutionTime(string $timer_name) : ?float  {
 		$end = self::$array2[$timer_name];
 		return self::getDiff($timer_name, $end);
 	}
 
-	private static function getDiffAsString(string $timer_name, $endtime, $format = null) {
+	private static function getDiffAsString(string $timer_name, float $endtime, string $format = '') : ?string {
 		$str = null;
 		if (!$format) {
 			$format = self::$def_format;
@@ -82,7 +90,7 @@ class Bench {
 		return $str;
 	}
 
-	private static function getDiff(string $timer_name, $endtime) {
+	private static function getDiff(string $timer_name, float $endtime) : ?float  {
 		$diff = null;
 		$starttime = self::$array[$timer_name];
 		if ($starttime) {
@@ -97,7 +105,7 @@ class Bench {
 	 * @see http://php.net/manual/en/function.microtime.php
 	 * @see http://php.net/manual/en/datetime.createfromformat.php
 	 */
-	public static function microtimeToString($mtime, $format) {
+	public static function microtimeToString(float $mtime, string $format) : string {
 		if (!$mtime) {
 			return '<undefined micro time>';
 		}
@@ -128,16 +136,16 @@ class Bench {
 	 * @see http://php.net/manual/en/class.datetime.php RFC822 = "D, d M y H:i:s O"
 	 *      RFC850 = "l, d-M-y H:i:s T"
 	 */
-	private static function timeToString($unixtime, \DateTimeZone $tz) {
+	private static function timeToString(float $unixtime, \DateTimeZone $tz): string {
 		if (!$unixtime) {
 			return '<undefined time>';
 		}
-		$dt = \DateTime::createFromFormat('U.u', $unixtime);
+		$dt = \DateTime::createFromFormat('U.u', strval($unixtime));
 		$dt->setTimezone($tz);
 		return $dt->format(\DateTime::RFC850); // This method does not use locales. All output is in English.
 	}
 
-	public static function getStartTimeAsString(string $timer_name, \DateTimeZone $tz = null) {
+	public static function getStartTimeAsString(string $timer_name, \DateTimeZone $tz = null): string {
 		if (!$tz) {
 			$tz = new \DateTimeZone('Europe/Rome');
 		}
@@ -145,7 +153,7 @@ class Bench {
 		return self::timeToString($unixtime, $tz);
 	}
 
-	public static function getStopTimeAsString(string $timer_name, \DateTimeZone $tz = null) {
+	public static function getStopTimeAsString(string $timer_name, \DateTimeZone $tz = null) : string {
 	    if (!$tz) {
 			$tz = new \DateTimeZone('Europe/Rome');
 		}
@@ -153,12 +161,12 @@ class Bench {
 		return self::timeToString($unixtime, $tz);
 	}
 
-	public static function getNowAsString(\DateTimeZone $tz = null) {
+	public static function getNowAsString(\DateTimeZone $tz = null) : string {
 	    if (!$tz) {
 			$tz = new \DateTimeZone('Europe/Rome');
 		}
 		$dt = new \DateTime();
-		$dt->setTimezone($tz);
+		$dt->setTimezone($tz); // TODO: valutare differenza tra l'invocare $dt->setTimezone(null) e il non invocarlo affatto.
 		return $dt->format(\DateTime::RFC850);
 	}
 }

@@ -5,8 +5,11 @@ namespace Iubar\Common;
 use Iubar\Common\BaseClass;
 
 class IniWriter extends BaseClass {
-	public static function write_ini_file($assoc_arr, $path, $has_sections = false) {
-		$use_quote = false;
+    
+    protected static bool $use_quote = false;
+        
+	public static function write_ini_file(array $assoc_arr, string $path, $has_sections = false) {
+		
 		$content = '';
 		if ($has_sections) {
 			foreach ($assoc_arr as $key => $elem) {
@@ -15,7 +18,7 @@ class IniWriter extends BaseClass {
 					if (is_array($elem2)) {
 						for ($i = 0; $i < count($elem2); $i++) {
 							$elem = $elem2[$i];
-							if ($use_quote) {
+							if (self::$use_quote) {
 								$elem = "\"" . $elem . "\"";
 							}
 							$content .= $key2 . '[] = ' . $elem . PHP_EOL;
@@ -23,7 +26,7 @@ class IniWriter extends BaseClass {
 					} elseif ($elem2 == '') {
 						$content .= $key2 . ' = ' . PHP_EOL;
 					} else {
-						if ($use_quote) {
+					    if (self::$use_quote) {
 							$elem2 = "\"" . $elem2 . "\"";
 						}
 						$content .= $key2 . ' = ' . $elem2 . PHP_EOL;
@@ -36,7 +39,7 @@ class IniWriter extends BaseClass {
 					for ($i = 0; $i < count($elem); $i++) {
 						if (isset($elem[$i])) {
 							$elem = $elem[$i];
-							if ($use_quote) {
+							if (self::$use_quote) {
 								$elem = "\"" . $elem . "\"";
 							}
 							$content .= $key . '[] = ' . $elem . PHP_EOL;
@@ -45,7 +48,7 @@ class IniWriter extends BaseClass {
 				} elseif ($elem == '') {
 					$content .= $key . ' = ' . PHP_EOL;
 				} else {
-					if ($use_quote) {
+				    if (self::$use_quote) {
 						$elem = "\"" . $elem . "\"";
 					}
 					$content .= $key . ' = ' . $elem . PHP_EOL;

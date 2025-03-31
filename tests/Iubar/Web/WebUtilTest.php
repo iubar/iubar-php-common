@@ -44,11 +44,11 @@ class WebUtilTest extends TestCase {
 	}
 
 	public function test2() {
-		if (false) {
-			$txt_content = "Pippo e pluto vanno al <img src=\"http://www.iubar.it\">ok</img> ciao ciao";
-			$links = WebUtil::extractLinks($txt_content);
-			print_r($links);
-		}
+// 		if (false) {
+// 			$txt_content = "Pippo e pluto vanno al <img src=\"http://www.iubar.it\">ok</img> ciao ciao";
+// 			$links = WebUtil::extractLinks($txt_content);
+// 			print_r($links);
+// 		}
 
 		$url = 'http://www.iubar.it/tools/mailinglist/img/logo_iubar.png';
 		$ok = WebUtil::check_url2($url);

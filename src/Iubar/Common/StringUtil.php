@@ -39,7 +39,7 @@ class StringUtil {
 	public static function toCsv(array $array, string $quote = '', string $def_for_null = '') : string {
 		// attenzione, a non invocare il metodo con $def_for_null=NULL ma usare $def_for_null = "NULL"
 		$result = '';
-		if (is_array($array)) {
+ 
 			$length = count($array);
 			if ($length > 0) {
 				for ($i = 0; $i < $length - 1; $i++) {
@@ -47,8 +47,8 @@ class StringUtil {
 					if ($value === null) {
 						$value = $def_for_null;
 						$result .= $value . ', ';
-					} elseif ($quote === null) {
-						$result .= $value . ', ';
+// 					} elseif ($quote === null) {
+// 						$result .= $value . ', ';
 					} else {
 						$result .= $quote . $value . $quote . ', ';
 					}
@@ -59,15 +59,13 @@ class StringUtil {
 				if ($value === null) {
 					$value = $def_for_null;
 					$result .= $value;
-				} elseif ($quote === null) {
-					$result .= $value;
+// 				} elseif ($quote === null) {
+// 					$result .= $value;
 				} else {
 					$result .= $quote . $value . $quote;
 				}
 			}
-		} else {
-			// TODO: throw an illegalargument exception
-		}
+ 
 		return $result;
 	}
 
@@ -123,7 +121,7 @@ class StringUtil {
 
 	public static function arrayToText2(array $array, string $sep = PHP_EOL): string {
 		$content = '';
-		if (is_array($array)) {
+ 
 			// $i = 0;
 			foreach ($array as $elem) {
 				if (is_array($elem)) {
@@ -135,9 +133,7 @@ class StringUtil {
 					//$i++;
 				}
 			}
-		} else {
-			$content = '<not an array>' . $sep;
-		}
+ 
 		return $content;
 	}
 
@@ -166,12 +162,7 @@ class StringUtil {
 	}
 
 	public static function arrayToText(array $array, string $sep = PHP_EOL) : string {
-		$content = '';
-		if (is_array($array)) {
-			$content = implode($sep, $array) . $sep;
-		} else {
-			$content = '<not an array>' . $sep;
-		}
+	 $content = implode($sep, $array) . $sep;
 		return $content;
 	}
 
@@ -254,12 +245,8 @@ class StringUtil {
 
 	public static function getLastWord(string $text)  : string|null {
 		$tokens = explode(' ', trim($text));
-		$index = sizeof($text);
-		if($index){
-		  return $tokens[$index - 1];
-		}else{
-		    return null;
-		}
+		$size = sizeof($tokens);
+	    return $tokens[$size - 1];
 	}
 
 	public static function getWordAfter(string $text, string $str) : string|null {
@@ -316,7 +303,8 @@ class StringUtil {
 	 *
 	 */
 	public static function is_ascii(string $string) : int|false {
-		return !preg_match('/[^\x00-\x7F]/S', $string);
+		// Usa una regex per verificare che tutti i caratteri siano nell'intervallo ASCII
+		return preg_match('/^[\x00-\x7F]*$/', $string);
 	}
 
 	public static function toUtf8(string $str) {
@@ -340,7 +328,7 @@ class StringUtil {
 	}
 
 	public static function isNotEmpty(string $str) : bool  {
-		return $str !== null && $str !== '';
+		return $str !== '';
 	}
 
 	public static function isEmpty(string $str)  : bool {

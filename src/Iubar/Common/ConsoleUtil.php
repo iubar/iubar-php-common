@@ -44,7 +44,7 @@ class ConsoleUtil {
 
 		$line = trim(fgets($f));
 
-		if ($line == '' && strlen($line) == 0) {
+		if (!$line) {
 			if ($def_boolean) {
 				$line = 'y';
 			} else {
@@ -212,7 +212,7 @@ class ConsoleUtil {
 
 		$line = trim(fgets($f));
 
-		if ($line == '' && strlen($line) == 0) {
+		if (!$line) {
 			$b = $def_boolean;
 		} else {
 			$b = ConsoleUtil::isYes($line);
@@ -236,7 +236,7 @@ class ConsoleUtil {
 		}
 
 		$perc = round(($current / $total) * 100, 2); //Percentage round off for a more clean, consistent look
-		for ($i = strlen($perc); $i <= 4; $i++) {
+		for ($i = strlen(strval($perc)); $i <= 4; $i++) {
 			$perc = ' ' . $perc;
 		} // percent indicator must be four characters, if shorter, add some spaces
 
@@ -338,10 +338,10 @@ POSSIBILITY OF SUCH DAMAGE.
 		$bar = floor($perc * $size);
 
 		$status_bar = "\r[";
-		$status_bar .= str_repeat('=', $bar);
+		$status_bar .= str_repeat('=', intval($bar));
 		if ($bar < $size) {
 			$status_bar .= '>';
-			$status_bar .= str_repeat(' ', $size - $bar);
+			$status_bar .= str_repeat(' ', intval($size - $bar));
 		} else {
 			$status_bar .= '=';
 		}

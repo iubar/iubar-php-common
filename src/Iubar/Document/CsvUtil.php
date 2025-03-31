@@ -105,19 +105,10 @@ class CsvUtil extends BaseClass {
 	}
 
 	public static function get_csv_header($filename, $delim = ',', $enclosure = '"') {
-		$row = 0;
 		$handle = fopen($filename, 'r');
 		if ($handle !== false) {
-			while (($data = fgetcsv($handle, CsvUtil::$MAX_LEN, $delim, $enclosure)) !== false) {
-				if ($row == 0) {
-					return $data;
-					//$dump[$row] = $data;
-					//echo $data[1] . $BR;
-				} else {
-					//echo "skipped " . $data[1] . $BR;
-					break;
-				}
-				$row++;
+			while (($data = fgetcsv($handle, CsvUtil::$MAX_LEN, $delim, $enclosure)) !== false) { 
+					return $data;  // restituisco la riga 0
 			}
 			fclose($handle);
 		}

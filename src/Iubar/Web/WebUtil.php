@@ -178,23 +178,38 @@ class WebUtil {
 		print '<pre>' . print_r($goodLinks, true) . '</pre>';
 	}
 
-	public static function check_url(string $url) : string {
+	public static function check_url(string $url) : int {
 		// 	USAGE:
 		// 		$check_url_status = WebUtil::check_url($url);
 		// 		if ($check_url_status == '200') // I think you can also check for 301 and 302 status codes: http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
 		// 			echo "Link Works";
 		// 		else
 		// 			echo "Broken Link";
-
+		$code = 0;
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_HEADER, 1);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		$data = curl_exec($ch);
-		$headers = curl_getinfo($ch);
+		curl_setopt($ch, CURLOPT_HEADER, true);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$response = curl_exec($ch);
+		
+		// Verifica se ci sono errori durante l'esecuzione
+		if(curl_errno($ch)) {
+		    $msg = "Errore cURL: " . curl_error($ch);
+		    echo $msg . PHP_EOL;
+		    // throw new \Exception($msg);
+		} else {
+		    // Ottieni informazioni sulla sessione cURL
+		    $info = curl_getinfo($ch);
+		    // Visualizza le informazioni ottenute
+		    echo "URL finale: " . $info['url'] . "\n";
+		    echo "Codice di stato HTTP: " . $info['http_code'] . "\n";
+		    echo "Tempo di trasferimento: " . $info['total_time'] . " secondi\n";
+		    echo "Lunghezza del contenuto: " . $info['size_download'] . " bytes\n";		 
+		    $code = $info['http_code'];
+		}
+		// Chiudi la sessione cURL
 		curl_close($ch);
-
-		return $headers['http_code'];
+		return $code;
 	}
 
 	public static function check_url2(string $url) : bool {
