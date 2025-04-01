@@ -47,8 +47,7 @@ class Pop3 {
 	 */
 	public function pop3_login($folder = 'INBOX') {
 		$pop3_folder = $this->getPop3Folder($folder);
-		($this->connection = imap_open($pop3_folder, self::$user, self::$password)) or
-			die("Can't connect: " . imap_last_error());
+		($this->connection = imap_open($pop3_folder, self::$user, self::$password)) or die("Can't connect: " . imap_last_error());
 		return $this->connection;
 	}
 
@@ -76,11 +75,11 @@ class Pop3 {
 	/**
 	 * Count the number of message in connection folder
 	 */
-	public function countMessages() : int {
+	public function countMessages(): int {
 		$n = 0;
 		$obj = imap_mailboxmsginfo($this->connection);
 		if ($obj->Mailbox) {
-		    $n = intval($obj->Nmsgs);
+			$n = intval($obj->Nmsgs);
 		} else {
 			echo 'imap_mailboxmsginfo() failed: ' . imap_last_error() . PHP_EOL;
 		}
@@ -128,7 +127,7 @@ class Pop3 {
 
 	/**
 	 */
-	protected function pop3_retr(int $message_num) : string | false {
+	protected function pop3_retr(int $message_num): string|false {
 		return imap_fetchheader($this->connection, $message_num, FT_PREFETCHTEXT);
 	}
 
@@ -136,15 +135,15 @@ class Pop3 {
 	 * unused function
 	 *
 	 */
-	private function mail_parse_headers(string $headers) : array {
+	private function mail_parse_headers(string $headers): array {
 		$result = [];
 		$headers = preg_replace('/\r\n\s+/m', '', $headers);
 		$matches = [];
 		$found = preg_match_all('/([^: ]+): (.+?(?:\r\n\s(?:.+?))*)?\r\n/m', $headers, $matches);
-		if ($found !== false){
-		foreach ($matches[1] as $key => $value) {
-			$result[$value] = $matches[2][$key];
-		}
+		if ($found !== false) {
+			foreach ($matches[1] as $key => $value) {
+				$result[$value] = $matches[2][$key];
+			}
 		}
 		return $result;
 	}
@@ -173,10 +172,7 @@ class Pop3 {
 			// multipart
 			$prefix = $prefix == '0' ? '' : "$prefix.";
 			foreach ($part->parts as $number => $subpart) {
-				$attachments = array_merge(
-					$attachments,
-					$this->mail_get_parts($imap, $mid, $subpart, $prefix . ($number + 1))
-				);
+				$attachments = array_merge($attachments, $this->mail_get_parts($imap, $mid, $subpart, $prefix . ($number + 1)));
 			}
 		}
 		return $attachments;
@@ -186,7 +182,7 @@ class Pop3 {
 	 * unused function
 	 *
 	 */
-	private function mail_decode_part(int $message_number, $part, $prefix) : array  {
+	private function mail_decode_part(int $message_number, $part, $prefix): array {
 		$attachment = [];
 
 		if ($part->ifdparameters) {

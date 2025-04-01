@@ -5,8 +5,7 @@ namespace Iubar\Common;
 class StringBuilder {
 	private $str = [];
 
-	public function __construct() {
-	}
+	public function __construct() {}
 
 	public function append($str) {
 		$this->str[] = $str;

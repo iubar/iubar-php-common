@@ -26,73 +26,73 @@ class MiscUtils {
 	 */
 
 	public static function rotatingLoggerFactoryloggerFactory(
-	    string $logger_name,
-	    string  $log_level,
-	    string $log_file = 'log.rot',
-	    bool $log_to_shell = true,
-	    bool $use_climate = false
-	    ) : LoggerInterface {
-	        $error = '';
-	        $log_path = '';
-	        $logger = new Logger($logger_name); // create a log channel
-	        if ($log_file) {
-	            $log_path = dirname($log_file);
-	            $error = self::checkLogPath($log_path);
-	            if ($error) {
-	                // Impossibile scrivere nel percorso $log_path
-	                die('QUIT: ' . $error . PHP_EOL);
-	            } else {
-	                $rotating_handler = new \Monolog\Handler\RotatingFileHandler($log_file, 3, $log_level);
-	                $formatter = self::formatterSimpleFactory();
-	                $rotating_handler->setFormatter($formatter);
-	                $logger->pushHandler($rotating_handler);
-	            }
-	        }
-	        if ($log_to_shell) {
-	            self::logToShell($logger, $log_level, $use_climate);
-	        }
-	        self::checkError($logger, $error, $log_path, $log_to_shell);
-	        return $logger;
-	}
-	
-	public static function loggerFactory(
-	    string $logger_name,
-	    string  $log_level,
-	    string $log_file = '',
-	    bool $overwrite_log = true,
-	    bool $log_to_shell = true,
-	    bool $use_climate = false
-	    ) : LoggerInterface {
-	        $error = '';
-	        $logger = new Logger($logger_name); // create a log channel
-	        if ($log_file) {
-	            $log_path = dirname($log_file);
-	            $error = self::checkLogPath($log_path);
-	            // $error = self::checkLogFile($log_file);
-	            if ($error) {
-	                // Impossibile scrivere nel percorso $log_path
-	                die('QUIT: ' . $error . PHP_EOL);
-	            } else {
-	                $handler = new StreamHandler($log_file, $log_level);
-	                $handler->setFormatter(new LineFormatter(null, null, true, true)); // LineFormatter::__construct(string $format = null, string $dateFormat = null, bool $allowInlineLineBreaks = false, bool $ignoreEmptyContextAndExtra = false)
-	                $logger->pushHandler($handler);
-	                if ($overwrite_log) {
-	                    file_put_contents($log_file, '');
-	                    $logger->info('Log file cleared');
-	                }
-	            }
-	        } else {
-	            // log to file is disabled
-	        }
-	        
-	        if ($log_to_shell) {
-	            self::logToShell($logger, $log_level, $use_climate);
-	        }
-	        self::checkError($logger, $error, $log_file, $log_to_shell);
-	        return $logger;
+		string $logger_name,
+		string $log_level,
+		string $log_file = 'log.rot',
+		bool $log_to_shell = true,
+		bool $use_climate = false
+	): LoggerInterface {
+		$error = '';
+		$log_path = '';
+		$logger = new Logger($logger_name); // create a log channel
+		if ($log_file) {
+			$log_path = dirname($log_file);
+			$error = self::checkLogPath($log_path);
+			if ($error) {
+				// Impossibile scrivere nel percorso $log_path
+				die('QUIT: ' . $error . PHP_EOL);
+			} else {
+				$rotating_handler = new \Monolog\Handler\RotatingFileHandler($log_file, 3, $log_level);
+				$formatter = self::formatterSimpleFactory();
+				$rotating_handler->setFormatter($formatter);
+				$logger->pushHandler($rotating_handler);
+			}
+		}
+		if ($log_to_shell) {
+			self::logToShell($logger, $log_level, $use_climate);
+		}
+		self::checkError($logger, $error, $log_path, $log_to_shell);
+		return $logger;
 	}
 
-	protected static function checkLogFile(string $log_file) : string {
+	public static function loggerFactory(
+		string $logger_name,
+		string $log_level,
+		string $log_file = '',
+		bool $overwrite_log = true,
+		bool $log_to_shell = true,
+		bool $use_climate = false
+	): LoggerInterface {
+		$error = '';
+		$logger = new Logger($logger_name); // create a log channel
+		if ($log_file) {
+			$log_path = dirname($log_file);
+			$error = self::checkLogPath($log_path);
+			// $error = self::checkLogFile($log_file);
+			if ($error) {
+				// Impossibile scrivere nel percorso $log_path
+				die('QUIT: ' . $error . PHP_EOL);
+			} else {
+				$handler = new StreamHandler($log_file, $log_level);
+				$handler->setFormatter(new LineFormatter(null, null, true, true)); // LineFormatter::__construct(string $format = null, string $dateFormat = null, bool $allowInlineLineBreaks = false, bool $ignoreEmptyContextAndExtra = false)
+				$logger->pushHandler($handler);
+				if ($overwrite_log) {
+					file_put_contents($log_file, '');
+					$logger->info('Log file cleared');
+				}
+			}
+		} else {
+			// log to file is disabled
+		}
+
+		if ($log_to_shell) {
+			self::logToShell($logger, $log_level, $use_climate);
+		}
+		self::checkError($logger, $error, $log_file, $log_to_shell);
+		return $logger;
+	}
+
+	protected static function checkLogFile(string $log_file): string {
 		$error = '';
 		// echo "Log file is '" . $log_file . "'" . PHP_EOL;
 		if (file_exists($log_file)) {
@@ -105,7 +105,7 @@ class MiscUtils {
 		return $error;
 	}
 
-	private static function checkLogPath(string $log_path) : string {
+	private static function checkLogPath(string $log_path): string {
 		$error = '';
 		echo "Log path is '" . $log_path . "'" . PHP_EOL;
 		if (!is_readable($log_path)) {
@@ -116,13 +116,13 @@ class MiscUtils {
 		return $error;
 	}
 
-	private static function checkError(LoggerInterface $logger, string $error, string $log_file_or_path, bool $log_to_shell) : void {
+	private static function checkError(LoggerInterface $logger, string $error, string $log_file_or_path, bool $log_to_shell): void {
 		$NO_HANDLER = 'All log handlers are disabled: you should choose between screen or file logging';
 		if ($error) {
-		    if ($log_to_shell || $log_file_or_path) {
+			if ($log_to_shell || $log_file_or_path) {
 				$logger->error($error);
 			} else {
-			    die('ERROR 1 : ' . $NO_HANDLER . PHP_EOL);
+				die('ERROR 1 : ' . $NO_HANDLER . PHP_EOL);
 			}
 		} elseif (!$log_file_or_path) {
 			if ($log_to_shell) {
@@ -130,67 +130,60 @@ class MiscUtils {
 				$msg = 'All log messages will be show only on screen';
 				$logger->notice($msg);
 			} else {
-			    die('ERROR 2 : ' . $NO_HANDLER . PHP_EOL);
+				die('ERROR 2 : ' . $NO_HANDLER . PHP_EOL);
 			}
 		}
 	}
 
 	/**
-	 * 
+	 *
 	 * @param Logger $logger non posso usare LoggerInterface perchè di seguito uso il metodo pushHandler()
 	 * @param string $log_level
 	 */
-	private static function logToShell(LoggerInterface $logger, string $log_level, bool $use_climate) : void {
-	    $handler = null;
-	    if($use_climate){
-	        $handler = new StreamHandler('php://stdout', $log_level);
-	    }else{
-	        $handler = new ClimateConsoleHandler($log_level);
-	    }	    
-        $formatter= self::formatterFactory();
-	    $handler->setFormatter($formatter);	    
-	    $logger->pushHandler($handler);
+	private static function logToShell(LoggerInterface $logger, string $log_level, bool $use_climate): void {
+		$handler = null;
+		if ($use_climate) {
+			$handler = new StreamHandler('php://stdout', $log_level);
+		} else {
+			$handler = new ClimateConsoleHandler($log_level);
+		}
+		$formatter = self::formatterFactory();
+		$handler->setFormatter($formatter);
+		$logger->pushHandler($handler);
 	}
-		
-	private static function formatterSimpleFactory(){
-	    // LineFormatter::__construct(
-	    //     string $format = null, 
-	    //     string $dateFormat = null, 
-	    //     bool $allowInlineLineBreaks = false, 
-	    //     bool $ignoreEmptyContextAndExtra = false
-	    // )
-	    $formatter = new LineFormatter(null, null, true, true);
-	    return $formatter;
+
+	private static function formatterSimpleFactory() {
+		// LineFormatter::__construct(
+		//     string $format = null,
+		//     string $dateFormat = null,
+		//     bool $allowInlineLineBreaks = false,
+		//     bool $ignoreEmptyContextAndExtra = false
+		// )
+		$formatter = new LineFormatter(null, null, true, true);
+		return $formatter;
 	}
-	
-	private static function formatterFactory(){
-	    $formatter = null;
-	    // const SIMPLE_FORMAT = "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n";
-	    $format = '%channel%.%level_name%: %message% %context% %extra%' . PHP_EOL;
-	    $colorScheme = null;
-	    // $dateFormat = 'Y-m-d H:i:s';
-	    $dateFormat = null;
-	    $allowInlineLineBreaks = true;
-	    $ignoreEmptyContextAndExtra = true;
-	    if (self::$useConEmuOnWin || !self::isWindows()) {
-	        // $colorScheme = new TrafficLight();
-	        $formatter = new ColoredLineFormatter(
-	            $colorScheme,
-	            $format,
-	            $dateFormat,
-	            $allowInlineLineBreaks,
-	            $ignoreEmptyContextAndExtra
-	            );
-	    } else {
-	        $formatter = new LineFormatter($format, $dateFormat, $allowInlineLineBreaks, $ignoreEmptyContextAndExtra);
-	        
-	    }
-	    return $formatter;
+
+	private static function formatterFactory() {
+		$formatter = null;
+		// const SIMPLE_FORMAT = "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n";
+		$format = '%channel%.%level_name%: %message% %context% %extra%' . PHP_EOL;
+		$colorScheme = null;
+		// $dateFormat = 'Y-m-d H:i:s';
+		$dateFormat = null;
+		$allowInlineLineBreaks = true;
+		$ignoreEmptyContextAndExtra = true;
+		if (self::$useConEmuOnWin || !self::isWindows()) {
+			// $colorScheme = new TrafficLight();
+			$formatter = new ColoredLineFormatter($colorScheme, $format, $dateFormat, $allowInlineLineBreaks, $ignoreEmptyContextAndExtra);
+		} else {
+			$formatter = new LineFormatter($format, $dateFormat, $allowInlineLineBreaks, $ignoreEmptyContextAndExtra);
+		}
+		return $formatter;
 	}
 
 	////////////////////////////////
 
-	public static function getWorkspacePath() : string {
+	public static function getWorkspacePath(): string {
 		$workspace = '';
 		echo 'I have been run on ' . php_uname('s') . PHP_EOL;
 		$user = get_current_user();
@@ -219,7 +212,7 @@ class MiscUtils {
 	// FUNCTIONS
 	// (da utilizzare quando non si può usare il trucco "2>&1")
 
-	public static function runCommand(string $bin, string $command = '', bool $force = true) : mixed {
+	public static function runCommand(string $bin, string $command = '', bool $force = true): mixed {
 		$stream = false;
 		$bin .= $force ? ' 2>&1' : '';
 
@@ -243,9 +236,8 @@ class MiscUtils {
 		return $stream;
 	}
 
-	public static function file_get_contents_utf8(string $fn) : mixed {
+	public static function file_get_contents_utf8(string $fn): mixed {
 		$content = file_get_contents($fn);
 		return mb_convert_encoding($content, 'UTF-8', mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
 	}
- 
 } // end class

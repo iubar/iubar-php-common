@@ -40,18 +40,17 @@ abstract class AbstractEmailProvider {
 
 	abstract protected function getTransport();
 
-	public function __construct() {
-	}
+	public function __construct() {}
 
 	public function getFromAddress(): Address {
-	    return $this->from_address;
+		return $this->from_address;
 	}
-	
-	public function send() : int {
+
+	public function send(): int {
 		return $this->sendThrough($this->getTransport());
 	}
 
-	protected function sendThrough($transport) : int{
+	protected function sendThrough($transport): int {
 		$result = 0;
 
 		$smtp_user = $transport->getUsername();
@@ -94,29 +93,29 @@ abstract class AbstractEmailProvider {
 		return $result;
 	}
 
-	public function setSmtpSsl(bool $useSsl) : void{
-	    $this->smtp_ssl = $useSsl;
+	public function setSmtpSsl(bool $useSsl): void {
+		$this->smtp_ssl = $useSsl;
 	}
-	
-	private function log(string $level, string $msg) : void {
+
+	private function log(string $level, string $msg): void {
 		if ($this->logger) {
 			$this->logger->log($level, $msg);
 		}
 	}
 
-	public function setLogger(LoggerInterface $logger) : void {
+	public function setLogger(LoggerInterface $logger): void {
 		$this->logger = $logger;
 	}
 
-	public function setFrom(string $email, string $name = '') : void {
+	public function setFrom(string $email, string $name = ''): void {
 		$this->from_address = new Address($email, $name);
 	}
 
-	public function setReplyTo(string $email, string $name = '') : void {
+	public function setReplyTo(string $email, string $name = ''): void {
 		$this->reply_to_address = new Address($email, $name);
 	}
 
-	public function addTo(string $email, string $name = '') : void {
+	public function addTo(string $email, string $name = ''): void {
 		$this->to_array[$email] = $name;
 	}
 
@@ -128,27 +127,27 @@ abstract class AbstractEmailProvider {
 		$this->body_html = $html;
 	}
 
-	public function setBodyTxt(string $txt) : void {
+	public function setBodyTxt(string $txt): void {
 		$this->body_txt = $txt;
 	}
 
-	public function setSmtpUser(string $user) : void {
+	public function setSmtpUser(string $user): void {
 		$this->smtp_user = $user;
 	}
 
-	public function setSmtpPassword(string $password) : void {
+	public function setSmtpPassword(string $password): void {
 		$this->smtp_pwd = $password;
 	}
-	
-	public function setSmtpPort(int $smtp_port) : void {
-	    $this->smtp_port = $smtp_port;
+
+	public function setSmtpPort(int $smtp_port): void {
+		$this->smtp_port = $smtp_port;
 	}
-	
-	public function addAttachment(string $filename, $type = null) : void {
+
+	public function addAttachment(string $filename, $type = null): void {
 		$this->attachments[$filename] = $type;
 	}
 
-	public function addAttachments(array $files = []) : void {
+	public function addAttachments(array $files = []): void {
 		foreach ($files as $file) {
 			$this->addAttachment($file);
 		}

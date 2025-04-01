@@ -15,12 +15,7 @@ class CryptUtils {
 
 	public static function base64SpecialCharsDecode($data) {
 		if (self::$PADDING) {
-			return str_pad(
-				strtr($data, '-_', '+/'),
-				strlen($data) + ((4 - (strlen($data) % 4)) % 4),
-				'=',
-				STR_PAD_RIGHT
-			);
+			return str_pad(strtr($data, '-_', '+/'), strlen($data) + ((4 - (strlen($data) % 4)) % 4), '=', STR_PAD_RIGHT);
 		} else {
 			return strtr($data, '-_', '+/');
 		}

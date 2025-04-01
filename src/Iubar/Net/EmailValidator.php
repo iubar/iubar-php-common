@@ -18,7 +18,7 @@ namespace Iubar\Net;
  *
  */
 class EmailValidator {
-	public function isEmailValid(string $email) : bool  {
+	public function isEmailValid(string $email): bool {
 		$mailparts = explode('@', $email);
 		if (!isset($mailparts[1])) {
 			return false;
@@ -34,7 +34,7 @@ class EmailValidator {
 		return true;
 	}
 
-	public function validate($email, $check_mx = true, $check_mailbox = false) : bool {
+	public function validate($email, $check_mx = true, $check_mailbox = false): bool {
 		$is_valid = true;
 
 		if (!$this->isEmailValid($email)) {
@@ -146,12 +146,12 @@ class EmailValidator {
 		return $is_valid;
 	}
 
-	private function send_command($fp, string $out) : mixed {
+	private function send_command($fp, string $out): mixed {
 		@fwrite($fp, $out . "\r\n");
 		return $this->get_data($fp);
 	}
 
-	private function get_data($fp) : string {
+	private function get_data($fp): string {
 		$s = '';
 		stream_set_timeout($fp, 2);
 

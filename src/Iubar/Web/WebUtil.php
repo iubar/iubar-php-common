@@ -3,8 +3,7 @@
 namespace Iubar\Web;
 
 class WebUtil {
- 
-	public static function getClientIp() : string {
+	public static function getClientIp(): string {
 		// Solo per PHP >=5.3
 		$ip =
 			getenv('HTTP_CLIENT_IP') ?:
@@ -19,7 +18,7 @@ class WebUtil {
 
 	/////////////////// URL
 
-	public static function isUrl(string $str) : bool {
+	public static function isUrl(string $str): bool {
 		$b = false;
 		$regex = '((https?|ftp)\:\/\/)?'; // Scheme
 		$regex .= "([a-z0-9+!*(),;?&=\$_.-]+(\:[a-z0-9+!*(),;?&=\$_.-]+)?@)?"; // User and Pass
@@ -35,7 +34,7 @@ class WebUtil {
 		return $b;
 	}
 
-	public static function isUrl2(string $str) : bool {
+	public static function isUrl2(string $str): bool {
 		$b = false;
 		if (filter_var($str, FILTER_VALIDATE_URL)) {
 			$b = true;
@@ -45,7 +44,7 @@ class WebUtil {
 
 	/////////////////// WEB PAGE
 
-	public static function curPageURL() : string {
+	public static function curPageURL(): string {
 		// retruns the current page url
 
 		// on IIS web server you should use $_SERVER['PATH_INFO']
@@ -64,14 +63,14 @@ class WebUtil {
 		return $pageURL;
 	}
 
-	public static function curPageName() : string {
+	public static function curPageName(): string {
 		// retruns the current page file name
 		return substr($_SERVER['SCRIPT_NAME'], strrpos($_SERVER['SCRIPT_NAME'], '/') + 1);
 	}
 
 	/////////////////// EXTRACT DATA
 
-	public static function extractLinks(string $html) : array {
+	public static function extractLinks(string $html): array {
 		$links = [];
 		$a_links = [];
 		$img_links = [];
@@ -115,7 +114,7 @@ class WebUtil {
 	}
 	/////////////////// BROKEN LINKS CHECKER
 
-	public static function check_brokenlink(string $pageToCheck) : void {
+	public static function check_brokenlink(string $pageToCheck): void {
 		// Attenzione il metodo verifica solo i link che sono attributo del tag <a>
 		// (ad esempio non prende in considerazione l'attributo "src" del tag "img")
 
@@ -178,7 +177,7 @@ class WebUtil {
 		print '<pre>' . print_r($goodLinks, true) . '</pre>';
 	}
 
-	public static function check_url(string $url) : int {
+	public static function check_url(string $url): int {
 		// 	USAGE:
 		// 		$check_url_status = WebUtil::check_url($url);
 		// 		if ($check_url_status == '200') // I think you can also check for 301 and 302 status codes: http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
@@ -191,28 +190,28 @@ class WebUtil {
 		curl_setopt($ch, CURLOPT_HEADER, true);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		$response = curl_exec($ch);
-		
+
 		// Verifica se ci sono errori durante l'esecuzione
-		if(curl_errno($ch)) {
-		    $msg = "Errore cURL: " . curl_error($ch);
-		    echo $msg . PHP_EOL;
-		    // throw new \Exception($msg);
+		if (curl_errno($ch)) {
+			$msg = 'Errore cURL: ' . curl_error($ch);
+			echo $msg . PHP_EOL;
+			// throw new \Exception($msg);
 		} else {
-		    // Ottieni informazioni sulla sessione cURL
-		    $info = curl_getinfo($ch);
-		    // Visualizza le informazioni ottenute
-		    echo "URL finale: " . $info['url'] . "\n";
-		    echo "Codice di stato HTTP: " . $info['http_code'] . "\n";
-		    echo "Tempo di trasferimento: " . $info['total_time'] . " secondi\n";
-		    echo "Lunghezza del contenuto: " . $info['size_download'] . " bytes\n";		 
-		    $code = $info['http_code'];
+			// Ottieni informazioni sulla sessione cURL
+			$info = curl_getinfo($ch);
+			// Visualizza le informazioni ottenute
+			echo 'URL finale: ' . $info['url'] . "\n";
+			echo 'Codice di stato HTTP: ' . $info['http_code'] . "\n";
+			echo 'Tempo di trasferimento: ' . $info['total_time'] . " secondi\n";
+			echo 'Lunghezza del contenuto: ' . $info['size_download'] . " bytes\n";
+			$code = $info['http_code'];
 		}
 		// Chiudi la sessione cURL
 		curl_close($ch);
 		return $code;
 	}
 
-	public static function check_url2(string $url) : bool {
+	public static function check_url2(string $url): bool {
 		// 	USAGE:
 		// 		if (WebUtil::check_url2($url))
 		// 			echo "Link Works";
@@ -225,7 +224,7 @@ class WebUtil {
 		return (bool) preg_match('#^HTTP/.*\s+[(200|301|302)]+\s#i', $headers);
 	}
 
-	public static function remoteFileExists(string $url) : bool {
+	public static function remoteFileExists(string $url): bool {
 		// USAGE:
 		// $exists = WebUtil::remoteFileExists('http://stackoverflow.com/favicon.ico');
 		// if ($exists) {
@@ -259,7 +258,7 @@ class WebUtil {
 		return $ret;
 	}
 
-	public static function rel2abs(string $rel, string $base) : string {
+	public static function rel2abs(string $rel, string $base): string {
 		if (parse_url($rel, PHP_URL_SCHEME) != '') {
 			return $rel;
 		}
@@ -311,12 +310,12 @@ class WebUtil {
 		return $scheme . '://' . $abs;
 	}
 
-	public static function getRoot() : string {
+	public static function getRoot(): string {
 		$root = (!empty($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
 		return $root;
 	}
 
-	public static function parseRoot(string $url) : string {
+	public static function parseRoot(string $url): string {
 		// $parsedUrl = parse_url('http://localhost/some/folder/containing/something/here/or/there');
 		// $root = $parsedUrl['scheme'] . '://' . $parsedUrl['host'] . '/';
 		// If you're also interested in other URL components prior to the path (e.g. credentials), you could also use strstr() on the full URL, with the "path" as the needle, e.g.

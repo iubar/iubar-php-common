@@ -1,54 +1,55 @@
 {
-	"name" : "iubar/iubar-php-common",
-	"type" : "library",
-	"description" : "Common classes for all tasks",
-	"keywords" : [
+	"name": "iubar/iubar-php-common",
+	"type": "library",
+	"description": "Common classes for all tasks",
+	"keywords": [
 		"database"
 	],
-	"homepage" : "http://www.iubar.it",
-	"license" : "MPL",
-	"authors" : [{
-			"name" : "Andrea Borgogelli Avveduti",
-			"homepage" : "http://www.iubar.it"
+	"homepage": "http://www.iubar.it",
+	"license": "MPL",
+	"authors": [
+		{
+			"name": "Andrea Borgogelli Avveduti",
+			"homepage": "http://www.iubar.it"
 		}
 	],
-    "config": {
-      "platform": {
-        "php": "8.1"
-      },
-	  "allow-plugins" : {
-			"dealerdirect/phpcodesniffer-composer-installer" : true
-		}	  
-    },	
-	"require" : {
-		"php" : ">=8.1",
-		"ext-mbstring" : "*",
-		"ext-pdo" : "*",
-		"ext-openssl" : "*",
-		"psr/log" : "^3.0",
-		"monolog/monolog" : "^3.8",
-		"bramus/monolog-colored-line-formatter" : "^3.1",
-		"league/climate": "^3.10",
-		"goodby/csv" : "^1.3",
-		"symfony/mailer" : "^6.4",
-		"doctrine/sql-formatter" : "^1.5"
-	},
-	"require-dev" : {
-		"phpunit/phpunit" : "^10.5",
-		"phpstan/phpstan": "^2.1",
-		"vimeo/psalm" : "^5.2",
-		"php-parallel-lint/php-parallel-lint" : "^v1",
-		"php-parallel-lint/php-console-highlighter" : "^v1",
-		"php-parallel-lint/php-var-dump-check" : "^0.5"
-	},
-	"autoload" : {
-		"psr-4" : {
-			"Iubar\\" : "src/Iubar/"
+	"config": {
+		"platform": {
+			"php": "8.1"
+		},
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
 		}
 	},
-	"autoload-dev" : {
-		"psr-4" : {
-			"Iubar\\Tests\\" : "tests/Iubar/"
+	"require": {
+		"php": ">=8.1",
+		"ext-mbstring": "*",
+		"ext-pdo": "*",
+		"ext-openssl": "*",
+		"psr/log": "^3.0",
+		"monolog/monolog": "^3.8",
+		"bramus/monolog-colored-line-formatter": "^3.1",
+		"league/climate": "^3.10",
+		"goodby/csv": "^1.3",
+		"symfony/mailer": "^6.4",
+		"doctrine/sql-formatter": "^1.5"
+	},
+	"require-dev": {
+		"phpunit/phpunit": "^10.5",
+		"phpstan/phpstan": "^2.1",
+		"vimeo/psalm": "^5.2",
+		"php-parallel-lint/php-parallel-lint": "^v1",
+		"php-parallel-lint/php-console-highlighter": "^v1",
+		"php-parallel-lint/php-var-dump-check": "^0.5"
+	},
+	"autoload": {
+		"psr-4": {
+			"Iubar\\": "src/Iubar/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Iubar\\Tests\\": "tests/Iubar/"
 		}
 	}
 }

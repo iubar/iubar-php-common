@@ -15,10 +15,10 @@ class XmlUtil {
 		// $matches[0] è la stringa completa
 		// $matches[1] è l'attributo del tag (nella forma nome="valore")
 		// $matches[2] è il sottoalbero xml del tag
-		if ($found !== false){
-    		if (isset($matches[2])) {
-    			$xml2 = $matches[2][0];
-    		}
+		if ($found !== false) {
+			if (isset($matches[2])) {
+				$xml2 = $matches[2][0];
+			}
 		}
 		return $xml2;
 	}

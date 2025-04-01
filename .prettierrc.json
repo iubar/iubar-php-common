@@ -1,10 +1,10 @@
 {
-        "phpVersion": "8.1",
-        "printWidth": 140,
-        "useTabs": true,
-        "singleQuote": true,
-        "trailingCommaPHP": false,
-        "braceStyle": "1tbs",
-        "requirePragma": false,
-        "insertPragma": false
+	"phpVersion": "8.1",
+	"printWidth": 140,
+	"useTabs": true,
+	"singleQuote": true,
+	"trailingCommaPHP": false,
+	"braceStyle": "1tbs",
+	"requirePragma": false,
+	"insertPragma": false
 }

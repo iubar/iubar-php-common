@@ -107,8 +107,8 @@ class CsvUtil extends BaseClass {
 	public static function get_csv_header($filename, $delim = ',', $enclosure = '"') {
 		$handle = fopen($filename, 'r');
 		if ($handle !== false) {
-			while (($data = fgetcsv($handle, CsvUtil::$MAX_LEN, $delim, $enclosure)) !== false) { 
-					return $data;  // restituisco la riga 0
+			while (($data = fgetcsv($handle, CsvUtil::$MAX_LEN, $delim, $enclosure)) !== false) {
+				return $data; // restituisco la riga 0
 			}
 			fclose($handle);
 		}

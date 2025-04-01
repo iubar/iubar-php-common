@@ -6,43 +6,44 @@ jobs:
       # https://circleci.com/docs/language-php
       # https://github.com/CircleCI-Public/cimg-php
       # https://hub.docker.com/r/cimg/php
-      # https://circleci.com/developer/images/image/cimg/php          
-    steps:    
+      # https://circleci.com/developer/images/image/cimg/php
+    steps:
       - run: php -v
       - checkout
       - restore_cache: # special step to restore the dependency cache if `composer.lock` does not change
           keys:
             # Find a cache corresponding to this specific composer.lock checksum
-            # when this file is changed, this key will fail          
+            # when this file is changed, this key will fail
             - composer-v1-{{ checksum "composer.lock" }}
             # fallback to using the latest cache if no exact match is found (See https://circleci.com/docs/caching/)
             # (match the most recently generated cache used from any branch)
             - composer-v1-
-      - run: 
+      - run:
           name: Install
           command: composer install --no-progress --no-interaction --prefer-dist
       - save_cache: # special step to save the dependency cache with the `composer.lock` cache key template
           key: composer-v1-{{ checksum "composer.lock" }}
           paths:
-            - vendor   
-      - run: 
+            - vendor
+      - run:
           name: Lint
           command: |
             vendor/bin/parallel-lint --exclude vendor .          
             vendor/bin/phpstan -V
             vendor/bin/phpstan analyse --no-interaction --no-progress
-            vendor/bin/var-dump-check --exclude vendor . || true              
-      - run: 
+            vendor/bin/var-dump-check --exclude vendor . || true
+      - run:
           name: Test
           command: |
             ls -la
-            vendor/bin/phpunit         
-# 
-# 
+            vendor/bin/phpunit
+
+#
+#
 # Visual Editor: https://circleci-public.github.io/visual-config-editor/
-# References: 
+# References:
 #   https://circleci.com/continuous-integration/
-#   https://circleci.com/docs/configuration-reference 
+#   https://circleci.com/docs/configuration-reference
 #   https://app.circleci.com/settings/user/notifications
 #   https://circleci.com/docs/variables
 # Immagini:

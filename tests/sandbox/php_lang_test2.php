@@ -272,4 +272,3 @@ $LINK_ICHARS_DOMAIN = (string) html_entity_decode(
 	ENT_QUOTES,
 	'UTF-8'
 );
-

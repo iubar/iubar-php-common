@@ -16,4 +16,3 @@ try {
 	//catch exception
 	echo 'Message: ' . $e->getMessage();
 }
-

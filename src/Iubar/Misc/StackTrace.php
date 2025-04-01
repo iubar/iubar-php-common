@@ -40,15 +40,7 @@ class StackTrace {
 				$skip_args = true;
 			}
 			$line =
-				$before .
-				$backtrace[$i]['file'] .
-				$after .
-				$function .
-				' on line: ' .
-				$before .
-				$backtrace[$i]['line'] .
-				$after .
-				$newline;
+				$before . $backtrace[$i]['file'] . $after . $function . ' on line: ' . $before . $backtrace[$i]['line'] . $after . $newline;
 			if ($i < $length - 1) {
 				if ($show_args && $backtrace[$i + 1]['args'] && !$skip_args) {
 					$params = $for_web

@@ -3,8 +3,7 @@
 namespace Iubar\Common;
 
 class OsUtil {
-	public function __construct() {
-	}
+	public function __construct() {}
 
 	public static function getInfoFromHttpUserAgent_demo() {
 		$os_list = [

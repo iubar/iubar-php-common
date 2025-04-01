@@ -8,8 +8,7 @@ use PHPUnit\Framework\TestCase;
 use Iubar\Crypt\AesCbcNoPadding;
 
 class AesCbcNoPaddingTest extends TestCase {
-	
-    protected static $config = [];
+	protected static $config = [];
 
 	public static function setUpBeforeClass(): void {
 		$config_file = __DIR__ . DIRECTORY_SEPARATOR . 'config.php';
@@ -20,10 +19,10 @@ class AesCbcNoPaddingTest extends TestCase {
 	}
 
 	//public function testDecrypt() {
-		// mcrypt_encrypt function was DEPRECATED in PHP 7.1.0, and REMOVED in PHP 7.2.0.
-		// 	$aes = new AesCbcNoPadding(self::$config['key']);
-		// 	$encrypted = $aes->encrypt(self::$config['plaintext'], self::$config['iv']);
-		// 	$data = $aes->getCryptedDataFromSignature($encrypted);
-		// 	$this->assertEquals($encrypted, $data);
+	// mcrypt_encrypt function was DEPRECATED in PHP 7.1.0, and REMOVED in PHP 7.2.0.
+	// 	$aes = new AesCbcNoPadding(self::$config['key']);
+	// 	$encrypted = $aes->encrypt(self::$config['plaintext'], self::$config['iv']);
+	// 	$data = $aes->getCryptedDataFromSignature($encrypted);
+	// 	$this->assertEquals($encrypted, $data);
 	//}
 }

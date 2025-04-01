@@ -42,13 +42,13 @@ class SmtpMailerTest extends TestCase {
 		Bench::startTimer($bench_name);
 
 		if (!self::$aruba_password) {
-		    $this->markTestSkipped('Credentials for Aruba are not available.');
+			$this->markTestSkipped('Credentials for Aruba are not available.');
 		}
-		
+
 		$m = $this->factorySmtpMailer('aruba');
 		$m->setSubject('TEST ARUBA');
 		$m->setSmtpUser('info@iubar.it');
-		$m->setSmtpPassword(self::$aruba_password);		
+		$m->setSmtpPassword(self::$aruba_password);
 		$m->setSmtpSsl(true);
 		$m->setFrom('info@iubar.it', 'Iubar');
 		$m->addTo('daniele.montesi@iubar.it', 'Daniele Montesi');
@@ -73,7 +73,7 @@ class SmtpMailerTest extends TestCase {
 		$this->assertEquals(1, $result);
 	}
 
-	private function factorySmtpMailer(string $type) : IEmailProvider {
+	private function factorySmtpMailer(string $type): IEmailProvider {
 		$logger = MiscUtils::loggerFactory('my_logger', LogLevel::DEBUG);
 
 		$m = SmtpMailer::factory($type);
@@ -83,7 +83,7 @@ class SmtpMailerTest extends TestCase {
 		return $m;
 	}
 
-	private function sendAmazonSes(string $subject) : int {
+	private function sendAmazonSes(string $subject): int {
 		$from = 'info@iubar.it';
 		$to = 'tester@email-test.had.dnsops.gov';
 		$m = $this->factorySmtpMailer('amazonses');
@@ -93,7 +93,7 @@ class SmtpMailerTest extends TestCase {
 		$m->setSmtpUser(self::$amazonses_user);
 		$m->setSmtpPassword(self::$amazonses_password);
 		$m->setSmtpPort(self::$amazonses_port);
-		
+
 		$result = $m->send();
 		return $result;
 	}

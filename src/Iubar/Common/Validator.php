@@ -64,7 +64,7 @@ class Validator extends BaseClass {
 		parent::__construct();
 	}
 
-	public function setLocaleIt() : void {
+	public function setLocaleIt(): void {
 		$locale_array = ['it_IT.UTF-8', 'it_IT@euro', 'it_IT', 'italian'];
 		setlocale(LC_ALL, $locale_array);
 	}
@@ -147,7 +147,7 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function isAValidCf(string $cf) : bool {
+	public static function isAValidCf(string $cf): bool {
 		$b = false;
 		$cf = trim($cf);
 		$len = strlen($cf);
@@ -157,7 +157,7 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function isAValidPiva(string $piva) : bool {
+	public static function isAValidPiva(string $piva): bool {
 		$b = false;
 		$piva = trim($piva);
 		$len = strlen($piva);
@@ -167,7 +167,7 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function isAValidEmail(string $email) : bool {
+	public static function isAValidEmail(string $email): bool {
 		$b = false;
 		$email = Formatter::cleanEmail($email);
 		$b = preg_match(Validator::$regex_email, $email, $matches);
@@ -180,7 +180,7 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function isAValidMySqlDate(string $txt): bool  {
+	public static function isAValidMySqlDate(string $txt): bool {
 		$b = false;
 		// $now = date("Y-m-d H:i:s")
 		// $mysqltime = date("Y-m-d H:i:s", $phptime); // http://php.net/manual/en/function.time.php
@@ -188,10 +188,27 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function isPec(string $email) : bool {
+	public static function isPec(string $email): bool {
 		$b = false;
 		$email = Formatter::cleanEmail($email);
-		$patterns = ['postacertificata.eu', 'pecpersonale.it', 'pecfacile.net', 'mypec.eu', 'pecavvocati.it', 'pecimprese.it', 'postecert.it', 'cert.cna.it', 'pecaruba.it', 'legalmail.it', 'pec.it', 'pec.com', 'consulentidellavoropec.it', 'actaliscertymail.it', 'pec.poste.it', '@pec.'];
+		$patterns = [
+			'postacertificata.eu',
+			'pecpersonale.it',
+			'pecfacile.net',
+			'mypec.eu',
+			'pecavvocati.it',
+			'pecimprese.it',
+			'postecert.it',
+			'cert.cna.it',
+			'pecaruba.it',
+			'legalmail.it',
+			'pec.it',
+			'pec.com',
+			'consulentidellavoropec.it',
+			'actaliscertymail.it',
+			'pec.poste.it',
+			'@pec.'
+		];
 		foreach ($patterns as $pattern) {
 			$pos = strpos($email, $pattern);
 			if ($pos !== false) {
@@ -202,18 +219,18 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function isAlphabetical(string $str): bool  {
+	public static function isAlphabetical(string $str): bool {
 		// TODO: testare il metodo con la stringa "Cantù" quando questa proviene da file in formato ANSI o da file in formato UTF-8. Sembrano esserci differenze
 
 		$b = false;
 		$enc = mb_detect_encoding($str);
 		$str = trim($str);
 		$regex = '';
-// 		if (true) {
-			$regex = Validator::getUtf8RegExPhraseOfWords(); // sembra funzionare indipendentemente dall'encoding
-// 		} else {
-// 			$regex = Validator::$regex_phrase_of_words;
-// 		}
+		// 		if (true) {
+		$regex = Validator::getUtf8RegExPhraseOfWords(); // sembra funzionare indipendentemente dall'encoding
+		// 		} else {
+		// 			$regex = Validator::$regex_phrase_of_words;
+		// 		}
 
 		$b = preg_match($regex, $str, $matches);
 
@@ -227,7 +244,7 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function isNumeric(string $str) : bool {
+	public static function isNumeric(string $str): bool {
 		$b = false;
 		$str = trim($str);
 		$b = preg_match(self::$regex_phrase_of_number, $str, $matches);
@@ -241,7 +258,7 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function isAValidCap(string $cap): bool  {
+	public static function isAValidCap(string $cap): bool {
 		$b = false;
 		$cap = trim($cap);
 		$len = strlen($cap);
@@ -251,7 +268,7 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function isAValidPhoneNum(string $tel) : bool {
+	public static function isAValidPhoneNum(string $tel): bool {
 		// TODO: prevedere una lunghezza minima per la stringa, almeno 3
 		$b = false;
 		$tel = Formatter::cleanPhoneNum($tel);
@@ -272,7 +289,7 @@ class Validator extends BaseClass {
 		return $b;
 	}
 
-	public static function demoRegEx() :void {
+	public static function demoRegEx(): void {
 		// preg_match("/^[A-Za-z]+(\s[A-Za-z]+)*$/", $nome_cognome, $matches2);		// match any words with a space between
 		// preg_match("/^[A-Z][a-z]+(\s[A-Z]a-z]+)*$/", $nome_cognome, $matches2);	// match any camel-case words with a space between
 		// preg_match("/^[A-Z]+(\s[A-Z]+)*$/", $nome_cognome, $matches3);			// match any uppercase words with a space between
@@ -301,7 +318,7 @@ class Validator extends BaseClass {
 		$matches = self::test(Validator::$regex_provincia2, $text103);
 	}
 
-	private static function test(string $regex, string $text) : array {
+	private static function test(string $regex, string $text): array {
 		$NL = "\r\n";
 		echo 'Text is ' . $text . ' and regex is ' . $regex . $NL;
 		preg_match_all($regex, $text, $matches);
@@ -310,7 +327,7 @@ class Validator extends BaseClass {
 		return $matches;
 	}
 
-	public static function isBalanced(string $s) : bool {
+	public static function isBalanced(string $s): bool {
 		// Determine if there is an equal number of parentheses
 		// and if they balance logically, i.e.
 		// ()()) = Bad (trailing ")")
@@ -326,21 +343,21 @@ class Validator extends BaseClass {
 		// Loop through each char
 		$array = str_split($s);
 		for ($i = 0; $i < count($array); $i++) {
-				if (substr($s, $i, 1) == '(') {
-					// Increase the open count
-					$open++;
-					echo "Open $open \n";
-				} elseif (substr($s, $i, 1) == ')') {
-					// If open goes below zero, there's an invalid closing paren
-					if ($open < 0) {
-						return false;
-					}
-					// Decrease the open count
-					$open--;
-					echo "Closed $open \n";
+			if (substr($s, $i, 1) == '(') {
+				// Increase the open count
+				$open++;
+				echo "Open $open \n";
+			} elseif (substr($s, $i, 1) == ')') {
+				// If open goes below zero, there's an invalid closing paren
+				if ($open < 0) {
+					return false;
 				}
+				// Decrease the open count
+				$open--;
+				echo "Closed $open \n";
 			}
- 
+		}
+
 		if ($open != 0) {
 			return false;
 		}
@@ -348,7 +365,7 @@ class Validator extends BaseClass {
 		return true;
 	}
 
-	public static function testIsBalanced() : void {
+	public static function testIsBalanced(): void {
 		$tests = [
 			'(())' => '' /* should pass */,
 			')()()' => '' /* should fail - leading close */,

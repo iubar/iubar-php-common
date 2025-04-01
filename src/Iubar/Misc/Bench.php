@@ -2,23 +2,23 @@
 namespace Iubar\Misc;
 
 class Bench {
-    /**
-     * start times
-     * @var array<string,float>
-     */
-    private static $array = []; 
- 
+	/**
+	 * start times
+	 * @var array<string,float>
+	 */
+	private static $array = [];
+
 	/**
 	 * stop times
 	 * @var array<string,float>
 	 */
-	private static $array2 = []; // float 
+	private static $array2 = []; // float
 
 	public static bool $debug = false;
 
 	public static string $def_format = 'H:i:s.u'; // oppure 'Y-m-d H:i:s.u'
 
-	public static function startTimer(string $timer_name) : void{
+	public static function startTimer(string $timer_name): void {
 		$starttime = microtime(true);
 		self::$array[$timer_name] = $starttime;
 		self::$array2[$timer_name] = 0;
@@ -27,14 +27,11 @@ class Bench {
 			$backtrace = debug_backtrace();
 			$calling_method = $backtrace[1]['function'];
 			echo $calling_method . ' : has been started at ' . $starttime . ' (unix timestamp)' . PHP_EOL;
-			echo $calling_method .
-				' : has been started at ' .
-				self::timeToString($starttime, new \DateTimeZone('Europe/Rome')) .
-				PHP_EOL;
+			echo $calling_method . ' : has been started at ' . self::timeToString($starttime, new \DateTimeZone('Europe/Rome')) . PHP_EOL;
 		}
 	}
 
-	public static function stopTimer(string $timer_name, bool $verbose = false) : string {
+	public static function stopTimer(string $timer_name, bool $verbose = false): string {
 		$endtime = microtime(true);
 		self::$array2[$timer_name] = $endtime;
 		$str = self::getDiffAsString($timer_name, $endtime);
@@ -50,7 +47,7 @@ class Bench {
 	/**
 	 * Returns time elapsed from start to now
 	 */
-	public static function getElapsedTimeAsString(string $timer_name) : ?string {
+	public static function getElapsedTimeAsString(string $timer_name): ?string {
 		$now = microtime(true);
 		return self::getDiffAsString($timer_name, $now);
 	}
@@ -63,17 +60,17 @@ class Bench {
 	/**
 	 * Returns time elapsed from start to stop
 	 */
-	public static function getTotalExecutionTimeAsString(string $timer_name) : string {
+	public static function getTotalExecutionTimeAsString(string $timer_name): string {
 		$end = self::$array2[$timer_name];
 		return self::getDiffAsString($timer_name, $end);
 	}
 
-	public static function getTotalExecutionTime(string $timer_name) : ?float  {
+	public static function getTotalExecutionTime(string $timer_name): ?float {
 		$end = self::$array2[$timer_name];
 		return self::getDiff($timer_name, $end);
 	}
 
-	private static function getDiffAsString(string $timer_name, float $endtime, string $format = '') : ?string {
+	private static function getDiffAsString(string $timer_name, float $endtime, string $format = ''): ?string {
 		$str = null;
 		if (!$format) {
 			$format = self::$def_format;
@@ -90,7 +87,7 @@ class Bench {
 		return $str;
 	}
 
-	private static function getDiff(string $timer_name, float $endtime) : ?float  {
+	private static function getDiff(string $timer_name, float $endtime): ?float {
 		$diff = null;
 		$starttime = self::$array[$timer_name];
 		if ($starttime) {
@@ -105,7 +102,7 @@ class Bench {
 	 * @see http://php.net/manual/en/function.microtime.php
 	 * @see http://php.net/manual/en/datetime.createfromformat.php
 	 */
-	public static function microtimeToString(float $mtime, string $format) : string {
+	public static function microtimeToString(float $mtime, string $format): string {
 		if (!$mtime) {
 			return '<undefined micro time>';
 		}
@@ -153,16 +150,16 @@ class Bench {
 		return self::timeToString($unixtime, $tz);
 	}
 
-	public static function getStopTimeAsString(string $timer_name, \DateTimeZone $tz = null) : string {
-	    if (!$tz) {
+	public static function getStopTimeAsString(string $timer_name, \DateTimeZone $tz = null): string {
+		if (!$tz) {
 			$tz = new \DateTimeZone('Europe/Rome');
 		}
 		$unixtime = self::$array2[$timer_name];
 		return self::timeToString($unixtime, $tz);
 	}
 
-	public static function getNowAsString(\DateTimeZone $tz = null) : string {
-	    if (!$tz) {
+	public static function getNowAsString(\DateTimeZone $tz = null): string {
+		if (!$tz) {
 			$tz = new \DateTimeZone('Europe/Rome');
 		}
 		$dt = new \DateTime();

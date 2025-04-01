@@ -3,7 +3,7 @@
 namespace Iubar\Misc;
 
 class ArrayUtils {
-    public static function getValue(array $array, mixed $key, mixed $default = null) {
+	public static function getValue(array $array, mixed $key, mixed $default = null) {
 		if (isset($array[$key])) {
 			return $array[$key];
 		} else {

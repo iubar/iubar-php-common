@@ -12,7 +12,7 @@ use Iubar\Net\EmailProviders\ArubaProvider;
  * $mailer->smtp_user = ...;
  * $mailer->smtp_pwd = ...;
  * $mailer->setSmtpUser($smtp_user);
- * $mailer->setSmtpPassword($smtp_pwd);     
+ * $mailer->setSmtpPassword($smtp_pwd);
  * $mailer->setFrom($config['from']);
  * $mailer->setTo($config['to']);
  * $mailer->setLogger($logger);
@@ -23,7 +23,7 @@ use Iubar\Net\EmailProviders\ArubaProvider;
  *
  */
 class SmtpMailer {
-    public static function factory(string $provider_name) : IEmailProvider {
+	public static function factory(string $provider_name): IEmailProvider {
 		$provider = null;
 		switch ($provider_name) {
 			case 'aruba':
@@ -34,12 +34,12 @@ class SmtpMailer {
 				break;
 			default:
 				throw new \Exception('Provider not supported: ' . $provider_name);
-				// break;
+			// break;
 		}
 		return $provider;
 	}
 
-	public static function getDomainFromEmail(string $email) : string {
+	public static function getDomainFromEmail(string $email): string {
 		// Get the data after the @ sign
 		$array = explode('@', $email);
 		$domain = $array[1];

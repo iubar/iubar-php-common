@@ -14,10 +14,9 @@ class BaseClass {
 	// 	const INFO      = 'info';
 	// 	const DEBUG     = 'debug';
 
-    protected ?LoggerInterface $logger = null;
+	protected ?LoggerInterface $logger = null;
 
-	public function __construct() {
-	}
+	public function __construct() {}
 
 	public function setLogger(LoggerInterface $logger): void {
 		$this->logger = $logger;

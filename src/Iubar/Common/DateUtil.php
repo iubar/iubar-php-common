@@ -54,10 +54,10 @@ class DateUtil {
 %Z or %z - time zone offset or name or abbreviation (Operating System dependent)
 %% - a literal `%' character
 */
-	// TODO: cambiare in : 
+	// TODO: cambiare in :
 	// $dateTime = new DateTime("now", new DateTimeZone('Europe/Rome'));
 	// $mysqldate = $dateTime->format("Y-m-d H:i:s");
-	// echo $mysqldate;	
+	// echo $mysqldate;
 	public static function getMysqlTodayString($type = 'DATE') {
 		$date = null;
 		$time = time();
@@ -163,7 +163,7 @@ class DateUtil {
 		}
 
 		[$dd, $mm, $yy] = explode('/', $date);
-		if ($dd && $mm && $yy ) {
+		if ($dd && $mm && $yy) {
 			return checkdate(intval($mm), intval($dd), intval($yy));
 		}
 
@@ -171,9 +171,7 @@ class DateUtil {
 	}
 
 	public static function isValidDateTime($dateTime) {
-		if (
-			preg_match("/^(\d{4})-(\d{2})-(\d{2}) ([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/", $dateTime, $matches)
-		) {
+		if (preg_match("/^(\d{4})-(\d{2})-(\d{2}) ([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/", $dateTime, $matches)) {
 			if (checkdate(intval($matches[2]), intval($matches[3]), intval($matches[1]))) {
 				return true;
 			}
@@ -205,7 +203,6 @@ class DateUtil {
 		$diff = $end_ts - $start_ts;
 		return round($diff / 86400);
 	}
- 
 
 	// Get the last day of the month
 	public static function lastDayOfMonth($month = '', $year = '') {
@@ -272,7 +269,7 @@ class DateUtil {
 		$h = $s / 3600;
 		return $h;
 	}
- 
+
 	public static function test_diff() {
 		// ATTENZIONE: Qui la timezone è probabilmente (!) uguale a GMT+1
 		$hours_diff = strtotime('20:00:00') - strtotime('19:00:00');

@@ -101,7 +101,7 @@ class Formatter extends BaseClass {
 		// e infine sostituire "' " con il semplice "'"
 
 		// echo "Before toCamelCase(): '$str'" . PHP_EOL; // Debug
-	    $isUtf8 = mb_check_encoding($str, 'UTF-8');
+		$isUtf8 = mb_check_encoding($str, 'UTF-8');
 		$str = trim($str);
 		if ($isUtf8) {
 			// echo "\$enc is: " . $enc . PHP_EOL;
@@ -208,27 +208,27 @@ class Formatter extends BaseClass {
 
 		$str = $hours . ':' . $minutes . ':' . $seconds;
 		if ($show_ms) {
-		    $str = $str . ($milliseconds === 0 ? '' : '.' . rtrim(strval($milliseconds % 1000), '0'));
+			$str = $str . ($milliseconds === 0 ? '' : '.' . rtrim(strval($milliseconds % 1000), '0'));
 		}
 		return $str;
 	}
-	public static function formatMicroTimeAsDate(float $sec) : string {
+	public static function formatMicroTimeAsDate(float $sec): string {
 		$str = date('l jS F \@ g:i a', intval($sec));
 		return $str;
 	}
 
-	public static function formatFloatIt(float $number, int $dec = 0) : string {
+	public static function formatFloatIt(float $number, int $dec = 0): string {
 		$number_format_it = number_format($number, $dec, ',', '.');
 		return $number_format_it;
 	}
 
 	/**
 	 * @see https://en.wikipedia.org/wiki/Byte#Multiple-byte_units
-	 * 
+	 *
 	 * @param float $yoursize
 	 * @return string
 	 */
-	public static function formatBytes(float $yoursize) : string  {
+	public static function formatBytes(float $yoursize): string {
 		// $r = number_format($yoursize / 1024, 2, ',', '.')
 		$str = null;
 		if ($yoursize < 1024) {
@@ -242,7 +242,7 @@ class Formatter extends BaseClass {
 		}
 		return $str;
 	}
-	public static function formatBytesPerSec(float $yoursize) : string {
+	public static function formatBytesPerSec(float $yoursize): string {
 		$str = Formatter::formatBytes($yoursize) . '/s';
 		return $str;
 	}
@@ -250,11 +250,8 @@ class Formatter extends BaseClass {
 		$str = date('F d Y H:i:s.', $time); // TODO: controllare se è formato italiano
 		return $str;
 	}
-	public static function replaceAccents(string $str) : string {
-		$search = explode(
-			',',
-			'ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,ø,Ø,Å,Á,À,Â,Ä,È,É,Ê,Ë,Í,Î,Ï,Ì,Ò,Ó,Ô,Ö,Ú,Ù,Û,Ü,Ÿ,Ç,Æ,Œ'
-		);
+	public static function replaceAccents(string $str): string {
+		$search = explode(',', 'ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,ø,Ø,Å,Á,À,Â,Ä,È,É,Ê,Ë,Í,Î,Ï,Ì,Ò,Ó,Ô,Ö,Ú,Ù,Û,Ü,Ÿ,Ç,Æ,Œ');
 		$replace = explode(
 			',',
 			'c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,o,O,A,A,A,A,A,E,E,E,E,I,I,I,I,O,O,O,O,U,U,U,U,Y,C,AE,OE'
@@ -265,8 +262,8 @@ class Formatter extends BaseClass {
 	}
 	public static function removeMultipleSpaces(string $string) {
 		//echo "Before removeMultipleSpaces() : '$string'" . PHP_EOL; // Debug
-	    $isUtf8 = mb_check_encoding($string, 'UTF-8');
-	    if ($isUtf8) {
+		$isUtf8 = mb_check_encoding($string, 'UTF-8');
+		if ($isUtf8) {
 			//echo "\$enc is: " . $enc . PHP_EOL;
 			$string = preg_replace('/\s+/u', ' ', $string);
 		} else {
@@ -293,7 +290,7 @@ class Formatter extends BaseClass {
 
 	/**
 	 * @see https://en.wikipedia.org/wiki/Byte#Multiple-byte_units
-	 * 
+	 *
 	 * @param string $file
 	 * @param string $type
 	 * @return string
@@ -318,7 +315,7 @@ class Formatter extends BaseClass {
 			return round($filesize, 2) . ' ' . $type;
 		}
 	}
- 
+
 	public static function secondsToWords(float $seconds) {
 		/**
 		 * * number of days **

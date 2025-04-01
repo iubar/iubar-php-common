@@ -7,8 +7,7 @@ namespace Iubar\Common;
 use Psr\Log\LoggerInterface;
 
 class FileUtil {
-    
-    protected LoggerInterface $logger;
+	protected LoggerInterface $logger;
 
 	public function __construct(LoggerInterface $logger) {
 		$this->logger = $logger;
@@ -396,7 +395,7 @@ class FileUtil {
 			return sprintf('%0.2f Kb', floatval($number) / pow(1024, 1));
 		}
 		if ($len <= 9) {
-		    return sprintf('%0.2f Mb', floatval($number) / pow(1024, 2));
+			return sprintf('%0.2f Mb', floatval($number) / pow(1024, 2));
 		}
 		return sprintf('%0.2f Gb', floatval($number) / pow(1024, 3)); // verificare se formatta in italiano, ad esempio 1.002,03
 	}
@@ -458,7 +457,7 @@ class FileUtil {
 		}
 	}
 
-	public static function getTotFileSize(array $array) : int {
+	public static function getTotFileSize(array $array): int {
 		$size = 0;
 		foreach ($array as $filename) {
 			$size = $size + self::getFileSize($filename);
@@ -590,15 +589,14 @@ class FileUtil {
 
 	public static function writeToFileUtf8(string $filename, $content, bool $bom = false) {
 		$handle = fopen($filename, 'wb+');
-		if ($handle===false) {
-		    throw new \Exception("Can't open file : " . $filename);
+		if ($handle === false) {
+			throw new \Exception("Can't open file : " . $filename);
 		}
-			if ($bom) {
-				FileUtil::writeUtf8Header($handle);
-			}
-			fwrite($handle, utf8_encode($content));
-			fclose($handle);
- 
+		if ($bom) {
+			FileUtil::writeUtf8Header($handle);
+		}
+		fwrite($handle, utf8_encode($content));
+		fclose($handle);
 	}
 
 	public static function writeToFileUtf8_2($filename, $content) {
@@ -714,12 +712,10 @@ class FileUtil {
 					if (is_dir($dir . $file)) {
 						chdir('.');
 						FileUtil::destroyDir($dir . $file);
-						FileUtil::rrmdir($dir . $file) or
-							die("rmdir command: warning, couldn't delete " . $dir . $file . "\r\n");
+						FileUtil::rrmdir($dir . $file) or die("rmdir command: warning, couldn't delete " . $dir . $file . "\r\n");
 						$array[] = $dir . $file;
 					} else {
-						unlink($dir . $file) or
-							die("unlink command: warning, couldn't delete " . $dir . $file . "\r\n");
+						unlink($dir . $file) or die("unlink command: warning, couldn't delete " . $dir . $file . "\r\n");
 						$array[] = $dir . $file;
 					}
 				}
@@ -816,7 +812,7 @@ class FileUtil {
 
 	public static function bfglob(string $path, string $pattern = '*', int $flags = 0, int $depth = 0) {
 		// Description
-		// non-recursive implementation for recursive glob with a depth parameter. 
+		// non-recursive implementation for recursive glob with a depth parameter.
 		// The search is done breadth-first and specifying -1 for the depth means no limit.
 		// Parameters:
 		// $path   - path of folder to search
@@ -1055,39 +1051,40 @@ class FileUtil {
 	 * Finds a list of disk drives on the server.
 	 * @return array The array velues are the existing disks.
 	 */
-	public static function get_disks() : array {
-	    $disks= [];
-	    if (strpos(php_uname(), 'Windows') !== false) { // oppure if(strpos(PHP_OS, 'WIN') === 0){
-		    // Esegui il comando WMIC per ottenere i nomi delle unità logiche
-		    $output = shell_exec('wmic logicaldisk get name');
-		    
-		    // Gestisci l'output per rimuovere l'intestazione e ottenere solo i nomi delle unità
-		    $lines = explode("\n", trim($output));
-		    array_shift($lines);  // Rimuovi l'intestazione
-		    
-		    // Rimuovi eventuali spazi vuoti dalle righe
-		    $lines = array_map('trim', $lines);
-		    
-		    // Filtra le righe non vuote
-		    $lines = array_filter($lines, function($line) {
-		        return !empty($line);
-		    });
+	public static function get_disks(): array {
+		$disks = [];
+		if (strpos(php_uname(), 'Windows') !== false) {
+			// oppure if(strpos(PHP_OS, 'WIN') === 0){
+			// Esegui il comando WMIC per ottenere i nomi delle unità logiche
+			$output = shell_exec('wmic logicaldisk get name');
+
+			// Gestisci l'output per rimuovere l'intestazione e ottenere solo i nomi delle unità
+			$lines = explode("\n", trim($output));
+			array_shift($lines); // Rimuovi l'intestazione
+
+			// Rimuovi eventuali spazi vuoti dalle righe
+			$lines = array_map('trim', $lines);
+
+			// Filtra le righe non vuote
+			$lines = array_filter($lines, function ($line) {
+				return !empty($line);
+			});
 		} else {
 			// unix
-// 			$data = `mount`;
-// 			$data = explode(' ', $data);
-// 			$disks = [];
-// 			foreach ($data as $token) {
-// 				if (substr($token, 0, 5) == '/dev/') {
-// 					$disks[] = $token;
-// 				}
-// 			}
-		    $output = shell_exec('lsblk -d -o NAME');		    
-		    // Elenco dei dischi
-		    $disks = explode("\n", trim($output));
-		    array_shift($disks);  // Rimuovi l'intestazione
+			// 			$data = `mount`;
+			// 			$data = explode(' ', $data);
+			// 			$disks = [];
+			// 			foreach ($data as $token) {
+			// 				if (substr($token, 0, 5) == '/dev/') {
+			// 					$disks[] = $token;
+			// 				}
+			// 			}
+			$output = shell_exec('lsblk -d -o NAME');
+			// Elenco dei dischi
+			$disks = explode("\n", trim($output));
+			array_shift($disks); // Rimuovi l'intestazione
 		}
-			return $disks;
+		return $disks;
 	}
 
 	public static function getSubfolders($folder) {

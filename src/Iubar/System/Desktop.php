@@ -5,7 +5,7 @@ namespace Iubar\System;
 class Desktop {
 	private static bool $isLinux = false;
 
-	public static function openBrowser(string $url) : void {
+	public static function openBrowser(string $url): void {
 		if (System::isWindows()) {
 			$cmd = 'start ' . $url;
 			exec($cmd);
@@ -15,8 +15,8 @@ class Desktop {
 			die('Quit: Unknown system detected.' . PHP_EOL);
 		}
 	}
-	
-	public static function openChrome(string $url) : void {
+
+	public static function openChrome(string $url): void {
 		$cmd = '';
 		// 		if($default){
 		// 			$cmd = "start link" . " " . $url;
@@ -39,13 +39,13 @@ class Desktop {
 			$output = [];
 			$exit_code = 0;
 			exec($cmd, $output, $exit_code);
-			if(!empty($output)){
-			     echo "Cmd output: " . PHP_EOL;
-			     print_r($output);
-			     echo PHP_EOL;
+			if (!empty($output)) {
+				echo 'Cmd output: ' . PHP_EOL;
+				print_r($output);
+				echo PHP_EOL;
 			}
-			if($exit_code){
-			    echo "ERROR, exit_code is " . $exit_code . PHP_EOL;
+			if ($exit_code) {
+				echo 'ERROR, exit_code is ' . $exit_code . PHP_EOL;
 			}
 		} elseif (self::$isLinux) {
 			die('Quit: Linux system detected.' . PHP_EOL);
@@ -54,7 +54,7 @@ class Desktop {
 		}
 	}
 
-	public static function readRegistry(string $reg_key, string $value = '') : string {
+	public static function readRegistry(string $reg_key, string $value = ''): string {
 		// http://ss64.com/nt/reg.html
 		// https://technet.microsoft.com/en-us/library/cc742028.aspx
 		//
@@ -71,7 +71,7 @@ class Desktop {
 		// echo 'eseguo: ' . $cmd . PHP_EOL;
 
 		exec($cmd, $output, $return_vars);
-		
+
 		// echo "\$output: " . PHP_EOL;
 		// print_r($output);
 		// echo "\$return_vars: " . PHP_EOL;
@@ -86,7 +86,7 @@ class Desktop {
 		return $result;
 	}
 
-	public static function getWorkspace() : string {
+	public static function getWorkspace(): string {
 		$workspace = '';
 		echo 'I have been run on ' . php_uname('s') . PHP_EOL;
 		$user = get_current_user();
@@ -119,4 +119,3 @@ class Desktop {
 // You can search words (term) with your default search engine, enter:
 // $ /usr/bin/firefox -search "term"
 // $ /usr/bin/firefox -search "linux add user to group"
- 

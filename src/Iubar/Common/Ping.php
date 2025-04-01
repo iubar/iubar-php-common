@@ -2,8 +2,7 @@
 namespace Iubar\Common;
 
 class Ping {
-	public function __construct() {
-	}
+	public function __construct() {}
 
 	public function ping($hostname) {
 		// Making the package
