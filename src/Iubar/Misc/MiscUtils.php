@@ -135,12 +135,7 @@ class MiscUtils {
 		}
 	}
 
-	/**
-	 *
-	 * @param Logger $logger non posso usare LoggerInterface perchè di seguito uso il metodo pushHandler()
-	 * @param string $log_level
-	 */
-	private static function logToShell(LoggerInterface $logger, string $log_level, bool $use_climate=true): void {
+	public static function logToShell(LoggerInterface $logger, string $log_level, bool $use_climate=true): void {
 		$handler = null;
 		if ($use_climate) {
 			$handler = new StreamHandler('php://stdout', $log_level);
