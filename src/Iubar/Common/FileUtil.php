@@ -386,7 +386,7 @@ class FileUtil {
 	 * Il metodo restituisce gli stessi risultati di formatBytes()
 	 * Nota che le sigle Gb, Kb, Mb, dovrebbero essere GB, KB, MB
 	 */
-	public static function convertBytes(string $number) {
+	public static function convertBytes(float $number) : string {
 		$len = strlen($number);
 		if ($len < 4) {
 			return sprintf('%d b', $number);
@@ -400,21 +400,21 @@ class FileUtil {
 		return sprintf('%0.2f Gb', floatval($number) / pow(1024, 3)); // verificare se formatta in italiano, ad esempio 1.002,03
 	}
 
-	public static function toBytes(float $size, string $type) {
+	public static function toBytes(float $number, string $type) : float {
 		// https://blogs.gnome.org/cneumair/2008/09/30/1-kb-1024-bytes-no-1-kb-1000-bytes/
-		$bytes = $size;
+	    $bytes = $number;
 		switch ($type) {
 			case 'KB':
-				$bytes = $size * pow(1024, 1);
+			    $bytes = $number * pow(1024, 1);
 				break;
 			case 'MB':
-				$bytes = $size * pow(1024, 2);
+			    $bytes = $number * pow(1024, 2);
 				break;
 			case 'GB':
-				$bytes = $size * pow(1024, 3);
+			    $bytes = $number * pow(1024, 3);
 				break;
 			case 'TB':
-				$bytes = $size * pow(1024, 4);
+			    $bytes = $number * pow(1024, 4);
 				break;
 		}
 		return $bytes;
