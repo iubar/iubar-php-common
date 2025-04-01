@@ -135,7 +135,7 @@ class MiscUtils {
 		}
 	}
 
-	public static function logToShell(LoggerInterface $logger, string $log_level, bool $use_climate=true): void {
+	public static function logToShell(LoggerInterface $logger, string $log_level, bool $use_climate = true): void {
 		$handler = null;
 		if ($use_climate) {
 			$handler = new StreamHandler('php://stdout', $log_level);
