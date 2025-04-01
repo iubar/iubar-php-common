@@ -7,7 +7,6 @@ use Monolog\Logger;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
 use Psr\Log\LoggerInterface;
-use App\Logger\ClimateConsoleHandler;
 use Psr\Log\LogLevel;
 
 class MiscUtils {
@@ -44,7 +43,8 @@ class MiscUtils {
 	                die('QUIT: ' . $error . PHP_EOL);
 	            } else {
 	                $rotating_handler = new \Monolog\Handler\RotatingFileHandler($log_file, 3, $log_level);
-	                $rotating_handler->setFormatter(new LineFormatter(null, null, true, true)); // LineFormatter::__construct(string $format = null, string $dateFormat = null, bool $allowInlineLineBreaks = false, bool $ignoreEmptyContextAndExtra = false)
+	                $formatter = self::formatterSimpleFactory();
+	                $rotating_handler->setFormatter($formatter);
 	                $logger->pushHandler($rotating_handler);
 	            }
 	        }
@@ -140,13 +140,31 @@ class MiscUtils {
 	 * @param Logger $logger non posso usare LoggerInterface perchè di seguito uso il metodo pushHandler()
 	 * @param string $log_level
 	 */
-	public static function logToShell(LoggerInterface $logger, string $log_level, bool $use_climate) : void {
+	private static function logToShell(LoggerInterface $logger, string $log_level, bool $use_climate) : void {
 	    $handler = null;
 	    if($use_climate){
 	        $handler = new StreamHandler('php://stdout', $log_level);
 	    }else{
 	        $handler = new ClimateConsoleHandler($log_level);
-	    }
+	    }	    
+        $formatter= self::formatterFactory();
+	    $handler->setFormatter($formatter);	    
+	    $logger->pushHandler($handler);
+	}
+		
+	private static function formatterSimpleFactory(){
+	    // LineFormatter::__construct(
+	    //     string $format = null, 
+	    //     string $dateFormat = null, 
+	    //     bool $allowInlineLineBreaks = false, 
+	    //     bool $ignoreEmptyContextAndExtra = false
+	    // )
+	    $formatter = new LineFormatter(null, null, true, true);
+	    return $formatter;
+	}
+	
+	private static function formatterFactory(){
+	    $formatter = null;
 	    // const SIMPLE_FORMAT = "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n";
 	    $format = '%channel%.%level_name%: %message% %context% %extra%' . PHP_EOL;
 	    $colorScheme = null;
@@ -154,7 +172,6 @@ class MiscUtils {
 	    $dateFormat = null;
 	    $allowInlineLineBreaks = true;
 	    $ignoreEmptyContextAndExtra = true;
-	    $formatter = null;
 	    if (self::$useConEmuOnWin || !self::isWindows()) {
 	        // $colorScheme = new TrafficLight();
 	        $formatter = new ColoredLineFormatter(
@@ -168,8 +185,7 @@ class MiscUtils {
 	        $formatter = new LineFormatter($format, $dateFormat, $allowInlineLineBreaks, $ignoreEmptyContextAndExtra);
 	        
 	    }
-	    $handler->setFormatter($formatter);
-	    $logger->pushHandler($handler);
+	    return $formatter;
 	}
 
 	////////////////////////////////

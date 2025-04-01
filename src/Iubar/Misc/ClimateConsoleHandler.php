@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Logger;
+namespace Iubar\Misc;
 
 use Monolog\Handler\AbstractProcessingHandler;
 
@@ -42,31 +42,31 @@ class ClimateConsoleHandler extends AbstractProcessingHandler
         // Applica colori diversi in base al livello di log
         switch ($record['level']) {
             case LogLevel::DEBUG:
-                $this->climate->lightGray()->inline($message . "\n");
+                $this->climate->lightGray()->inline($message . PHP_EOL);
                 break;
             case LogLevel::INFO:
-                $this->climate->cyan()->inline($message . "\n");
+                $this->climate->lightCyan()->inline($message . PHP_EOL);
                 break;
             case LogLevel::NOTICE:
-                $this->climate->green()->inline($message . "\n");
+                $this->climate->lightGreen()->inline($message . PHP_EOL);
                 break;
             case LogLevel::WARNING:
-                $this->climate->yellow()->inline($message . "\n");
+                $this->climate->lightYellow()->inline($message . PHP_EOL);
                 break;
             case LogLevel::ERROR:
-                $this->climate->red()->inline($message . "\n");
+                $this->climate->lightRed()->inline($message . PHP_EOL);
                 break;
             case LogLevel::CRITICAL:
-                $this->climate->backgroundRed()->white()->inline($message . "\n");
+                $this->climate->backgroundRed()->white()->inline($message . PHP_EOL);
                 break;
             case LogLevel::ALERT:
-                $this->climate->backgroundYellow()->black()->inline($message . "\n");
+                $this->climate->backgroundYellow()->black()->inline($message . PHP_EOL);
                 break;
             case LogLevel::EMERGENCY:
-                $this->climate->backgroundBlack()->lightRed()->inline($message . "\n");
+                $this->climate->backgroundBlack()->lightRed()->inline($message . PHP_EOL);
                 break;
             default:
-                $this->climate->inline($message . "\n");
+                $this->climate->inline($message . PHP_EOL);
         }
     }
 }
