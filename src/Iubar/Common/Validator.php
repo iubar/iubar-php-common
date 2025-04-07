@@ -138,7 +138,7 @@ class Validator extends BaseClass {
 					if ($b) {
 						$b = Validator::isBalanced($subquery);
 						if (!$b) {
-							die("Non bilanciate: $subquery" . "\r\n");
+							die("Parentesi non bilanciate: $subquery" . "\r\n");
 						}
 					}
 				}
@@ -346,7 +346,6 @@ class Validator extends BaseClass {
 			if (substr($s, $i, 1) == '(') {
 				// Increase the open count
 				$open++;
-				echo "Open $open \n";
 			} elseif (substr($s, $i, 1) == ')') {
 				// If open goes below zero, there's an invalid closing paren
 				if ($open < 0) {
@@ -354,7 +353,6 @@ class Validator extends BaseClass {
 				}
 				// Decrease the open count
 				$open--;
-				echo "Closed $open \n";
 			}
 		}
 

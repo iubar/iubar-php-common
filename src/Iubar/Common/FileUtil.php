@@ -76,7 +76,7 @@ class FileUtil {
 	 * @return \RecursiveIteratorIterator[]|\FilesystemIterator[]
 	 */
 	public static function getFilesInPath(string $target_path, string $ext = '', bool $recursive = true): array {
-		// TODO: scrivere un metodo analogo che accetta anche come parametro un pattern
+		// TODO: scrivere un metodo analogo che accetti anche come parametro un pattern
 		// per i nomi dei file da ricercare
 		// Poi vedi anche il metodo rglob e se è il caso di cancellarlo perchè obsoleto, oppure no
 
