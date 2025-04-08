@@ -386,35 +386,36 @@ class FileUtil {
 	 * Il metodo restituisce gli stessi risultati di formatBytes()
 	 * Nota che le sigle Gb, Kb, Mb, dovrebbero essere GB, KB, MB
 	 */
-	public static function convertBytes(float $number) : string {
-		$len = strlen($number);
-		if ($len < 4) {
+	public static function convertBytes(float $number): string {
+	    $integerPart = (int) $number;
+	    $len = strlen((string) $integerPart);
+		if ($len <= 3) {
 			return sprintf('%d b', $number);
 		}
 		if ($len <= 6) {
-			return sprintf('%0.2f Kb', floatval($number) / pow(1024, 1));
+			return sprintf('%0.2f Kb', $number / pow(1024, 1));
 		}
 		if ($len <= 9) {
-			return sprintf('%0.2f Mb', floatval($number) / pow(1024, 2));
+			return sprintf('%0.2f Mb', $number / pow(1024, 2));
 		}
-		return sprintf('%0.2f Gb', floatval($number) / pow(1024, 3)); // verificare se formatta in italiano, ad esempio 1.002,03
+		return sprintf('%0.2f Gb', $number / pow(1024, 3)); // verificare se formatta in italiano, ad esempio 1.002,03
 	}
 
-	public static function toBytes(float $number, string $type) : float {
+	public static function toBytes(float $number, string $type): float {
 		// https://blogs.gnome.org/cneumair/2008/09/30/1-kb-1024-bytes-no-1-kb-1000-bytes/
-	    $bytes = $number;
+		$bytes = $number;
 		switch ($type) {
 			case 'KB':
-			    $bytes = $number * pow(1024, 1);
+				$bytes = $number * pow(1024, 1);
 				break;
 			case 'MB':
-			    $bytes = $number * pow(1024, 2);
+				$bytes = $number * pow(1024, 2);
 				break;
 			case 'GB':
-			    $bytes = $number * pow(1024, 3);
+				$bytes = $number * pow(1024, 3);
 				break;
 			case 'TB':
-			    $bytes = $number * pow(1024, 4);
+				$bytes = $number * pow(1024, 4);
 				break;
 		}
 		return $bytes;
