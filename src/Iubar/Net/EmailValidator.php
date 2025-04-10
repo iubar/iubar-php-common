@@ -174,14 +174,12 @@ class EmailValidator {
 	    
 	    // If the string is already a plain email address
 	    if (filter_var($string, FILTER_VALIDATE_EMAIL)) {
-	        return $string; // Return the valid email
+	        return trim($string); // Return the valid email
 	    }
 	    
 	    return ''; // No email found
 	}
 
-	// http://php.net/manual/en/function.levenshtein.php
-	// http://php.net/manual/en/function.similar-text.php
 }
 
 // Support windows platforms. Only for PHP < 5.3
