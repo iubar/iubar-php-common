@@ -12,7 +12,7 @@ interface IEmailProvider {
 	public function setSmtpPassword(string $password): void;
 	public function setSmtpSsl(bool $useSsl): void;
 	public function setFrom(string $from_email, string $from_name): void;
-	public function addTo(string $email, string $name = ''): void;	
+	public function addTo(string $email, string $name = ''): void;
 	public function setReplyTo(string $email, string $name = ''): void;
 	public function setSubject(string $subject): void;
 	public function setBodyHtml(string $html): void;

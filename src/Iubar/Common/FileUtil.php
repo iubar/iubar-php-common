@@ -387,8 +387,8 @@ class FileUtil {
 	 * Nota che le sigle Gb, Kb, Mb, dovrebbero essere GB, KB, MB
 	 */
 	public static function convertBytes(float $number): string {
-	    $integerPart = (int) $number;
-	    $len = strlen((string) $integerPart);
+		$integerPart = (int) $number;
+		$len = strlen((string) $integerPart);
 		if ($len <= 3) {
 			return sprintf('%d b', $number);
 		}

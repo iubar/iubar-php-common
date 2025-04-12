@@ -144,7 +144,7 @@ class MiscUtils {
 		}
 		$formatter = self::formatterFactory();
 		$handler->setFormatter($formatter);
-		
+
 		$logger->pushHandler($handler);
 	}
 

@@ -161,25 +161,22 @@ class EmailValidator {
 
 		return $s;
 	}
-	
-	
-	public function extractEmail(string $string) : string {
-	    
-	    $matches = [];
-	    
-	    // Match email address inside angle brackets
-	    if (preg_match('/<([^>]+)>/', $string, $matches)) {
-	        return $matches[1]; // Return the email found between <>
-	    }
-	    
-	    // If the string is already a plain email address
-	    if (filter_var($string, FILTER_VALIDATE_EMAIL)) {
-	        return trim($string); // Return the valid email
-	    }
-	    
-	    return ''; // No email found
-	}
 
+	public function extractEmail(string $string): string {
+		$matches = [];
+
+		// Match email address inside angle brackets
+		if (preg_match('/<([^>]+)>/', $string, $matches)) {
+			return $matches[1]; // Return the email found between <>
+		}
+
+		// If the string is already a plain email address
+		if (filter_var($string, FILTER_VALIDATE_EMAIL)) {
+			return trim($string); // Return the valid email
+		}
+
+		return ''; // No email found
+	}
 }
 
 // Support windows platforms. Only for PHP < 5.3
