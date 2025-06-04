@@ -19,7 +19,7 @@ class System {
 	/**
 	 * Using getenv() and putenv() is strongly discouraged due to the fact that these functions are not thread safe.
 	 * 
-	 * @param string $name
+	 * @param string $varName
 	 * @return string
 	 */
 	public static function readEnv(string $varName): string {
