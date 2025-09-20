@@ -26,7 +26,7 @@ class MiscUtils {
 	 */
 
 	public static function rotatingLoggerFactoryloggerFactory(
-		string $logger_name,
+	    string $channel,
 		string $log_level,
 		string $log_file = 'log.rot',
 		bool $log_to_shell = true,
@@ -34,7 +34,7 @@ class MiscUtils {
 	): LoggerInterface {
 		$error = '';
 		$log_path = '';
-		$logger = new Logger($logger_name); // create a log channel
+		$logger = new Logger($channel); // create a log channel
 		if ($log_file) {
 			$log_path = dirname($log_file);
 			$error = self::checkLogPath($log_path);
@@ -56,7 +56,7 @@ class MiscUtils {
 	}
 
 	public static function loggerFactory(
-		string $logger_name,
+	    string $channel,
 		string $log_level,
 		string $log_file = '',
 		bool $overwrite_log = true,
@@ -64,7 +64,7 @@ class MiscUtils {
 		bool $use_climate = false
 	): LoggerInterface {
 		$error = '';
-		$logger = new Logger($logger_name); // create a log channel
+		$logger = new Logger($channel); // create a log channel
 		if ($log_file) {
 			$log_path = dirname($log_file);
 			$error = self::checkLogPath($log_path);
@@ -161,8 +161,10 @@ class MiscUtils {
 
 	private static function formatterFactory() {
 		$formatter = null;
-		// const SIMPLE_FORMAT = "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n";
-		$format = '%channel%.%level_name%: %message% %context% %extra%' . PHP_EOL;
+		// const SIMPLE_FORMAT = "[%datetime%] %channel%.%level_name%: %message% %context% %extra%" . PHP_EOL;
+		$format = '%channel%.%level_name%: %message% %context% %extra%' . PHP_EOL;		
+		// $format2 = '[%datetime%] %channel%.%level_name%: %message% [%extra.class%]' . PHP_EOL; // da provare
+				
 		$colorScheme = null;
 		// $dateFormat = 'Y-m-d H:i:s';
 		$dateFormat = null;

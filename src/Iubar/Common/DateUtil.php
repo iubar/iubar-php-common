@@ -58,7 +58,7 @@ class DateUtil {
 	// $dateTime = new DateTime("now", new DateTimeZone('Europe/Rome'));
 	// $mysqldate = $dateTime->format("Y-m-d H:i:s");
 	// echo $mysqldate;
-	public static function getMysqlTodayString($type = 'DATE') {
+	public static function getMysqlTodayString($type = 'DATE') : string {
 		$date = null;
 		$time = time();
 		if ($type == 'DATE') {
@@ -71,7 +71,7 @@ class DateUtil {
 		return $date;
 	}
 
-	public static function mysql_date_to_string($date_field) {
+	public static function mysql_date_to_string(string $date_field) : string {
 		$str = '';
 		if ($date_field != '') {
 			$str = date('d-m-Y H:i:s', strtotime($date_field));
@@ -79,7 +79,7 @@ class DateUtil {
 		return $str;
 	}
 
-	public static function amazingStringFromTime($str, $nTimestamp = null) {
+	public static function amazingStringFromTime(string $str, ?int $nTimestamp = null) : string|false {
 		// This public static function reads a human readable string representation of dates. e.g.
 		// DD MM YYYY => 01 07 1978
 		// DDD D MMM YY => Mon 1 Jul 78
@@ -104,7 +104,7 @@ class DateUtil {
 		return strftime($str, $nTimestamp);
 	}
 
-	public static function strange2min(string $strange) {
+	public static function strange2min(string $strange) : int {
 		$h24h = substr($strange, -2);
 		[$hour_str, $minute_str] = preg_split('/(?i:am|pm|:)/', $strange);
 		$hour = intval($hour_str);
@@ -117,7 +117,7 @@ class DateUtil {
 		return $hour * 60 + $minute;
 	}
 
-	public static function checkinzone($start, $end) {
+	public static function checkinzone(string $start, string $end) : bool {
 		// USAGE
 		// $start = "1:30am";
 		// $end = "9:39am";
@@ -132,7 +132,7 @@ class DateUtil {
 	/**
 	 * Finds the difference in days between two calendar dates.
 	 */
-	public static function dateDiff($startDate, $endDate) {
+	public static function dateDiff(string $startDate, string $endDate) : float {
 		// Parse dates for conversion
 		$startArry = date_parse($startDate);
 		$endArry = date_parse($endDate);
@@ -145,11 +145,11 @@ class DateUtil {
 		return round($end_date - $start_date, 0);
 	}
 
-	public static function getTime() {
+	public static function getTime(): string {
 		return date('h:i:s A');
 	}
 
-	public static function getFullTime() {
+	public static function getFullTime() : string {
 		$str = date('h:i:s A') . ' of ' . date('d-m-Y');
 		return $str;
 	}
@@ -157,8 +157,8 @@ class DateUtil {
 	/**
 	 * check a date in the Italian format
 	 */
-	public static function checkData($date) {
-		if (!isset($date) || $date == '') {
+	public static function checkData(string $date) : bool{
+		if (!$date) {
 			return false;
 		}
 
@@ -170,7 +170,7 @@ class DateUtil {
 		return false;
 	}
 
-	public static function isValidDateTime($dateTime) {
+	public static function isValidDateTime(string $dateTime) : bool {
 		if (preg_match("/^(\d{4})-(\d{2})-(\d{2}) ([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/", $dateTime, $matches)) {
 			if (checkdate(intval($matches[2]), intval($matches[3]), intval($matches[1]))) {
 				return true;
@@ -180,7 +180,7 @@ class DateUtil {
 		return false;
 	}
 
-	public static function isMoorning() {
+	public static function isMoorning() : bool {
 		$h = date('H');
 		$b = false;
 		if ($h < 13) {
@@ -189,23 +189,23 @@ class DateUtil {
 		return $b;
 	}
 
-	public static function getElapsedDays($from, $to) {
+	public static function getElapsedDays(int $from, int $to) : float {
 		// Attenzione: non tiene conto del passaggio ora legale/solare
 		$diff = $to - $from;
-		return round($diff / 86400);
+		return round($diff / 86400, 0);
 	}
 
-	public static function getElapsedDays2($from, $to) {
+	public static function getElapsedDays2(string $from, string $to) : float {
 		// Attenzione: non tiene conto del passaggio ora legale/solare
 		// The public static function expects to be given a string containing an English date format
 		$start_ts = strtotime($from);
 		$end_ts = strtotime($to);
 		$diff = $end_ts - $start_ts;
-		return round($diff / 86400);
+		return round($diff / 86400, 0);
 	}
 
 	// Get the last day of the month
-	public static function lastDayOfMonth($month = '', $year = '') {
+	public static function lastDayOfMonth(string $month = '', string $year = '') : string {
 		if (empty($month)) {
 			$month = date('m');
 		}
@@ -217,7 +217,7 @@ class DateUtil {
 		return date('d/m/Y', $result);
 	}
 
-	public static function stringToTime($str) {
+	public static function stringToTime(string $str) : int {
 		// 	// Nota che la funzione strtotime presenta delle ambiguità che possono essere
 		// 	// superate solo utilizzando un particolare separatore
 		// 	echo date("jS F, Y", strtotime("11.12.10"));
@@ -229,9 +229,9 @@ class DateUtil {
 		return strtotime($str);
 	}
 
-	public static function stringToTime2($str) {
+	public static function stringToTime2(string $str) : int {
 		// il metodo funziona solo per date espresse nel formato gg/mm/aaaa o gg/mm/aa
-		$d = null;
+		$d = 0;
 
 		if ($str != '') {
 			$seps = ['/', '-', '.'];
@@ -265,12 +265,12 @@ class DateUtil {
 		return $d;
 	}
 
-	public static function secondsToHours($s) {
+	public static function secondsToHours(int $s) : float {
 		$h = $s / 3600;
-		return $h;
+		return round($h, 2);
 	}
 
-	public static function test_diff() {
+	public static function test_diff() : void  {
 		// ATTENZIONE: Qui la timezone è probabilmente (!) uguale a GMT+1
 		$hours_diff = strtotime('20:00:00') - strtotime('19:00:00');
 		echo date('h:i', $hours_diff) . ' Hours' . PHP_EOL;
@@ -281,12 +281,12 @@ class DateUtil {
 		echo date('h:i', $hours_diff) . ' Hours' . PHP_EOL;
 	}
 
-	public static function test_tz() {
+	public static function test_tz(): void {
 		$tz = new \DateTimeZone('Europe/Rome');
 		print_r($tz->getLocation());
 	}
 
-	public static function test_tz_2() {
+	public static function test_tz_2() : void {
 		date_default_timezone_set('Europe/Rome');
 
 		$datetime = new \DateTime('2008-08-03 12:35:23');
@@ -298,7 +298,7 @@ class DateUtil {
 		echo $datetime->getTimezone()->getName();
 	}
 
-	public static function getElapsedTime($pastTimestamp) {
+	public static function getElapsedTime(int $pastTimestamp) : string {
 		$currentTimestamp = time();
 		$timePassed = $currentTimestamp - $pastTimestamp; //time passed in seconds
 		// Minute == 60 seconds
@@ -331,7 +331,7 @@ class DateUtil {
 		return $elapsedString;
 	}
 
-	public static function getLastMonths($n) {
+	public static function getLastMonths(int $n) : array {
 		$array = [];
 		$today_time = time();
 		$month_current = DateUtil::getMonthNum($today_time);
@@ -386,34 +386,34 @@ class DateUtil {
 
 	// DATE MANIPULATION
 
-	public static function countDaysInMonth($month, $year) {
+	public static function countDaysInMonth(int $month, int $year): int {
 		// $last_day = date('d', mktime(0, 0, 0, $this->month + 1, 0, $this->year));
 		// in alternativa posso usare ...
 		return cal_days_in_month(CAL_GREGORIAN, $month, $year);
 	}
 
-	public static function getTodayNum() {
+	public static function getTodayNum() : string {
 		return date('j', time()); // 1-31
 	}
 
-	public static function getMonthNum($date) {
+	public static function getMonthNum(int $date) : string {
 		return date('n', $date);
 	}
 
-	public static function getYear($date) {
+	public static function getYear(int $date) : string {
 		return date('Y', $date);
 	}
 
-	public static function getDayOfMonth($date) {
+	public static function getDayOfMonth($date) : string {
 		return date('j', $date);
 	}
 
-	public static function getMonthName($month) {
+	public static function getMonthName(int $month) : string {
 		$timestamp = mktime(0, 0, 0, $month, 1); // anno corrente, occorre specificare il giorno 1 onde evitare side-effects in date come 31/12
 		return date('M', $timestamp);
 	}
 
-	public static function getPreviousMonthNum($month) {
+	public static function getPreviousMonthNum(int $month) : int {
 		$prev = 0;
 		if ($month == 1) {
 			$prev = 12;
@@ -423,7 +423,7 @@ class DateUtil {
 		return $prev;
 	}
 
-	public static function getPreviousYearNum($month, $year) {
+	public static function getPreviousYearNum(int $month, int $year) : int {
 		$prev = 0;
 		if ($month == 1) {
 			$prev = $year - 1;
@@ -433,30 +433,30 @@ class DateUtil {
 		return $prev;
 	}
 
-	public static function getDateFirstDayOfMonth($month, $year) {
+	public static function getDateFirstDayOfMonth(int $month, int $year) : string {
 		return self::getDateFirstDayOfMonth2($month, $year, DateUtil::$def_date_format);
 	}
 
-	public static function getDateLastDayOfMonth($month, $year) {
+	public static function getDateLastDayOfMonth(int $month, int $year) : string {
 		return self::getDateLastDayOfMonth2($month, $year, DateUtil::$def_date_format);
 	}
 
-	public static function getDateFirstDayOfMonth2($month, $year, $date_format) {
+	public static function getDateFirstDayOfMonth2(int $month,int  $year, string $date_format) : string {
 		$timestamp = mktime(0, 0, 0, $month, 1, $year);
 		return date($date_format, $timestamp);
 	}
 
-	public static function getDateLastDayOfMonth2($month, $year, $date_format) {
+	public static function getDateLastDayOfMonth2(int $month, int $year, string $date_format): string {
 		$timestamp = mktime(0, 0, -1, $month + 1, 1, $year);
 		//printDebug("test: " . date($date_format, $timestamp));
 		return date($date_format, $timestamp);
 	}
 
-	public static function getDateAsEndOfDay($day_of_month, $month, $year) {
+	public static function getDateAsEndOfDay(int $day_of_month, int $month, int $year) : string {
 		return self::getDateAsEndOfDay2($day_of_month, $month, $year, DateUtil::$def_date_format);
 	}
 
-	public static function getDateAsEndOfDay2($day_of_month, $month, $year, $date_format) {
+	public static function getDateAsEndOfDay2(int $day_of_month, int $month, int $year, string $date_format) : string {
 		$timestamp = mktime(0, 0, -1, $month, $day_of_month + 1, $year);
 		return date($date_format, $timestamp);
 	}

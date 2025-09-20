@@ -126,7 +126,7 @@ function searchFileByPattern($path, $regex) {
 
 // $files = FileUtil::searchFileByPattern("C:/Users/Borgo/iubar/paghe/install/windows/nsi/db/update/sql", "/Update_Db_(Paghe|Addizionali|Anag|Fisco)_da_015500_a_015600\.sql/");
 
-$path = 'C:\Users\Borgo\iubar\paghe\db\sql\install';
+$path = getenv('USERPROFILE') . '\iubar\paghe\db\sql\install';
 $regex = '/Get(.*)\.sql/i';
 $regex = '/Db(.*)\.sql/i';
 echo $path . PHP_EOL;
