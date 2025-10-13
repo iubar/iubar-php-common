@@ -108,14 +108,16 @@ class Validator extends BaseClass {
 		return $regex_phrase_of_words_utf8;
 	}
 
-	public static function isAValidSelectQuery(string $query) {
-		$commands = ['SELECT '];
-		return self::isAValidQuery($query, $commands);
-	}
+// 	public static function isAValidSelectQuery(string $query) {
+// 		$commands = ['SELECT '];
+// 		return self::isAValidQuery($query, $commands);
+// 	}
+	
 	public static function isAValidDmlQuery(string $query) {
 		$commands = ['INSERT ', 'UPDATE ', 'SELECT ', 'DELETE '];
 		return self::isAValidQuery($query, $commands);
 	}
+	
 	private static function isAValidQuery(string $query, array $commands) {
 		$b = false;
 
@@ -138,7 +140,7 @@ class Validator extends BaseClass {
 					if ($b) {
 						$b = Validator::isBalanced($subquery);
 						if (!$b) {
-							die("Parentesi non bilanciate: $subquery" . "\r\n");
+							die("Parentesi non bilanciate: $subquery" . PHP_EOL);
 						}
 					}
 				}
