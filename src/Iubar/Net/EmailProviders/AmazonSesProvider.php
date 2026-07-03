@@ -21,6 +21,12 @@ class AmazonSesProvider extends AbstractEmailProvider implements IEmailProvider 
 
 	/**
 	 * Il metodo implementa accesso SMPT al servizio SES.
+	 * 
+     * Protocollo	     Porta	      TLS
+     * SMTP + STARTTLS	 587	      TLS esplicito (richiede $tls = false)
+     * SMTPS	         465	      TLS implicito (richiede $tls = true)
+     * SMTP plain	      25	      sconsigliato/bloccato spesso
+     *
 	 * @see http://docs.aws.amazon.com/ses/latest/DeveloperGuide/smtp-connect.html
 	 *
 	 * Per un'eventuale utilizzo alternativo tramite REST API, si veda
