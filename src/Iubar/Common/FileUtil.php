@@ -596,7 +596,15 @@ class FileUtil {
 		if ($bom) {
 			FileUtil::writeUtf8Header($handle);
 		}
-		fwrite($handle, utf8_encode($content));
+
+		$enc = mb_detect_encoding($content, ['UTF-8', 'Windows-1252'], true) ?: 'ISO-8859-1';
+		
+		if ($enc !== 'UTF-8') {
+		    $content = mb_convert_encoding($content, 'UTF-8', $enc);
+		}
+		
+		fwrite($handle, $content);
+				
 		fclose($handle);
 	}
 

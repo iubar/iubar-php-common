@@ -6,7 +6,7 @@ use Iubar\Common\BaseClass;
 
 class HostingUtil extends BaseClass {
 	public $iubar_lan = '192.168.0.';
-	public $iubar_wan = '82.91.10.178';
+	public $iubar_wan = '94.32.182.56'; // The old address was '82.91.10.178';
 	public $iubar_it = '62.149.128.166';
 
 	public $www_iubar_it = '62.149.140.104';
