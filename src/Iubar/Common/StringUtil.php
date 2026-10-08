@@ -2,14 +2,6 @@
 
 namespace Iubar\Common;
 
-// Per convertire una stringa dalla codifica sconosciuta in utf8:
-// iconv(mb_detect_encoding($text, mb_detect_order(), true), "UTF-8", $text);
-
-// Verificare anche il comportamento della funzione utf8_encode()
-
-// Verificare anche
-// mb_internal_encoding('UTF-8');
-
 class StringUtil {
 	public static function startsWith(string $haystack, string $needle): bool {
 		$length = strlen($needle);
@@ -348,4 +340,18 @@ class StringUtil {
 			return null;
 		}
 	}
+	
+	public static function utf8encode(string $str): string|false {
+    	$result = mb_convert_encoding(
+    	    $str,
+    	    'UTF-8',
+    	    mb_detect_encoding(
+    	        $str,
+    	        ['UTF-8', 'ISO-8859-1', 'Windows-1252'],
+    	        true
+    	        ) ?: 'UTF-8'
+    	    );
+    	return $result;
+	}
+	
 } // end class

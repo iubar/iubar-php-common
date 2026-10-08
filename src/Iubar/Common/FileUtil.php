@@ -559,8 +559,7 @@ class FileUtil {
 				exit();
 			}
 
-			// Write $somecontent to our opened file.
-			//if (fwrite($handle, utf8_encode($content)) === FALSE) { // NON HO BISOGNO DI USARE utf8_encode
+			// Write content to our opened file.
 			if (fwrite($handle, $content) === false) {
 				echo "Cannot write to file ($filename)";
 				exit();
